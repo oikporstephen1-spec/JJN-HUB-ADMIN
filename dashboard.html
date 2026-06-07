@@ -484,6 +484,37 @@ window.location.href =
 })();
 
 </script>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<script>
+
+const supabaseUrl =
+'https://aosewocqcpoffckmnfpn.supabase.co';
+
+const supabaseKey =
+'YOUR_ANON_PUBLIC_KEY';
+
+const supabaseClient =
+window.supabase.createClient(
+supabaseUrl,
+supabaseKey
+);
+
+(async () => {
+
+const { data } =
+await supabaseClient.auth.getSession();
+
+if (!data.session) {
+
+window.location.href =
+'login.html';
+
+}
+
+})();
+
+</script>
 </body>
 
 </html>
