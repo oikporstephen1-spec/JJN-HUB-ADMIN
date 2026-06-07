@@ -1,0 +1,663 @@
+<!-- AUTOMOTIVE ADMIN PART 1 START -->
+
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta
+name="viewport"
+content="width=device-width, initial-scale=1.0">
+
+<title>
+
+JJN HUB Automotive Administration
+
+</title>
+
+<link
+rel="stylesheet"
+href="css/admin.css">
+
+<link
+href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap"
+rel="stylesheet">
+
+</head>
+
+<body class="dashboard-body">
+
+<button
+class="admin-menu-toggle"
+onclick="toggleAdminMenu()">
+
+☰
+
+</button>
+
+<div class="dashboard-layout">
+
+<aside class="sidebar">
+
+<div class="sidebar-logo">
+
+<img
+src="assets/logo.png"
+alt="JJN HUB Logo"
+class="sidebar-logo-img">
+
+<h2>
+
+JJN HUB
+
+</h2>
+
+<p>
+
+ADMIN PORTAL
+
+</p>
+
+</div>
+
+<nav class="sidebar-nav">
+
+<a href="dashboard.html">Dashboard</a>
+
+<a href="customers.html">Customers</a>
+
+<a href="documents.html">Documents</a>
+
+<a href="projects.html">Projects</a>
+
+<a
+href="automotive-admin.html"
+class="active-nav">
+
+Automotive
+
+</a>
+
+<a href="engineering-admin.html">Engineering</a>
+
+<a href="marine-admin.html">Marine</a>
+
+<a href="logistics-admin.html">Logistics</a>
+
+<a href="procurement-admin.html">Procurement</a>
+
+<a href="quality.html">Quality Management</a>
+
+<a href="reports.html">Reports</a>
+
+<a href="settings.html">Settings</a>
+
+</nav>
+
+</aside>
+
+<main class="main-content">
+
+<header class="topbar">
+
+<h1>
+
+Automotive Management
+
+</h1>
+
+<div class="user-info">
+
+Administrator ▼
+
+</div>
+
+</header>
+
+<section class="dashboard-cards">
+
+<div class="dashboard-card">
+
+<h3>
+
+Vehicles Available
+
+</h3>
+
+<h2>
+
+45
+
+</h2>
+
+</div>
+
+<div class="dashboard-card">
+
+<h3>
+
+Vehicles Sold
+
+</h3>
+
+<h2>
+
+18
+
+</h2>
+
+</div>
+
+<div class="dashboard-card">
+
+<h3>
+
+Import Requests
+
+</h3>
+
+<h2>
+
+12
+
+</h2>
+
+</div>
+
+<div class="dashboard-card">
+
+<h3>
+
+Customer Orders
+
+</h3>
+
+<h2>
+
+27
+
+</h2>
+
+</div>
+
+</section>
+
+<section class="dashboard-panel">
+
+<h2>
+
+Add Vehicle Record
+
+</h2>
+
+<form class="vehicle-form">
+
+<div class="form-group">
+
+<label>
+
+Vehicle Make
+
+</label>
+
+<input
+type="text"
+placeholder="Toyota">
+
+</div>
+
+<div class="form-group">
+
+<label>
+
+Vehicle Model
+
+</label>
+
+<input
+type="text"
+placeholder="Corolla">
+
+</div>
+
+<div class="form-group">
+
+<label>
+
+Year
+
+</label>
+
+<input
+type="number"
+placeholder="2020">
+
+</div>
+
+<div class="form-group">
+
+<label>
+
+VIN Number
+
+</label>
+
+<input
+type="text"
+placeholder="Vehicle Identification Number">
+
+</div>
+
+<!-- AUTOMOTIVE ADMIN PART 1 END -->
+<!-- AUTOMOTIVE ADMIN PART 2 START -->
+
+<div class="form-group">
+
+<label>
+
+Vehicle Status
+
+</label>
+
+<select>
+
+<option>
+
+Available
+
+</option>
+
+<option>
+
+Reserved
+
+</option>
+
+<option>
+
+Sold
+
+</option>
+
+<option>
+
+In Transit
+
+</option>
+
+</select>
+
+</div>
+
+<div class="form-group">
+
+<label>
+
+Purchase Cost ($)
+
+</label>
+
+<input
+type="number"
+placeholder="5000">
+
+</div>
+
+<div class="form-group">
+
+<label>
+
+Selling Price ($)
+
+</label>
+
+<input
+type="number"
+placeholder="6500">
+
+</div>
+
+<div class="form-group">
+
+<label>
+
+Location
+
+</label>
+
+<input
+type="text"
+placeholder="Lagos, Nigeria">
+
+</div>
+
+<button
+type="submit"
+class="action-btn">
+
+Save Vehicle
+
+</button>
+
+</form>
+
+</section>
+
+<section class="dashboard-panel">
+
+<h2>
+
+Vehicle Inventory
+
+</h2>
+
+<div class="customer-table-wrapper">
+
+<table class="automotive-table">
+
+<thead>
+
+<tr>
+
+<th>Stock No.</th>
+
+<th>Vehicle</th>
+
+<th>Year</th>
+
+<th>Status</th>
+
+<th>Cost ($)</th>
+
+<th>Price ($)</th>
+
+<th>Action</th>
+
+</tr>
+
+</thead>
+
+<tbody>
+
+<tr>
+
+<td>
+
+AUTO-001
+
+</td>
+
+<td>
+
+Toyota Corolla
+
+</td>
+
+<td>
+
+2020
+
+</td>
+
+<td class="status-active">
+
+Available
+
+</td>
+
+<td>
+
+5,000
+
+</td>
+
+<td>
+
+6,500
+
+</td>
+
+<td>
+
+<button class="action-btn">
+
+View
+
+</button>
+
+</td>
+
+</tr>
+
+<tr>
+
+<td>
+
+AUTO-002
+
+</td>
+
+<td>
+
+Toyota Venza
+
+</td>
+
+<td>
+
+2012
+
+</td>
+
+<td class="status-pending">
+
+Reserved
+
+</td>
+
+<td>
+
+6,200
+
+</td>
+
+<td>
+
+8,000
+
+</td>
+
+<td>
+
+<button class="action-btn">
+
+View
+
+</button>
+
+</td>
+
+</tr>
+
+</tbody>
+
+</table>
+
+</div>
+
+</section>
+
+<section class="dashboard-panel">
+
+<h2>
+
+Customer Orders
+
+</h2>
+
+<div class="customer-table-wrapper">
+
+<table class="automotive-table">
+
+<thead>
+
+<tr>
+
+<th>Order No.</th>
+
+<th>Customer</th>
+
+<th>Vehicle Requested</th>
+
+<th>Status</th>
+
+<th>Action</th>
+
+</tr>
+
+</thead>
+
+<tbody>
+
+<tr>
+
+<td>
+
+ORD-2026-001
+
+</td>
+
+<td>
+
+ABC Logistics
+
+</td>
+
+<td>
+
+Toyota Corolla 2020
+
+</td>
+
+<td class="status-active">
+
+Processing
+
+</td>
+
+<td>
+
+<button class="action-btn">
+
+View
+
+</button>
+
+</td>
+
+</tr>
+
+<tr>
+
+<td>
+
+ORD-2026-002
+
+</td>
+
+<td>
+
+John Smith
+
+</td>
+
+<td>
+
+Toyota Venza 2012
+
+</td>
+
+<td class="status-pending">
+
+Pending
+
+</td>
+
+<td>
+
+<button class="action-btn">
+
+View
+
+</button>
+
+</td>
+
+</tr>
+
+</tbody>
+
+</table>
+
+</div>
+
+</section>
+
+<footer class="admin-footer">
+
+<div class="admin-footer-links">
+
+<a href="dashboard.html">Dashboard</a>
+
+<span>|</span>
+
+<a href="customers.html">Customers</a>
+
+<span>|</span>
+
+<a href="documents.html">Documents</a>
+
+<span>|</span>
+
+<a href="projects.html">Projects</a>
+
+<span>|</span>
+
+<a href="automotive-admin.html">Automotive</a>
+
+<span>|</span>
+
+<a href="quality.html">Quality</a>
+
+<span>|</span>
+
+<a href="reports.html">Reports</a>
+
+<span>|</span>
+
+<a href="settings.html">Settings</a>
+
+</div>
+
+<div class="admin-footer-copy">
+
+© 2026 Jesse & Jeslyn Nigeria Limited (JJN HUB)
+
+</div>
+
+</footer>
+
+</main>
+
+</div>
+
+<script src="js/admin.js"></script>
+
+</body>
+
+</html>
+
+<!-- AUTOMOTIVE ADMIN PART 2 END -->

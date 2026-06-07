@@ -1,0 +1,617 @@
+<!-- REPORTS PART 1 START -->
+
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta
+name="viewport"
+content="width=device-width, initial-scale=1.0">
+
+<title>
+
+JJN HUB Reports
+
+</title>
+
+<link
+rel="stylesheet"
+href="css/admin.css">
+
+<link
+href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap"
+rel="stylesheet">
+
+</head>
+
+<body class="dashboard-body">
+
+<button
+class="admin-menu-toggle"
+onclick="toggleAdminMenu()">
+
+☰
+
+</button>
+
+<div class="dashboard-layout">
+
+<aside class="sidebar">
+
+<div class="sidebar-logo">
+
+<img
+src="assets/logo.png"
+alt="JJN HUB Logo"
+class="sidebar-logo-img">
+
+<h2>
+
+JJN HUB
+
+</h2>
+
+<p>
+
+ADMIN PORTAL
+
+</p>
+
+</div>
+
+<nav class="sidebar-nav">
+
+<a href="dashboard.html">Dashboard</a>
+
+<a href="customers.html">Customers</a>
+
+<a href="documents.html">Documents</a>
+
+<a href="projects.html">Projects</a>
+
+<a href="automotive-admin.html">Automotive</a>
+
+<a href="engineering-admin.html">Engineering</a>
+
+<a href="marine-admin.html">Marine</a>
+
+<a href="logistics-admin.html">Logistics</a>
+
+<a href="procurement-admin.html">Procurement</a>
+
+<a href="quality.html">Quality Management</a>
+
+<a
+href="reports.html"
+class="active-nav">
+
+Reports
+
+</a>
+
+<a href="settings.html">Settings</a>
+
+</nav>
+
+</aside>
+
+<main class="main-content">
+
+<header class="topbar">
+
+<h1>
+
+Management Reports
+
+</h1>
+
+<div class="user-info">
+
+Administrator ▼
+
+</div>
+
+</header>
+
+<section class="dashboard-cards">
+
+<div class="dashboard-card">
+
+<h3>
+
+Total Customers
+
+</h3>
+
+<h2>
+
+25
+
+</h2>
+
+</div>
+
+<div class="dashboard-card">
+
+<h3>
+
+Active Projects
+
+</h3>
+
+<h2>
+
+12
+
+</h2>
+
+</div>
+
+<div class="dashboard-card">
+
+<h3>
+
+Documents
+
+</h3>
+
+<h2>
+
+240
+
+</h2>
+
+</div>
+
+<div class="dashboard-card">
+
+<h3>
+
+Quality Records
+
+</h3>
+
+<h2>
+
+18
+
+</h2>
+
+</div>
+
+</section>
+
+<section class="dashboard-panel">
+
+<h2>
+
+Generate Report
+
+</h2>
+
+<form class="report-form">
+
+<div class="form-group">
+
+<label>
+
+Report Type
+
+</label>
+
+<select>
+
+<option>
+
+Customer Report
+
+</option>
+
+<option>
+
+Project Report
+
+</option>
+
+<option>
+
+Document Report
+
+</option>
+
+<option>
+
+Quality Report
+
+</option>
+
+<option>
+
+Management Review Report
+
+</option>
+
+<option>
+
+ISO Readiness Report
+
+</option>
+
+</select>
+
+</div>
+
+<div class="form-group">
+
+<label>
+
+Department
+
+</label>
+
+<select>
+
+<option>
+
+All Departments
+
+</option>
+
+<option>
+
+Automotive
+
+</option>
+
+<option>
+
+Engineering
+
+</option>
+
+<option>
+
+Marine
+
+</option>
+
+<option>
+
+Logistics
+
+</option>
+
+<option>
+
+Procurement
+
+</option>
+
+</select>
+
+</div>
+
+<div class="form-group">
+
+<label>
+
+Start Date
+
+</label>
+
+<input
+type="date">
+
+</div>
+
+<div class="form-group">
+
+<label>
+
+End Date
+
+</label>
+
+<input
+type="date">
+
+</div>
+
+<!-- REPORTS PART 1 END -->
+<!-- REPORTS PART 2 START -->
+
+<button
+type="submit"
+class="action-btn">
+
+Generate Report
+
+</button>
+
+<button
+type="button"
+class="action-btn">
+
+Export PDF
+
+</button>
+
+<button
+type="button"
+class="action-btn">
+
+Export Excel
+
+</button>
+
+</form>
+
+</section>
+
+<section class="dashboard-panel">
+
+<h2>
+
+Management Review Summary
+
+</h2>
+
+<div class="customer-table-wrapper">
+
+<table class="report-table">
+
+<thead>
+
+<tr>
+
+<th>Category</th>
+
+<th>Target</th>
+
+<th>Actual</th>
+
+<th>Status</th>
+
+</tr>
+
+</thead>
+
+<tbody>
+
+<tr>
+
+<td>
+
+Customer Satisfaction
+
+</td>
+
+<td>
+
+90%
+
+</td>
+
+<td>
+
+92%
+
+</td>
+
+<td class="status-active">
+
+Achieved
+
+</td>
+
+</tr>
+
+<tr>
+
+<td>
+
+Project Completion
+
+</td>
+
+<td>
+
+95%
+
+</td>
+
+<td>
+
+88%
+
+</td>
+
+<td class="status-pending">
+
+Below Target
+
+</td>
+
+</tr>
+
+<tr>
+
+<td>
+
+Document Compliance
+
+</td>
+
+<td>
+
+100%
+
+</td>
+
+<td>
+
+98%
+
+</td>
+
+<td class="status-pending">
+
+Review Required
+
+</td>
+
+</tr>
+
+<tr>
+
+<td>
+
+Internal Audits
+
+</td>
+
+<td>
+
+4
+
+</td>
+
+<td>
+
+3
+
+</td>
+
+<td class="status-pending">
+
+Pending
+
+</td>
+
+</tr>
+
+</tbody>
+
+</table>
+
+</div>
+
+</section>
+
+<section class="dashboard-panel">
+
+<h2>
+
+ISO Readiness Dashboard
+
+</h2>
+
+<div class="status-grid">
+
+<div class="status-item">
+
+Document Control
+
+<span>98%</span>
+
+</div>
+
+<div class="status-item">
+
+Risk Management
+
+<span>85%</span>
+
+</div>
+
+<div class="status-item">
+
+Training Records
+
+<span>90%</span>
+
+</div>
+
+<div class="status-item">
+
+Internal Audits
+
+<span>75%</span>
+
+</div>
+
+<div class="status-item">
+
+Corrective Actions
+
+<span>80%</span>
+
+</div>
+
+<div class="status-item">
+
+Management Review
+
+<span>70%</span>
+
+</div>
+
+</div>
+
+</section>
+
+<footer class="admin-footer">
+
+<div class="admin-footer-links">
+
+<a href="dashboard.html">Dashboard</a>
+
+<span>|</span>
+
+<a href="customers.html">Customers</a>
+
+<span>|</span>
+
+<a href="documents.html">Documents</a>
+
+<span>|</span>
+
+<a href="projects.html">Projects</a>
+
+<span>|</span>
+
+<a href="quality.html">Quality</a>
+
+<span>|</span>
+
+<a href="reports.html">Reports</a>
+
+<span>|</span>
+
+<a href="settings.html">Settings</a>
+
+</div>
+
+<div class="admin-footer-copy">
+
+© 2026 Jesse & Jeslyn Nigeria Limited (JJN HUB)
+
+</div>
+
+</footer>
+
+</main>
+
+</div>
+
+<script src="js/admin.js"></script>
+
+</body>
+
+</html>
+
+<!-- REPORTS PART 2 END -->

@@ -1,0 +1,663 @@
+<!-- PROJECTS PART 1 START -->
+
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta
+name="viewport"
+content="width=device-width, initial-scale=1.0">
+
+<title>
+
+JJN HUB Projects
+
+</title>
+
+<link
+rel="stylesheet"
+href="css/admin.css">
+
+<link
+href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap"
+rel="stylesheet">
+
+</head>
+
+<body class="dashboard-body">
+
+<button
+class="admin-menu-toggle"
+onclick="toggleAdminMenu()">
+
+☰
+
+</button>
+
+<div class="dashboard-layout">
+
+<aside class="sidebar">
+
+<div class="sidebar-logo">
+
+<img
+src="assets/logo.png"
+alt="JJN HUB Logo"
+class="sidebar-logo-img">
+
+<h2>
+
+JJN HUB
+
+</h2>
+
+<p>
+
+ADMIN PORTAL
+
+</p>
+
+</div>
+
+<nav class="sidebar-nav">
+
+<a href="dashboard.html">
+
+Dashboard
+
+</a>
+
+<a href="customers.html">
+
+Customers
+
+</a>
+
+<a href="documents.html">
+
+Documents
+
+</a>
+
+<a
+href="projects.html"
+class="active-nav">
+
+Projects
+
+</a>
+
+<a href="automotive-admin.html">
+
+Automotive
+
+</a>
+
+<a href="engineering-admin.html">
+
+Engineering
+
+</a>
+
+<a href="marine-admin.html">
+
+Marine
+
+</a>
+
+<a href="logistics-admin.html">
+
+Logistics
+
+</a>
+
+<a href="procurement-admin.html">
+
+Procurement
+
+</a>
+
+<a href="quality.html">
+
+Quality Management
+
+</a>
+
+<a href="reports.html">
+
+Reports
+
+</a>
+
+<a href="settings.html">
+
+Settings
+
+</a>
+
+</nav>
+
+</aside>
+
+<main class="main-content">
+
+<header class="topbar">
+
+<h1>
+
+Projects
+
+</h1>
+
+<div class="user-info">
+
+Administrator ▼
+
+</div>
+
+</header>
+
+<section class="dashboard-panel">
+
+<h2>
+
+Project Management
+
+</h2>
+
+<p>
+
+Manage all customer projects across Automotive,
+Engineering,
+Marine,
+Logistics,
+Procurement
+and Quality Management operations.
+
+</p>
+
+</section>
+
+<section class="dashboard-panel">
+
+<h2>
+
+Create New Project
+
+</h2>
+
+<form class="project-form">
+
+<div class="form-group">
+
+<label>
+
+Project Number
+
+</label>
+
+<input
+type="text"
+placeholder="PRJ-2026-0001">
+
+</div>
+
+<div class="form-group">
+
+<label>
+
+Project Name
+
+</label>
+
+<input
+type="text"
+placeholder="Enter Project Name">
+
+</div>
+
+<div class="form-group">
+
+<label>
+
+Customer
+
+</label>
+
+<input
+type="text"
+placeholder="Customer Name">
+
+</div>
+
+<div class="form-group">
+
+<label>
+
+Department
+
+</label>
+
+<select>
+
+<option>
+
+Select Department
+
+</option>
+
+<option>
+
+Automotive
+
+</option>
+
+<option>
+
+Engineering
+
+</option>
+
+<option>
+
+Marine
+
+</option>
+
+<option>
+
+Logistics
+
+</option>
+
+<option>
+
+Procurement
+
+</option>
+
+</select>
+
+</div>
+
+<!-- PROJECTS PART 1 END -->
+<!-- PROJECTS PART 2 START -->
+
+<div class="form-group">
+
+<label>
+
+Start Date
+
+</label>
+
+<input
+type="date">
+
+</div>
+
+<div class="form-group">
+
+<label>
+
+Due Date
+
+</label>
+
+<input
+type="date">
+
+</div>
+
+<div class="form-group">
+
+<label>
+
+Assigned Staff
+
+</label>
+
+<input
+type="text"
+placeholder="Assigned Staff">
+
+</div>
+
+<div class="form-group">
+
+<label>
+
+Project Status
+
+</label>
+
+<select>
+
+<option>
+
+Pending
+
+</option>
+
+<option>
+
+Approved
+
+</option>
+
+<option>
+
+In Progress
+
+</option>
+
+<option>
+
+Completed
+
+</option>
+
+<option>
+
+On Hold
+
+</option>
+
+<option>
+
+Cancelled
+
+</option>
+
+</select>
+
+</div>
+
+<div class="form-group">
+
+<label>
+
+Progress (%)
+
+</label>
+
+<input
+type="number"
+placeholder="0 - 100">
+
+</div>
+
+<div class="form-group">
+
+<label>
+
+Project Notes
+
+</label>
+
+<input
+type="text"
+placeholder="Additional Notes">
+
+</div>
+
+<button
+type="submit"
+class="action-btn">
+
+Create Project
+
+</button>
+
+</form>
+
+</section>
+
+<section class="dashboard-panel">
+
+<h2>
+
+Project Register
+
+</h2>
+
+<div class="customer-table-wrapper">
+
+<table class="project-table">
+<thead>
+
+<tr>
+
+<th>Project No.</th>
+
+<th>Project Name</th>
+
+<th>Customer</th>
+
+<th>Department</th>
+
+<th>Status</th>
+
+<th>Progress</th>
+
+<th>Action</th>
+
+</tr>
+
+</thead>
+
+<tbody>
+
+<tr>
+
+<td>
+
+PRJ-2026-0001
+
+</td>
+
+<td>
+
+Generator Troubleshooting
+
+</td>
+
+<td>
+
+ABC Marine Ltd
+
+</td>
+
+<td>
+
+Marine
+
+</td>
+
+<td class="status-active">
+
+In Progress
+
+</td>
+
+<td>
+
+65%
+
+</td>
+
+<td>
+
+<button class="action-btn">
+
+View
+
+</button>
+
+</td>
+
+</tr>
+
+<tr>
+
+<td>
+
+PRJ-2026-0002
+
+</td>
+
+<td>
+
+Fleet Vehicle Import
+
+</td>
+
+<td>
+
+Global Logistics
+
+</td>
+
+<td>
+
+Automotive
+
+</td>
+
+<td class="status-pending">
+
+Pending
+
+</td>
+
+<td>
+
+20%
+
+</td>
+
+<td>
+
+<button class="action-btn">
+
+View
+
+</button>
+
+</td>
+
+</tr>
+
+<tr>
+
+<td>
+
+PRJ-2026-0003
+
+</td>
+
+<td>
+
+Switchboard Upgrade
+
+</td>
+
+<td>
+
+Prime Engineering
+
+</td>
+
+<td>
+
+Engineering
+
+</td>
+
+<td class="status-active">
+
+Completed
+
+</td>
+
+<td>
+
+100%
+
+</td>
+
+<td>
+
+<button class="action-btn">
+
+View
+
+</button>
+
+</td>
+
+</tr>
+
+</tbody>
+
+</table>
+
+</div>
+
+</section>
+
+<footer class="admin-footer">
+
+<div class="admin-footer-links">
+
+<a href="dashboard.html">Dashboard</a>
+
+<span>|</span>
+
+<a href="customers.html">Customers</a>
+
+<span>|</span>
+
+<a href="documents.html">Documents</a>
+
+<span>|</span>
+
+<a href="projects.html">Projects</a>
+
+<span>|</span>
+
+<a href="quality.html">Quality</a>
+
+<span>|</span>
+
+<a href="reports.html">Reports</a>
+
+<span>|</span>
+
+<a href="settings.html">Settings</a>
+
+</div>
+
+<div class="admin-footer-copy">
+
+© 2026 Jesse & Jeslyn Nigeria Limited (JJN HUB)
+
+</div>
+
+</footer>
+
+</main>
+
+</div>
+
+<script src="js/admin.js"></script>
+
+</body>
+
+</html>
+
+<!-- PROJECTS PART 2 END -->

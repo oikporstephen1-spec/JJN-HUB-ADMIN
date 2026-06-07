@@ -1,0 +1,583 @@
+<!-- CUSTOMERS PART 1 START -->
+
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta
+name="viewport"
+content="width=device-width, initial-scale=1.0">
+
+<title>
+
+JJN HUB Customers
+
+</title>
+
+<link
+rel="stylesheet"
+href="css/admin.css">
+
+<link
+href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap"
+rel="stylesheet">
+
+</head>
+
+<body class="dashboard-body">
+<!-- MOBILE MENU BUTTON -->
+
+<button
+class="admin-menu-toggle"
+onclick="toggleAdminMenu()">
+
+☰
+
+</button>
+
+<div class="dashboard-layout">
+
+<aside class="sidebar">
+
+<div class="sidebar-logo">
+
+<img
+src="assets/logo.png"
+alt="JJN HUB Logo"
+class="sidebar-logo-img">
+
+<h2>
+
+JJN HUB
+
+</h2>
+
+<p>
+
+ADMIN PORTAL
+
+</p>
+
+</div>
+
+<nav class="sidebar-nav">
+
+<a href="dashboard.html">
+
+Dashboard
+
+</a>
+
+<a
+href="customers.html"
+class="active-nav">
+
+Customers
+
+</a>
+
+<a href="documents.html">
+
+Documents
+
+</a>
+
+<a href="projects.html">
+
+Projects
+
+</a>
+
+<a href="automotive-admin.html">
+
+Automotive
+
+</a>
+
+<a href="engineering-admin.html">
+
+Engineering
+
+</a>
+
+<a href="marine-admin.html">
+
+Marine
+
+</a>
+
+<a href="logistics-admin.html">
+
+Logistics
+
+</a>
+
+<a href="procurement-admin.html">
+
+Procurement
+
+</a>
+
+<a href="quality.html">
+
+Quality Management
+
+</a>
+
+<a href="reports.html">
+
+Reports
+
+</a>
+
+<a href="settings.html">
+
+Settings
+
+</a>
+
+</nav>
+
+</aside>
+
+<main class="main-content">
+
+<header class="topbar">
+
+<h1>
+
+Customers
+
+</h1>
+
+<div class="user-info">
+
+Administrator ▼
+
+</div>
+
+</header>
+
+<section class="dashboard-panel">
+
+<h2>
+
+Customer Management
+
+</h2>
+
+<p>
+
+Create, manage and track all JJN HUB customers across Automotive,
+Engineering, Marine, Logistics and Procurement operations.
+
+</p>
+
+</section>
+
+<section class="dashboard-panel">
+
+<h2>
+
+Add New Customer
+
+</h2>
+
+<form class="customer-form">
+
+<div class="form-group">
+
+<label>
+
+Customer Name
+
+</label>
+
+<input
+type="text"
+placeholder="Enter Customer Name">
+
+</div>
+
+<div class="form-group">
+
+<label>
+
+Company Name
+
+</label>
+
+<input
+type="text"
+placeholder="Enter Company Name">
+
+</div>
+
+<div class="form-group">
+
+<label>
+
+Phone Number
+
+</label>
+
+<input
+type="text"
+placeholder="Enter Phone Number">
+
+</div>
+
+<div class="form-group">
+
+<label>
+
+Email Address
+
+</label>
+
+<input
+type="email"
+placeholder="Enter Email Address">
+
+</div>
+
+<!-- CUSTOMERS PART 1 END -->
+<!-- CUSTOMERS PART 2 START -->
+
+<div class="form-group">
+
+<label>
+
+Address
+
+</label>
+
+<input
+type="text"
+placeholder="Enter Address">
+
+</div>
+
+<div class="form-group">
+
+<label>
+
+Department
+
+</label>
+
+<select>
+
+<option>
+
+Select Department
+
+</option>
+
+<option>
+
+Automotive
+
+</option>
+
+<option>
+
+Engineering
+
+</option>
+
+<option>
+
+Marine
+
+</option>
+
+<option>
+
+Logistics
+
+</option>
+
+<option>
+
+Procurement
+
+</option>
+
+</select>
+
+</div>
+
+<div class="form-group">
+
+<label>
+
+Customer Status
+
+</label>
+
+<select>
+
+<option>
+
+Active
+
+</option>
+
+<option>
+
+Pending
+
+</option>
+
+<option>
+
+Inactive
+
+</option>
+
+</select>
+
+</div>
+
+<button
+type="submit"
+class="action-btn">
+
+Add Customer
+
+</button>
+
+</form>
+
+</section>
+
+<section class="dashboard-panel">
+
+<h2>
+
+Customer Records
+
+</h2>
+
+<div class="customer-table-wrapper">
+
+<table class="customer-table">
+
+<thead>
+
+<tr>
+
+<th>ID</th>
+
+<th>Name</th>
+
+<th>Company</th>
+
+<th>Department</th>
+
+<th>Status</th>
+
+<th>Action</th>
+
+</tr>
+
+</thead>
+
+<tbody>
+
+<tr>
+
+<td>
+
+CUS-2026-0001
+
+</td>
+
+<td>
+
+ABC Marine Ltd
+
+</td>
+
+<td>
+
+ABC Marine
+
+</td>
+
+<td>
+
+Marine
+
+</td>
+
+<td>
+
+Active
+
+</td>
+
+<td>
+
+<button class="action-btn">
+
+View
+
+</button>
+
+</td>
+
+</tr>
+
+<tr>
+
+<td>
+
+CUS-2026-0002
+
+</td>
+
+<td>
+
+Global Logistics
+
+</td>
+
+<td>
+
+Global Logistics Ltd
+
+</td>
+
+<td>
+
+Logistics
+
+</td>
+
+<td class="status-active">
+
+Active
+
+</td>
+
+<td>
+
+<button class="action-btn">
+
+View
+
+</button>
+
+</td>
+
+</tr>
+
+<tr>
+
+<td>
+
+CUS-2026-0003
+
+</td>
+
+<td>
+
+Prime Engineering
+
+</td>
+
+<td>
+
+Prime Engineering Ltd
+
+</td>
+
+<td>
+
+Engineering
+
+</td>
+
+<td class="status-pending">
+
+Pending
+
+</td>
+
+<td>
+
+<button class="action-btn">
+
+View
+
+</button>
+
+</td>
+
+</tr>
+
+</tbody>
+
+</table>
+
+</div>
+
+</section>
+<!-- ADMIN FOOTER -->
+
+<footer class="admin-footer">
+
+<div class="admin-footer-links">
+
+<a href="dashboard.html">Dashboard</a>
+
+<span>|</span>
+
+<a href="customers.html">Customers</a>
+
+<span>|</span>
+
+<a href="documents.html">Documents</a>
+
+<span>|</span>
+
+<a href="projects.html">Projects</a>
+
+<span>|</span>
+
+<a href="quality.html">Quality</a>
+
+<span>|</span>
+
+<a href="reports.html">Reports</a>
+
+<span>|</span>
+
+<a href="settings.html">Settings</a>
+
+</div>
+
+<div class="admin-footer-copy">
+
+© 2026 Jesse & Jeslyn Nigeria Limited (JJN HUB)
+
+</div>
+
+</footer>
+</main>
+
+</div>
+
+<script src="js/admin.js"></script>
+
+</body>
+
+</html>
+
+<!-- CUSTOMERS PART 2 END -->

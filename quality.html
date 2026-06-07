@@ -1,0 +1,780 @@
+<!-- QUALITY PART 1 START -->
+
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta
+name="viewport"
+content="width=device-width, initial-scale=1.0">
+
+<title>
+
+JJN HUB Quality Management
+
+</title>
+
+<link
+rel="stylesheet"
+href="css/admin.css">
+
+<link
+href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap"
+rel="stylesheet">
+
+</head>
+
+<body class="dashboard-body">
+
+<button
+class="admin-menu-toggle"
+onclick="toggleAdminMenu()">
+
+☰
+
+</button>
+
+<div class="dashboard-layout">
+
+<aside class="sidebar">
+
+<div class="sidebar-logo">
+
+<img
+src="assets/logo.png"
+alt="JJN HUB Logo"
+class="sidebar-logo-img">
+
+<h2>
+
+JJN HUB
+
+</h2>
+
+<p>
+
+ADMIN PORTAL
+
+</p>
+
+</div>
+
+<nav class="sidebar-nav">
+
+<a href="dashboard.html">
+
+Dashboard
+
+</a>
+
+<a href="customers.html">
+
+Customers
+
+</a>
+
+<a href="documents.html">
+
+Documents
+
+</a>
+
+<a href="projects.html">
+
+Projects
+
+</a>
+
+<a href="automotive-admin.html">
+
+Automotive
+
+</a>
+
+<a href="engineering-admin.html">
+
+Engineering
+
+</a>
+
+<a href="marine-admin.html">
+
+Marine
+
+</a>
+
+<a href="logistics-admin.html">
+
+Logistics
+
+</a>
+
+<a href="procurement-admin.html">
+
+Procurement
+
+</a>
+
+<a
+href="quality.html"
+class="active-nav">
+
+Quality Management
+
+</a>
+
+<a href="reports.html">
+
+Reports
+
+</a>
+
+<a href="settings.html">
+
+Settings
+
+</a>
+
+</nav>
+
+</aside>
+
+<main class="main-content">
+
+<header class="topbar">
+
+<h1>
+
+Quality Management
+
+</h1>
+
+<div class="user-info">
+
+Administrator ▼
+
+</div>
+
+</header>
+
+<section class="dashboard-panel">
+
+<h2>
+
+ISO 9001 Quality Management System
+
+</h2>
+
+<p>
+
+Manage quality procedures,
+controlled documents,
+internal audits,
+corrective actions,
+risk assessments,
+training records
+and continuous improvement activities.
+
+</p>
+
+</section>
+
+<section class="dashboard-cards">
+
+<div class="dashboard-card">
+
+<h3>
+
+Procedures
+
+</h3>
+
+<h2>
+
+12
+
+</h2>
+
+</div>
+
+<div class="dashboard-card">
+
+<h3>
+
+Internal Audits
+
+</h3>
+
+<h2>
+
+3
+
+</h2>
+
+</div>
+
+<div class="dashboard-card">
+
+<h3>
+
+Corrective Actions
+
+</h3>
+
+<h2>
+
+5
+
+</h2>
+
+</div>
+
+<div class="dashboard-card">
+
+<h3>
+
+Training Records
+
+</h3>
+
+<h2>
+
+18
+
+</h2>
+
+</div>
+
+</section>
+
+<section class="dashboard-panel">
+
+<h2>
+
+Create Quality Record
+
+</h2>
+
+<form class="quality-form">
+
+<div class="form-group">
+
+<label>
+
+Record Number
+
+</label>
+
+<input
+type="text"
+placeholder="QMS-2026-0001">
+
+</div>
+
+<div class="form-group">
+
+<label>
+
+Record Type
+
+</label>
+
+<select>
+
+<option>
+
+Procedure
+
+</option>
+
+<option>
+
+Internal Audit
+
+</option>
+
+<option>
+
+Corrective Action
+
+</option>
+
+<option>
+
+Risk Assessment
+
+</option>
+
+<option>
+
+Training Record
+
+</option>
+
+<option>
+
+Management Review
+
+</option>
+
+</select>
+
+</div>
+
+<div class="form-group">
+
+<label>
+
+Title
+
+</label>
+
+<input
+type="text"
+placeholder="Enter Record Title">
+
+</div>
+
+<div class="form-group">
+
+<label>
+
+Responsible Person
+
+</label>
+
+<input
+type="text"
+placeholder="Assigned Person">
+
+</div>
+
+<!-- QUALITY PART 1 END -->
+<!-- QUALITY PART 2 START -->
+
+<div class="form-group">
+
+<label>
+
+Due Date
+
+</label>
+
+<input
+type="date">
+
+</div>
+
+<div class="form-group">
+
+<label>
+
+Status
+
+</label>
+
+<select>
+
+<option>
+
+Open
+
+</option>
+
+<option>
+
+In Progress
+
+</option>
+
+<option>
+
+Completed
+
+</option>
+
+<option>
+
+Closed
+
+</option>
+
+</select>
+
+</div>
+
+<div class="form-group">
+
+<label>
+
+Risk Level
+
+</label>
+
+<select>
+
+<option>
+
+Low
+
+</option>
+
+<option>
+
+Medium
+
+</option>
+
+<option>
+
+High
+
+</option>
+
+<option>
+
+Critical
+
+</option>
+
+</select>
+
+</div>
+
+<div class="form-group">
+
+<label>
+
+Remarks
+
+</label>
+
+<input
+type="text"
+placeholder="Additional Notes">
+
+</div>
+
+<button
+type="submit"
+class="action-btn">
+
+Create Record
+
+</button>
+
+</form>
+
+</section>
+
+<section class="dashboard-panel">
+
+<h2>
+
+Quality Records Register
+
+</h2>
+
+<div class="customer-table-wrapper">
+
+<table class="quality-table">
+
+<thead>
+
+<tr>
+
+<th>Record No.</th>
+
+<th>Type</th>
+
+<th>Title</th>
+
+<th>Status</th>
+
+<th>Risk</th>
+
+<th>Due Date</th>
+
+<th>Action</th>
+
+</tr>
+
+</thead>
+
+<tbody>
+
+<tr>
+
+<td>
+
+QMS-2026-0001
+
+</td>
+
+<td>
+
+Procedure
+
+</td>
+
+<td>
+
+Document Control Procedure
+
+</td>
+
+<td class="status-active">
+
+Completed
+
+</td>
+
+<td class="risk-low">
+
+Low
+
+</td>
+
+<td>
+
+30/06/2026
+
+</td>
+
+<td>
+
+<button class="action-btn">
+
+View
+
+</button>
+
+</td>
+
+</tr>
+
+<tr>
+
+<td>
+
+QMS-2026-0002
+
+</td>
+
+<td>
+
+Internal Audit
+
+</td>
+
+<td>
+
+Marine Department Audit
+
+</td>
+
+<td class="status-pending">
+
+In Progress
+
+</td>
+
+<td class="risk-medium">
+
+Medium
+
+</td>
+
+<td>
+
+15/07/2026
+
+</td>
+
+<td>
+
+<button class="action-btn">
+
+View
+
+</button>
+
+</td>
+
+</tr>
+
+<tr>
+
+<td>
+
+QMS-2026-0003
+
+</td>
+
+<td>
+
+Corrective Action
+
+</td>
+
+<td>
+
+Customer Complaint Resolution
+
+</td>
+
+<td class="status-pending">
+
+Open
+
+</td>
+
+<td class="risk-high">
+
+High
+
+</td>
+
+<td>
+
+20/07/2026
+
+</td>
+
+<td>
+
+<button class="action-btn">
+
+View
+
+</button>
+
+</td>
+
+</tr>
+
+</tbody>
+
+</table>
+
+</div>
+
+</section>
+
+<section class="dashboard-panel">
+
+<h2>
+
+ISO Readiness Tracker
+
+</h2>
+
+<div class="status-grid">
+
+<div class="status-item">
+
+Quality Manual
+
+<span>Completed</span>
+
+</div>
+
+<div class="status-item">
+
+Procedures
+
+<span>In Progress</span>
+
+</div>
+
+<div class="status-item">
+
+Internal Audits
+
+<span>Pending</span>
+
+</div>
+
+<div class="status-item">
+
+Training Records
+
+<span>Active</span>
+
+</div>
+
+<div class="status-item">
+
+Management Reviews
+
+<span>Pending</span>
+
+</div>
+
+<div class="status-item">
+
+Certification Preparation
+
+<span>Planned</span>
+
+</div>
+
+</div>
+
+</section>
+
+<footer class="admin-footer">
+
+<div class="admin-footer-links">
+
+<a href="dashboard.html">Dashboard</a>
+
+<span>|</span>
+
+<a href="customers.html">Customers</a>
+
+<span>|</span>
+
+<a href="documents.html">Documents</a>
+
+<span>|</span>
+
+<a href="projects.html">Projects</a>
+
+<span>|</span>
+
+<a href="quality.html">Quality</a>
+
+<span>|</span>
+
+<a href="reports.html">Reports</a>
+
+<span>|</span>
+
+<a href="settings.html">Settings</a>
+
+</div>
+
+<div class="admin-footer-copy">
+
+© 2026 Jesse & Jeslyn Nigeria Limited (JJN HUB)
+
+</div>
+
+</footer>
+
+</main>
+
+</div>
+
+<script src="js/admin.js"></script>
+
+</body>
+
+</html>
+
+<!-- QUALITY PART 2 END -->

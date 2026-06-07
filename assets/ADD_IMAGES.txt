@@ -1,0 +1,10 @@
+Add images:
+home-hero.jpg
+about-bg.jpg
+automotive-bg.jpg
+engineering-bg.jpg
+logistics-bg.jpg
+marine-bg.jpg
+procurement-bg.jpg
+contact-bg.jpg
+logo.png (optional)

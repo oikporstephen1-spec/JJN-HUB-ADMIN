@@ -1,0 +1,731 @@
+<!-- LOGISTICS ADMIN PART 1 START -->
+
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta
+name="viewport"
+content="width=device-width, initial-scale=1.0">
+
+<title>
+
+JJN HUB Logistics Administration
+
+</title>
+
+<link
+rel="stylesheet"
+href="css/admin.css">
+
+<link
+href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap"
+rel="stylesheet">
+
+</head>
+
+<body class="dashboard-body">
+
+<button
+class="admin-menu-toggle"
+onclick="toggleAdminMenu()">
+
+☰
+
+</button>
+
+<div class="dashboard-layout">
+
+<aside class="sidebar">
+
+<div class="sidebar-logo">
+
+<img
+src="assets/logo.png"
+alt="JJN HUB Logo"
+class="sidebar-logo-img">
+
+<h2>
+
+JJN HUB
+
+</h2>
+
+<p>
+
+ADMIN PORTAL
+
+</p>
+
+</div>
+
+<nav class="sidebar-nav">
+
+<a href="dashboard.html">Dashboard</a>
+
+<a href="customers.html">Customers</a>
+
+<a href="documents.html">Documents</a>
+
+<a href="projects.html">Projects</a>
+
+<a href="automotive-admin.html">Automotive</a>
+
+<a href="engineering-admin.html">Engineering</a>
+
+<a href="marine-admin.html">Marine</a>
+
+<a
+href="logistics-admin.html"
+class="active-nav">
+
+Logistics
+
+</a>
+
+<a href="procurement-admin.html">Procurement</a>
+
+<a href="quality.html">Quality Management</a>
+
+<a href="reports.html">Reports</a>
+
+<a href="settings.html">Settings</a>
+
+</nav>
+
+</aside>
+
+<main class="main-content">
+
+<header class="topbar">
+
+<h1>
+
+Logistics Management
+
+</h1>
+
+<div class="user-info">
+
+Administrator ▼
+
+</div>
+
+</header>
+
+<section class="dashboard-cards">
+
+<div class="dashboard-card">
+
+<h3>
+
+Active Shipments
+
+</h3>
+
+<h2>
+
+24
+
+</h2>
+
+</div>
+
+<div class="dashboard-card">
+
+<h3>
+
+Containers In Transit
+
+</h3>
+
+<h2>
+
+16
+
+</h2>
+
+</div>
+
+<div class="dashboard-card">
+
+<h3>
+
+RoRo Shipments
+
+</h3>
+
+<h2>
+
+9
+
+</h2>
+
+</div>
+
+<div class="dashboard-card">
+
+<h3>
+
+Delivered Jobs
+
+</h3>
+
+<h2>
+
+58
+
+</h2>
+
+</div>
+
+</section>
+
+<section class="dashboard-panel">
+
+<h2>
+
+Create Shipment Record
+
+</h2>
+
+<form class="logistics-form">
+
+<div class="form-group">
+
+<label>
+
+Shipment Number
+
+</label>
+
+<input
+type="text"
+placeholder="LOG-2026-0001">
+
+</div>
+
+<div class="form-group">
+
+<label>
+
+Customer Name
+
+</label>
+
+<input
+type="text"
+placeholder="Customer / Company">
+
+</div>
+
+<div class="form-group">
+
+<label>
+
+Shipment Type
+
+</label>
+
+<select>
+
+<option>
+
+RoRo Vehicle Shipment
+
+</option>
+
+<option>
+
+Container Shipment
+
+</option>
+
+<option>
+
+Air Freight
+
+</option>
+
+<option>
+
+Sea Freight
+
+</option>
+
+<option>
+
+Project Cargo
+
+</option>
+
+</select>
+
+</div>
+
+<div class="form-group">
+
+<label>
+
+Origin Port
+
+</label>
+
+<input
+type="text"
+placeholder="Port of Loading">
+
+</div>
+
+<div class="form-group">
+
+<label>
+
+Destination Port
+
+</label>
+
+<input
+type="text"
+placeholder="Port of Discharge">
+
+</div>
+
+<div class="form-group">
+
+<label>
+
+Carrier / Shipping Line
+
+</label>
+
+<input
+type="text"
+placeholder="Grimaldi, MSC, Maersk etc.">
+
+</div>
+
+<!-- LOGISTICS ADMIN PART 1 END -->
+<!-- LOGISTICS ADMIN PART 2 START -->
+
+<div class="form-group">
+
+<label>
+
+ETD (Departure Date)
+
+</label>
+
+<input
+type="date">
+
+</div>
+
+<div class="form-group">
+
+<label>
+
+ETA (Arrival Date)
+
+</label>
+
+<input
+type="date">
+
+</div>
+
+<div class="form-group">
+
+<label>
+
+Tracking Number
+
+</label>
+
+<input
+type="text"
+placeholder="Tracking Reference">
+
+</div>
+
+<div class="form-group">
+
+<label>
+
+Shipment Status
+
+</label>
+
+<select>
+
+<option>
+
+Booked
+
+</option>
+
+<option>
+
+In Transit
+
+</option>
+
+<option>
+
+Arrived
+
+</option>
+
+<option>
+
+Customs Clearance
+
+</option>
+
+<option>
+
+Delivered
+
+</option>
+
+</select>
+
+</div>
+
+<div class="form-group">
+
+<label>
+
+Remarks
+
+</label>
+
+<input
+type="text"
+placeholder="Additional Shipment Notes">
+
+</div>
+
+<button
+type="submit"
+class="action-btn">
+
+Save Shipment
+
+</button>
+
+</form>
+
+</section>
+
+<section class="dashboard-panel">
+
+<h2>
+
+Shipment Register
+
+</h2>
+
+<div class="customer-table-wrapper">
+
+<table class="logistics-table">
+
+<thead>
+
+<tr>
+
+<th>Shipment No.</th>
+
+<th>Customer</th>
+
+<th>Type</th>
+
+<th>Origin</th>
+
+<th>Destination</th>
+
+<th>Status</th>
+
+<th>Action</th>
+
+</tr>
+
+</thead>
+
+<tbody>
+
+<tr>
+
+<td>
+
+LOG-2026-0001
+
+</td>
+
+<td>
+
+ABC Logistics
+
+</td>
+
+<td>
+
+RoRo
+
+</td>
+
+<td>
+
+New York
+
+</td>
+
+<td>
+
+Lagos
+
+</td>
+
+<td class="status-active">
+
+In Transit
+
+</td>
+
+<td>
+
+<button class="action-btn">
+
+View
+
+</button>
+
+</td>
+
+</tr>
+
+<tr>
+
+<td>
+
+LOG-2026-0002
+
+</td>
+
+<td>
+
+Prime Engineering
+
+</td>
+
+<td>
+
+Container
+
+</td>
+
+<td>
+
+Antwerp
+
+</td>
+
+<td>
+
+Tema
+
+</td>
+
+<td class="status-pending">
+
+Booked
+
+</td>
+
+<td>
+
+<button class="action-btn">
+
+View
+
+</button>
+
+</td>
+
+</tr>
+
+</tbody>
+
+</table>
+
+</div>
+
+</section>
+
+<section class="dashboard-panel">
+
+<h2>
+
+RoRo Vehicle Tracking
+
+</h2>
+
+<div class="customer-table-wrapper">
+
+<table class="logistics-table">
+
+<thead>
+
+<tr>
+
+<th>Vehicle</th>
+
+<th>VIN</th>
+
+<th>Port of Loading</th>
+
+<th>Destination</th>
+
+<th>Status</th>
+
+</tr>
+
+</thead>
+
+<tbody>
+
+<tr>
+
+<td>
+
+Toyota Corolla 2020
+
+</td>
+
+<td>
+
+JTDBU4EE123456789
+
+</td>
+
+<td>
+
+Newark
+
+</td>
+
+<td>
+
+Lagos
+
+</td>
+
+<td class="status-active">
+
+In Transit
+
+</td>
+
+</tr>
+
+<tr>
+
+<td>
+
+Toyota Venza 2012
+
+</td>
+
+<td>
+
+4T3BK3BB987654321
+
+</td>
+
+<td>
+
+Baltimore
+
+</td>
+
+<td>
+
+Lagos
+
+</td>
+
+<td class="status-pending">
+
+Booked
+
+</td>
+
+</tr>
+
+</tbody>
+
+</table>
+
+</div>
+
+</section>
+
+<footer class="admin-footer">
+
+<div class="admin-footer-links">
+
+<a href="dashboard.html">Dashboard</a>
+
+<span>|</span>
+
+<a href="customers.html">Customers</a>
+
+<span>|</span>
+
+<a href="documents.html">Documents</a>
+
+<span>|</span>
+
+<a href="projects.html">Projects</a>
+
+<span>|</span>
+
+<a href="logistics-admin.html">Logistics</a>
+
+<span>|</span>
+
+<a href="quality.html">Quality</a>
+
+<span>|</span>
+
+<a href="reports.html">Reports</a>
+
+<span>|</span>
+
+<a href="settings.html">Settings</a>
+
+</div>
+
+<div class="admin-footer-copy">
+
+© 2026 Jesse & Jeslyn Nigeria Limited (JJN HUB)
+
+</div>
+
+</footer>
+
+</main>
+
+</div>
+
+<script src="js/admin.js"></script>
+
+</body>
+
+</html>
+
+<!-- LOGISTICS ADMIN PART 2 END -->
