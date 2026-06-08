@@ -23,10 +23,14 @@ await supabase
 .order("id",{ascending:false});
 
 if(error){
-console.log(error);
-return;
-}
 
+console.log(error);
+
+alert(error.message);
+
+return;
+
+}
 tableBody.innerHTML = "";
 
 data.forEach(customer => {
