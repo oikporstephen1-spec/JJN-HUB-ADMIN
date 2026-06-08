@@ -198,7 +198,9 @@ Add New Customer
 
 </h2>
 
-<form class="customer-form">
+<form
+class="customer-form"
+id="customerForm">
 
 <div class="form-group">
 
@@ -210,6 +212,7 @@ Customer Name
 
 <input
 type="text"
+id="customer_name"
 placeholder="Enter Customer Name">
 
 </div>
@@ -224,6 +227,7 @@ Company Name
 
 <input
 type="text"
+id="company_name"
 placeholder="Enter Company Name">
 
 </div>
@@ -238,6 +242,7 @@ Phone Number
 
 <input
 type="text"
+id="phone"
 placeholder="Enter Phone Number">
 
 </div>
@@ -252,12 +257,10 @@ Email Address
 
 <input
 type="email"
+id="email"
 placeholder="Enter Email Address">
 
 </div>
-
-<!-- CUSTOMERS PART 1 END -->
-<!-- CUSTOMERS PART 2 START -->
 
 <div class="form-group">
 
@@ -269,10 +272,11 @@ Address
 
 <input
 type="text"
+id="address"
 placeholder="Enter Address">
 
 </div>
-
+  
 <div class="form-group">
 
 <label>
@@ -399,7 +403,7 @@ Customer Records
 
 </thead>
 
-<tbody>
+<<tbody id="customerTableBody">>
 
 <tr>
 
