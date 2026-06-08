@@ -2388,4 +2388,31 @@ opacity:0.9;
 transform:translateY(-1px);
 
 }
+.user-actions{
+
+display:flex;
+
+align-items:center;
+
+gap:12px;
+
+}
+
+.logout-btn{
+
+background:#d4a017;
+
+color:#000;
+
+border:none;
+
+padding:8px 16px;
+
+border-radius:6px;
+
+cursor:pointer;
+
+font-weight:600;
+
+}
 /* ENGINEERING PART 14 END */
