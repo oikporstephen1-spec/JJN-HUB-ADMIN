@@ -2344,8 +2344,9 @@ grid-template-columns:1fr;
 min-width:800px;
 
 }
-
+}
 /* ENGINEERING PART 14 END */
+
 .user-actions{
 display:flex;
 align-items:center;
