@@ -2368,3 +2368,13 @@ transition:0.3s;
 opacity:0.9;
 transform:translateY(-1px);
 }
+button.logout-btn{
+background:#d4a017 !important;
+color:#000 !important;
+border:none !important;
+padding:10px 16px !important;
+border-radius:8px !important;
+cursor:pointer !important;
+font-weight:700 !important;
+display:inline-block !important;
+}
