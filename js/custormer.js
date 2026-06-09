@@ -83,7 +83,9 @@ document.getElementById(
 "address"
 ).value;
 
-const { error } =
+console.log("Submitting customer...");
+
+const { data, error } =
 await supabase
 .from("customers")
 .insert([{
@@ -92,14 +94,23 @@ company_name,
 email,
 phone,
 address
-}]);
+}])
+.select();
+
+console.log("DATA:", data);
+console.log("ERROR:", error);
 
 if(error){
 
+console.log(error);
+
 alert(error.message);
+
 return;
 
 }
+
+alert("Customer Added Successfully");
 
 alert("Customer Added");
 
