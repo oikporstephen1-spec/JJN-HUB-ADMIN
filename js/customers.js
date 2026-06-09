@@ -1,4 +1,4 @@
-const supabase = supabaseClient;
+const customerSupabase = supabaseClient;
 const form =
 document.getElementById("customerForm");
 
@@ -8,7 +8,7 @@ document.getElementById("customerTableBody");
 async function loadCustomers() {
 
 const { data, error } =
-await supabase
+await customerSupabase
 .from("customers")
 .select("*")
 .order("id", { ascending: false });
