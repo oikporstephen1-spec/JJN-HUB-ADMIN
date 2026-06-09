@@ -1,115 +1,91 @@
-console.log("SUPABASE =", supabase);
-const supabase =
-window.supabaseClient;
-const form =
-document.getElementById("customerForm");
+const customerSupabase = window.supabaseClient;
 
-const tableBody =
-document.getElementById("customerTableBody");
+const form = document.getElementById("customerForm");
+const tableBody = document.getElementById("customerTableBody");
 
 async function loadCustomers() {
 
-const { data, error } =
-await customerSupabase
-.from("customers")
-.select("*")
-.order("id", { ascending: false });
+  const { data, error } = await customerSupabase
+    .from("customers")
+    .select("*")
+    .order("id", { ascending: false });
 
-console.log("CUSTOMERS:", data);
-console.log("ERROR:", error);
+  console.log("CUSTOMERS:", data);
+  console.log("ERROR:", error);
 
-if(error){
-alert(error.message);
-return;
-}
-tableBody.innerHTML = "";
+  if (error) {
+    alert(error.message);
+    return;
+  }
 
-data.forEach(customer => {
+  tableBody.innerHTML = "";
 
-tableBody.innerHTML += `
-<tr>
-<td>${customer.id}</td>
-<td>${customer.customer_name}</td>
-<td>${customer.company_name}</td>
-<td>${customer.email}</td>
-<td>${customer.phone}</td>
-<td>
-<button class="action-btn">
-View
-</button>
-</td>
-</tr>
-`;
+  data.forEach(customer => {
 
-});
+    tableBody.innerHTML += `
+      <tr>
+        <td>${customer.id}</td>
+        <td>${customer.customer_name}</td>
+        <td>${customer.company_name}</td>
+        <td>${customer.email}</td>
+        <td>${customer.phone}</td>
+        <td>
+          <button class="action-btn">View</button>
+        </td>
+      </tr>
+    `;
+
+  });
 
 }
 
-form.addEventListener(
-"submit",
-async (e)=>{
+form.addEventListener("submit", async (e) => {
 
-e.preventDefault();
+  e.preventDefault();
 
-const customer_name =
-document.getElementById(
-"customer_name"
-).value;
+  const customer_name =
+    document.getElementById("customer_name").value;
 
-const company_name =
-document.getElementById(
-"company_name"
-).value;
+  const company_name =
+    document.getElementById("company_name").value;
 
-const email =
-document.getElementById(
-"email"
-).value;
+  const email =
+    document.getElementById("email").value;
 
-const phone =
-document.getElementById(
-"phone"
-).value;
+  const phone =
+    document.getElementById("phone").value;
 
-const address =
-document.getElementById(
-"address"
-).value;
+  const address =
+    document.getElementById("address").value;
 
-console.log("Submitting customer...");
+  console.log("Submitting customer...");
 
-const { data, error } =
-await supabase
-.from("customers")
-.insert([{
-customer_name,
-company_name,
-email,
-phone,
-address
-}])
-.select();
+  const { data, error } = await customerSupabase
+    .from("customers")
+    .insert([
+      {
+        customer_name,
+        company_name,
+        email,
+        phone,
+        address
+      }
+    ])
+    .select();
 
-console.log("DATA:", data);
-console.log("ERROR:", error);
+  console.log("INSERT DATA:", data);
+  console.log("INSERT ERROR:", error);
 
-if(error){
+  if (error) {
+    alert(error.message);
+    return;
+  }
 
-console.log(error);
+  alert("Customer Added Successfully");
 
-alert(error.message);
+  form.reset();
 
-return;
-
-}
-
-alert("Customer Added Successfully");
-
-alert("Customer Added");
-
-form.reset();
-
-loadCustomers();
+  loadCustomers();
 
 });
 
