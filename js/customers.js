@@ -1,4 +1,6 @@
-const customerSupabase = supabaseClient;
+console.log("SUPABASE =", supabase);
+const supabase =
+window.supabaseClient;
 const form =
 document.getElementById("customerForm");
 
