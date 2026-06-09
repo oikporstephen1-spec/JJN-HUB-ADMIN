@@ -20,16 +20,14 @@ const { data, error } =
 await supabase
 .from("customers")
 .select("*")
-.order("id",{ascending:false});
+.order("id", { ascending: false });
+
+console.log("CUSTOMERS:", data);
+console.log("ERROR:", error);
 
 if(error){
-
-console.log(error);
-
 alert(error.message);
-
 return;
-
 }
 tableBody.innerHTML = "";
 
