@@ -460,7 +460,45 @@ Customer Records
 <script src="js/logout.js"></script>
 <script src="js/customers.js"></script>
 <script src="js/admin.js"></script>
+<div id="customerModal" class="customer-modal">
 
+  <div class="customer-modal-content">
+
+    <h2>Customer Details</h2>
+
+    <div id="customerDetails"></div>
+
+    <div class="customer-actions">
+
+      <button class="action-btn">Print Receipt</button>
+
+      <button class="action-btn">Send Invoice</button>
+
+      <button class="action-btn">Send Email</button>
+
+      <button class="action-btn">Policy Statement (PDF)</button>
+
+      <button class="action-btn">Contract Terms (PDF)</button>
+
+      <button class="action-btn">Customer Documents</button>
+
+      <button class="action-btn">Edit Customer</button>
+
+      <button class="action-btn">Delete Customer</button>
+
+      <button
+      class="action-btn"
+      onclick="closeCustomerModal()">
+
+      Close
+
+      </button>
+
+    </div>
+
+  </div>
+
+</div>
 </body>
 
 </html>
