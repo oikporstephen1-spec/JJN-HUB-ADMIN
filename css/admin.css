@@ -2379,3 +2379,32 @@ cursor:pointer !important;
 font-weight:700 !important;
 display:inline-block !important;
 }
+.customer-modal{
+display:none;
+position:fixed;
+top:0;
+left:0;
+width:100%;
+height:100%;
+background:rgba(0,0,0,.8);
+z-index:9999;
+justify-content:center;
+align-items:center;
+}
+
+.customer-modal-content{
+background:#111;
+border:1px solid rgba(212,160,23,.2);
+border-radius:15px;
+padding:30px;
+width:90%;
+max-width:700px;
+color:#fff;
+}
+
+.customer-actions{
+display:grid;
+grid-template-columns:repeat(2,1fr);
+gap:12px;
+margin-top:25px;
+}
