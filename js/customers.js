@@ -154,6 +154,11 @@ function editCustomer(){
 
   editingCustomerId = currentCustomer.id;
 
+  console.log(
+    "EDITING CUSTOMER ID:",
+    editingCustomerId
+  );
+
   document.getElementById("customer_name").value =
     currentCustomer.customer_name;
 
@@ -176,7 +181,6 @@ function editCustomer(){
   );
 
 }
-
 async function deleteCustomer(){
 
   if(!currentCustomer){
