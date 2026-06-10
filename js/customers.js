@@ -209,21 +209,9 @@ async function deleteCustomer(){
 
   await loadCustomers();
 
-  alert("Customer Deleted");
-
-  } catch(err){
-
-    console.error("DELETE FAILED:", err);
-
-    alert(
-      "Delete Failed:\n" +
-      err.message
-    );
-
-  }
+  alert("Customer Deleted Successfully");
 
 }
-
 function printReceipt(){
 
   if(!currentCustomer){
