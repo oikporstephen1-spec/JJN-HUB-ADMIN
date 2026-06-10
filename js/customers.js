@@ -10,9 +10,6 @@ async function loadCustomers() {
     .select("*")
     .order("id", { ascending: false });
 
-  console.log("CUSTOMERS:", data);
-  console.log("ERROR:", error);
-
   if (error) {
     alert(error.message);
     return;
@@ -44,59 +41,49 @@ form.addEventListener("submit", async (e) => {
   e.preventDefault();
 
   const customer_name =
-    document.getElementById("customer_name").value;
+    document.getElementById("customer_name").value.trim();
 
   const company_name =
-    document.getElementById("company_name").value;
+    document.getElementById("company_name").value.trim();
 
   const email =
-    document.getElementById("email").value;
+    document.getElementById("email").value.trim();
 
   const phone =
-    document.getElementById("phone").value;
+    document.getElementById("phone").value.trim();
 
   const address =
-    document.getElementById("address").value;
+    document.getElementById("address").value.trim();
 
-  console.log("Submitting customer...");
-alert("Button Clicked");
   try {
 
-  const { data, error } = await customerSupabase
-    .from("customers")
-    .insert([
-      {
-        customer_name,
-        company_name,
-        email,
-        phone,
-        address
-      }
-    ])
-    .select();
+    const { error } = await customerSupabase
+      .from("customers")
+      .insert([
+        {
+          customer_name,
+          company_name,
+          email,
+          phone,
+          address
+        }
+      ]);
 
-  console.log("INSERT DATA:", data);
-  console.log("INSERT ERROR:", error);
+    if (error) throw error;
 
-  if (error) {
-    throw error;
+    alert("Customer Added Successfully");
+
+    form.reset();
+
+    await loadCustomers();
+
+  } catch (err) {
+
+    console.error(err);
+    alert(err.message);
+
   }
 
-  alert("Customer Added Successfully");
+});
 
-  form.reset();
-
-  loadCustomers();
-
-} catch(err) {
-
-  console.error("FULL ERROR:", err);
-
-  alert(
-    JSON.stringify(err, null, 2)
-  );
-
-}
-
- });
 loadCustomers();
