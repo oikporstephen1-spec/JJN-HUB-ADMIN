@@ -266,14 +266,3 @@ alert(
 );
 
 }
-
-
-// CLOSE MODAL
-
-
-document.getElementById(
-"customerModal"
-).style.display =
-"none";
-
-}
