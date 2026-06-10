@@ -102,7 +102,7 @@ async function viewCustomer(id) {
     alert(error.message);
     return;
   }
-
+currentCustomer = data;
   document.getElementById("customerDetails").innerHTML = `
     <p><strong>Name:</strong> ${data.customer_name}</p>
     <p><strong>Company:</strong> ${data.company_name}</p>
@@ -123,3 +123,157 @@ function closeCustomerModal() {
 }
 
 loadCustomers();
+// CURRENT CUSTOMER
+let currentCustomer = null;
+
+
+// PRINT RECEIPT
+function printReceipt(){
+
+window.print();
+
+}
+
+
+// SEND INVOICE
+function sendInvoice(){
+
+alert(
+"Invoice Generator Coming Next"
+);
+
+}
+
+
+// SEND EMAIL
+function sendEmail(){
+
+if(!currentCustomer) return;
+
+window.location.href =
+`mailto:${currentCustomer.email}`;
+
+}
+
+
+// POLICY PDF
+function openPolicy(){
+
+window.open(
+"assets/pdfs/policy-statement.pdf",
+"_blank"
+);
+
+}
+
+
+// CONTRACT PDF
+function openContract(){
+
+window.open(
+"assets/pdfs/contract-terms.pdf",
+"_blank"
+);
+
+}
+
+
+// CUSTOMER DOCUMENTS
+function customerDocuments(){
+
+alert(
+"Customer Documents Module"
+);
+
+}
+
+
+// EDIT CUSTOMER
+function editCustomer(){
+
+if(!currentCustomer) return;
+
+document.getElementById(
+"customer_name"
+).value =
+currentCustomer.customer_name;
+
+document.getElementById(
+"company_name"
+).value =
+currentCustomer.company_name;
+
+document.getElementById(
+"email"
+).value =
+currentCustomer.email;
+
+document.getElementById(
+"phone"
+).value =
+currentCustomer.phone;
+
+document.getElementById(
+"address"
+).value =
+currentCustomer.address;
+
+closeCustomerModal();
+
+alert(
+"Customer loaded into form for editing"
+);
+
+}
+
+
+// DELETE CUSTOMER
+async function deleteCustomer(){
+
+if(!currentCustomer) return;
+
+if(
+!confirm(
+"Delete this customer?"
+)
+){
+return;
+}
+
+const { error } =
+await customerSupabase
+.from("customers")
+.delete()
+.eq(
+"id",
+currentCustomer.id
+);
+
+if(error){
+
+alert(error.message);
+
+return;
+
+}
+
+closeCustomerModal();
+
+loadCustomers();
+
+alert(
+"Customer Deleted"
+);
+
+}
+
+
+// CLOSE MODAL
+
+
+document.getElementById(
+"customerModal"
+).style.display =
+"none";
+
+}
