@@ -184,28 +184,32 @@ async function deleteCustomer(){
     return;
   }
 
+  console.log("CURRENT CUSTOMER:", currentCustomer);
+
   if(!confirm("Delete this customer?")){
     return;
   }
 
-  try {
+  const { data, error } =
+  await customerSupabase
+    .from("customers")
+    .delete()
+    .eq("id", currentCustomer.id)
+    .select();
 
-    const { error } = await customerSupabase
-      .from("customers")
-      .delete()
-      .eq("id", currentCustomer.id);
+  console.log("DELETE DATA:", data);
+  console.log("DELETE ERROR:", error);
 
-    console.log("DELETE ERROR:", error);
+  if(error){
+    alert(error.message);
+    return;
+  }
 
-    if(error){
-      throw error;
-    }
+  closeCustomerModal();
 
-    closeCustomerModal();
+  await loadCustomers();
 
-    await loadCustomers();
-
-    alert("Customer Deleted Successfully");
+  alert("Customer Deleted");
 
   } catch(err){
 
