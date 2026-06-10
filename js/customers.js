@@ -3,6 +3,9 @@ const customerSupabase = window.supabaseClient;
 const form = document.getElementById("customerForm");
 const tableBody = document.getElementById("customerTableBody");
 
+let currentCustomer = null;
+let editingCustomerId = null;
+
 async function loadCustomers() {
 
   const { data, error } = await customerSupabase
@@ -61,21 +64,48 @@ form.addEventListener("submit", async (e) => {
 
   try {
 
-    const { error } = await customerSupabase
-      .from("customers")
-      .insert([
-        {
+    let error;
+
+    if(editingCustomerId){
+
+      const result = await customerSupabase
+        .from("customers")
+        .update({
           customer_name,
           company_name,
           email,
           phone,
           address
-        }
-      ]);
+        })
+        .eq("id", editingCustomerId);
 
-    if (error) throw error;
+      error = result.error;
 
-    alert("Customer Added Successfully");
+      editingCustomerId = null;
+
+      alert("Customer Updated Successfully");
+
+    } else {
+
+      const result = await customerSupabase
+        .from("customers")
+        .insert([
+          {
+            customer_name,
+            company_name,
+            email,
+            phone,
+            address
+          }
+        ]);
+
+      error = result.error;
+
+      alert("Customer Added Successfully");
+
+    }
+
+    if(error) throw error;
 
     form.reset();
 
@@ -102,7 +132,9 @@ async function viewCustomer(id) {
     alert(error.message);
     return;
   }
-currentCustomer = data;
+
+  currentCustomer = data;
+
   document.getElementById("customerDetails").innerHTML = `
     <p><strong>Name:</strong> ${data.customer_name}</p>
     <p><strong>Company:</strong> ${data.company_name}</p>
@@ -116,153 +148,184 @@ currentCustomer = data;
 
 }
 
-function closeCustomerModal() {
-
-  document.getElementById("customerModal").style.display = "none";
-
-}
-
-loadCustomers();
-// CURRENT CUSTOMER
-let currentCustomer = null;
-
-
-// PRINT RECEIPT
-function printReceipt(){
-
-window.print();
-
-}
-
-
-// SEND INVOICE
-function sendInvoice(){
-
-alert(
-"Invoice Generator Coming Next"
-);
-
-}
-
-
-// SEND EMAIL
-function sendEmail(){
-
-if(!currentCustomer) return;
-
-window.location.href =
-`mailto:${currentCustomer.email}`;
-
-}
-
-
-// POLICY PDF
-function openPolicy(){
-
-window.open(
-"assets/pdfs/policy-statement.pdf",
-"_blank"
-);
-
-}
-
-
-// CONTRACT PDF
-function openContract(){
-
-window.open(
-"assets/pdfs/contract-terms.pdf",
-"_blank"
-);
-
-}
-
-
-// CUSTOMER DOCUMENTS
-function customerDocuments(){
-
-alert(
-"Customer Documents Module"
-);
-
-}
-
-
-// EDIT CUSTOMER
 function editCustomer(){
 
-if(!currentCustomer) return;
+  if(!currentCustomer) return;
 
-document.getElementById(
-"customer_name"
-).value =
-currentCustomer.customer_name;
+  editingCustomerId = currentCustomer.id;
 
-document.getElementById(
-"company_name"
-).value =
-currentCustomer.company_name;
+  document.getElementById("customer_name").value =
+    currentCustomer.customer_name;
 
-document.getElementById(
-"email"
-).value =
-currentCustomer.email;
+  document.getElementById("company_name").value =
+    currentCustomer.company_name;
 
-document.getElementById(
-"phone"
-).value =
-currentCustomer.phone;
+  document.getElementById("email").value =
+    currentCustomer.email;
 
-document.getElementById(
-"address"
-).value =
-currentCustomer.address;
+  document.getElementById("phone").value =
+    currentCustomer.phone;
 
-closeCustomerModal();
+  document.getElementById("address").value =
+    currentCustomer.address;
 
-alert(
-"Customer loaded into form for editing"
-);
+  closeCustomerModal();
+
+  alert(
+    "Customer loaded for editing. Click Add Customer to save changes."
+  );
 
 }
 
-
-// DELETE CUSTOMER
 async function deleteCustomer(){
 
-if(!currentCustomer) return;
+  if(!currentCustomer){
+    alert("No customer selected");
+    return;
+  }
 
-if(
-!confirm(
-"Delete this customer?"
-)
-){
-return;
+  if(!confirm("Delete this customer?")){
+    return;
+  }
+
+  try {
+
+    const { error } = await customerSupabase
+      .from("customers")
+      .delete()
+      .eq("id", currentCustomer.id);
+
+    console.log("DELETE ERROR:", error);
+
+    if(error){
+      throw error;
+    }
+
+    closeCustomerModal();
+
+    await loadCustomers();
+
+    alert("Customer Deleted Successfully");
+
+  } catch(err){
+
+    console.error("DELETE FAILED:", err);
+
+    alert(
+      "Delete Failed:\n" +
+      err.message
+    );
+
+  }
+
 }
 
-const { error } =
-await customerSupabase
-.from("customers")
-.delete()
-.eq(
-"id",
-currentCustomer.id
-);
+function printReceipt(){
 
-if(error){
+  if(!currentCustomer){
+    alert("No customer selected");
+    return;
+  }
 
-alert(error.message);
+  const receipt = window.open("", "_blank");
 
-return;
+  receipt.document.write(`
+    <html>
+    <head>
+      <title>JJN HUB Receipt</title>
+      <style>
+        body{
+          font-family:Arial,sans-serif;
+          padding:30px;
+        }
+        h2{
+          color:#d4a017;
+        }
+      </style>
+    </head>
+    <body>
+
+      <h2>JJN HUB CUSTOMER RECEIPT</h2>
+
+      <hr>
+
+      <p><strong>Name:</strong>
+      ${currentCustomer.customer_name}</p>
+
+      <p><strong>Company:</strong>
+      ${currentCustomer.company_name}</p>
+
+      <p><strong>Email:</strong>
+      ${currentCustomer.email}</p>
+
+      <p><strong>Phone:</strong>
+      ${currentCustomer.phone}</p>
+
+      <p><strong>Address:</strong>
+      ${currentCustomer.address}</p>
+
+      <hr>
+
+      <p>
+      Generated:
+      ${new Date().toLocaleString()}
+      </p>
+
+    </body>
+    </html>
+  `);
+
+  receipt.document.close();
+
+  receipt.print();
 
 }
 
-closeCustomerModal();
+function sendInvoice(){
+
+  alert("Invoice Generator Coming Next");
+
+}
+
+function sendEmail(){
+
+  if(!currentCustomer) return;
+
+  window.location.href =
+    `mailto:${currentCustomer.email}`;
+
+}
+
+function openPolicy(){
+
+  window.open(
+    "assets/pdfs/policy-statement.pdf",
+    "_blank"
+  );
+
+}
+
+function openContract(){
+
+  window.open(
+    "assets/pdfs/contract-terms.pdf",
+    "_blank"
+  );
+
+}
+
+function customerDocuments(){
+
+  alert("Customer Documents Module");
+
+}
+
+function closeCustomerModal(){
+
+  document.getElementById(
+    "customerModal"
+  ).style.display = "none";
+
+}
 
 loadCustomers();
-
-alert(
-"Customer Deleted"
-);
-
-}
