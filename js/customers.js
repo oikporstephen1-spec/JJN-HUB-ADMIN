@@ -27,12 +27,12 @@ async function loadCustomers() {
         <td>${customer.email}</td>
         <td>${customer.phone}</td>
         <td>
-<button
-class="action-btn"
-onclick="viewCustomer(${customer.id})">
-View
-</button>
-</td>
+          <button
+            class="action-btn"
+            onclick="viewCustomer(${customer.id})">
+            View
+          </button>
+        </td>
       </tr>
     `;
 
@@ -90,9 +90,36 @@ form.addEventListener("submit", async (e) => {
 
 });
 
-loadCustomers();
-function viewCustomer(id){
+async function viewCustomer(id) {
 
-alert("Customer ID: " + id);
+  const { data, error } = await customerSupabase
+    .from("customers")
+    .select("*")
+    .eq("id", id)
+    .single();
+
+  if (error) {
+    alert(error.message);
+    return;
+  }
+
+  document.getElementById("customerDetails").innerHTML = `
+    <p><strong>Name:</strong> ${data.customer_name}</p>
+    <p><strong>Company:</strong> ${data.company_name}</p>
+    <p><strong>Email:</strong> ${data.email}</p>
+    <p><strong>Phone:</strong> ${data.phone}</p>
+    <p><strong>Address:</strong> ${data.address}</p>
+    <hr>
+  `;
+
+  document.getElementById("customerModal").style.display = "flex";
 
 }
+
+function closeCustomerModal() {
+
+  document.getElementById("customerModal").style.display = "none";
+
+}
+
+loadCustomers();
