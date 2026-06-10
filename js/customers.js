@@ -27,8 +27,12 @@ async function loadCustomers() {
         <td>${customer.email}</td>
         <td>${customer.phone}</td>
         <td>
-          <button class="action-btn">View</button>
-        </td>
+<button
+class="action-btn"
+onclick="viewCustomer(${customer.id})">
+View
+</button>
+</td>
       </tr>
     `;
 
@@ -87,3 +91,8 @@ form.addEventListener("submit", async (e) => {
 });
 
 loadCustomers();
+function viewCustomer(id){
+
+alert("Customer ID: " + id);
+
+}
