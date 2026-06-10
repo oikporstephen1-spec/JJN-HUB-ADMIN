@@ -59,6 +59,8 @@ form.addEventListener("submit", async (e) => {
     document.getElementById("address").value;
 
   console.log("Submitting customer...");
+alert("Button Clicked");
+  try {
 
   const { data, error } = await customerSupabase
     .from("customers")
@@ -77,8 +79,7 @@ form.addEventListener("submit", async (e) => {
   console.log("INSERT ERROR:", error);
 
   if (error) {
-    alert(error.message);
-    return;
+    throw error;
   }
 
   alert("Customer Added Successfully");
@@ -87,6 +88,15 @@ form.addEventListener("submit", async (e) => {
 
   loadCustomers();
 
-});
+} catch(err) {
 
+  console.error("FULL ERROR:", err);
+
+  alert(
+    JSON.stringify(err, null, 2)
+  );
+
+}
+
+ });
 loadCustomers();
