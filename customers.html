@@ -210,10 +210,8 @@ Customer Name
 
 </label>
 
-<input
-type="text"
-id="customer_name"
-placeholder="Enter Customer Name">
+<input type="text" id="customer_name"
+placeholder="Enter Customer Name" required>
 
 </div>
 
@@ -225,10 +223,8 @@ Company Name
 
 </label>
 
-<input
-type="text"
-id="company_name"
-placeholder="Enter Company Name">
+<input type="text" id="company_name"
+placeholder="Enter Company Name" required>
 
 </div>
 
@@ -243,7 +239,7 @@ Phone Number
 <input
 type="text"
 id="phone"
-placeholder="Enter Phone Number">
+placeholder="Enter Phone Number"required>
 
 </div>
 
@@ -258,7 +254,7 @@ Email Address
 <input
 type="email"
 id="email"
-placeholder="Enter Email Address">
+placeholder="Enter Email Address"required>
 
 </div>
 
@@ -273,7 +269,7 @@ Address
 <input
 type="text"
 id="address"
-placeholder="Enter Address">
+placeholder="Enter Address"required>
 
 </div>
   
@@ -285,39 +281,39 @@ Department
 
 </label>
 
-<select>
+<select id="department" required>
 
-<option>
+<option value="">
 
 Select Department
 
 </option>
 
-<option>
+<option value="Automotive">
 
 Automotive
 
 </option>
 
-<option>
+<option value="Engineering">
 
 Engineering
 
 </option>
 
-<option>
+<option value="Marine">
 
 Marine
 
 </option>
 
-<option>
+<option value="Logistics">
 
 Logistics
 
 </option>
 
-<option>
+<option value="Procurement">
 
 Procurement
 
@@ -335,21 +331,27 @@ Customer Status
 
 </label>
 
-<select>
+<select id="status" required>
 
-<option>
+<option value="">
+
+Select Status
+
+</option>
+
+<option value="Active">
 
 Active
 
 </option>
 
-<option>
+<option value="Pending">
 
 Pending
 
 </option>
 
-<option>
+<option value="Inactive">
 
 Inactive
 
