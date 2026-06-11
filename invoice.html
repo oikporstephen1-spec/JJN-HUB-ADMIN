@@ -1,1 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
 
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport"
+content="width=device-width, initial-scale=1.0">
+
+<title>JJN HUB Invoice</title>
+
+<link rel="stylesheet"
+href="css/admin.css">
+
+</head>
+
+<body class="dashboard-body">
+
+<div class="main-content">
+
+<section class="dashboard-panel">
+
+<h2>Create Invoice</h2>
+
+<form id="invoiceForm">
+
+<div class="form-group">
+
+<label>Customer Name</label>
+
+<input
+type="text"
+id="customer_name"
+readonly>
+
+</div>
+
+<div class="form-group">
+
+<label>Company</label>
+
+<input
+type="text"
+id="company_name"
+readonly>
+
+</div>
+
+<div class="form-group">
+
+<label>Description</label>
+
+<input
+type="text"
+id="description"
+required>
+
+</div>
+
+<div class="form-group">
+
+<label>Quantity</label>
+
+<input
+type="number"
+id="quantity"
+min="1"
+required>
+
+</div>
+
+<div class="form-group">
+
+<label>Unit Price</label>
+
+<input
+type="number"
+id="unit_price"
+min="0"
+required>
+
+</div>
+
+<div class="form-group">
+
+<label>Due Date</label>
+
+<input
+type="date"
+id="due_date"
+required>
+
+</div>
+
+<div class="form-group">
+
+<label>Total</label>
+
+<input
+type="number"
+id="total"
+readonly>
+
+</div>
+
+<button
+type="submit"
+class="action-btn">
+
+Save Invoice
+
+</button>
+
+<button
+type="button"
+class="action-btn"
+onclick="window.print()">
+
+Print Invoice
+
+</button>
+
+</form>
+
+</section>
+
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<script src="js/auth.js"></script>
+
+<script src="js/invoice.js"></script>
+
+</body>
+
+</html>
