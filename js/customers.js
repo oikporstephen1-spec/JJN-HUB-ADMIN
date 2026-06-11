@@ -234,104 +234,128 @@ function printReceipt(){
   receipt.document.write(`
   <html>
   <head>
-  <title>JJN HUB Receipt</title>
+    <title>JJN HUB Receipt</title>
 
-  <style>
+    <style>
 
-  body{
-    font-family:Arial,sans-serif;
-    margin:0;
-    padding:20px;
-    display:flex;
-    justify-content:center;
-  }
+      body{
+        font-family:Arial,sans-serif;
+        padding:40px;
+        color:#222;
+      }
 
-  .receipt{
-    width:320px;
-    border:1px solid #ccc;
-    padding:20px;
-  }
+      .header{
+        text-align:center;
+        margin-bottom:30px;
+      }
 
-  h2,h3,p{
-    margin:5px 0;
-  }
+      .header h1{
+        margin:0;
+        color:#d4a017;
+      }
 
-  .center{
-    text-align:center;
-  }
+      .line{
+        border-top:2px solid #d4a017;
+        margin:15px 0;
+      }
 
-  hr{
-    border:none;
-    border-top:1px dashed #000;
-    margin:10px 0;
-  }
+      .section{
+        margin:20px 0;
+      }
 
-  </style>
+      .label{
+        font-weight:bold;
+      }
+
+      .footer{
+        margin-top:40px;
+        text-align:center;
+      }
+
+    </style>
+
   </head>
 
   <body>
 
-  <div class="receipt">
+    <div class="header">
 
-    <div class="center">
-
-      <h2>JJN HUB</h2>
-
-      <p>Customer Receipt</p>
+      <h1>JJN HUB</h1>
 
       <p>
-      #JJN-${currentCustomer.id}
+      Jesse & Jeslyn Nigeria Limited
+      </p>
+
+      <div class="line"></div>
+
+      <h2>Customer Receipt</h2>
+
+    </div>
+
+    <div class="section">
+
+      <p>
+      <span class="label">Receipt No:</span>
+      JJN-${currentCustomer.id}
+      </p>
+
+      <p>
+      <span class="label">Date:</span>
+      ${new Date().toLocaleDateString()}
       </p>
 
     </div>
 
-    <hr>
+    <div class="line"></div>
 
-    <p>
-    <strong>Name:</strong>
-    ${currentCustomer.customer_name}
-    </p>
+    <div class="section">
 
-    <p>
-    <strong>Company:</strong>
-    ${currentCustomer.company_name}
-    </p>
-
-    <p>
-    <strong>Email:</strong>
-    ${currentCustomer.email}
-    </p>
-
-    <p>
-    <strong>Phone:</strong>
-    ${currentCustomer.phone}
-    </p>
-
-    <p>
-    <strong>Address:</strong>
-    ${currentCustomer.address}
-    </p>
-
-    <hr>
-
-    <p>
-    Date:
-    ${new Date().toLocaleDateString()}
-    </p>
-
-    <div class="center">
+      <h3>Customer Details</h3>
 
       <p>
-      Thank You
+      <span class="label">Name:</span>
+      ${currentCustomer.customer_name}
+      </p>
+
+      <p>
+      <span class="label">Company:</span>
+      ${currentCustomer.company_name}
+      </p>
+
+      <p>
+      <span class="label">Email:</span>
+      ${currentCustomer.email}
+      </p>
+
+      <p>
+      <span class="label">Phone:</span>
+      ${currentCustomer.phone}
+      </p>
+
+      <p>
+      <span class="label">Address:</span>
+      ${currentCustomer.address}
+      </p>
+
+    </div>
+
+    <div class="line"></div>
+
+    <div class="footer">
+
+      <p>
+      Authorized By: JJN HUB ADMIN
       </p>
 
       <p>
       www.jjnhub.com
       </p>
 
-    </div>
+      <h3>
+      Thank You For Doing Business With Us
+      </h3>
 
-  </div>
+    </div>
 
   </body>
   </html>
