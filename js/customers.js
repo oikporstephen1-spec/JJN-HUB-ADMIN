@@ -36,6 +36,7 @@ async function loadCustomers() {
             View
           </button>
         </td>
+        
       </tr>
     `;
 
@@ -61,7 +62,12 @@ const phone =
 
 const address =
   document.getElementById("address").value.trim();
+const department =
+  document.getElementById("department").value;
 
+const status =
+  document.getElementById("status").value;
+  
 if(
   !customer_name ||
   !company_name ||
