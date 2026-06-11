@@ -274,123 +274,15 @@ function createInvoice(){
     return;
   }
 
-  const invoiceWindow =
-    window.open("", "_blank");
+  localStorage.setItem(
+    "invoiceCustomer",
+    JSON.stringify(currentCustomer)
+  );
 
-  invoiceWindow.document.write(`
-  <html>
-
-  <head>
-
-    <title>JJN HUB Invoice</title>
-
-    <style>
-
-      body{
-        font-family:Arial,sans-serif;
-        padding:40px;
-      }
-
-      table{
-        width:100%;
-        border-collapse:collapse;
-        margin-top:20px;
-      }
-
-      th,td{
-        border:1px solid #ccc;
-        padding:10px;
-      }
-
-      h1{
-        color:#d4a017;
-      }
-
-    </style>
-
-  </head>
-
-  <body>
-
-<div style="text-align:center;">
-
-  <img
-    src="assets/logo.png"
-    alt="JJN HUB Logo"
-    style="
-      width:120px;
-      margin-bottom:10px;
-    "
-  >
-
-  <h1>
-    JJN HUB INVOICE
-  </h1>
-
-  <p>
-    Jesse & Jeslyn Nigeria Limited
-  </p>
-
-</div>
-
-<hr>
-
-<p>
-  <strong>Invoice No:</strong>
-  INV-${new Date().getFullYear()}-${currentCustomer.id}
-</p>
-
-      <p>
-      <strong>Customer:</strong>
-      ${currentCustomer.customer_name}
-    </p>
-
-    <p>
-      <strong>Company:</strong>
-      ${currentCustomer.company_name}
-    </p>
-
-    <p>
-      <strong>Email:</strong>
-      ${currentCustomer.email}
-    </p>
-
-    <p>
-      <strong>Phone:</strong>
-      ${currentCustomer.phone}
-    </p>
-
-    <hr>
-
-    <table>
-
-      <tr>
-        <th>Description</th>
-        <th>Qty</th>
-        <th>Unit Price</th>
-        <th>Amount</th>
-      </tr>
-
-      <tr>
-        <td>Enter Service</td>
-        <td>1</td>
-        <td>0.00</td>
-        <td>0.00</td>
-      </tr>
-
-    </table>
-
-    <h3>Total: ₦0.00</h3>
-
-  </body>
-
-  </html>
-  `);
-
-  invoiceWindow.document.close();
+  window.location.href =
+    "invoice.html";
 
 }
-
 function sendEmail(){
 
   if(!currentCustomer) return;
