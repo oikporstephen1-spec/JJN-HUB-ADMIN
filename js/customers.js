@@ -229,47 +229,61 @@ function printReceipt(){
     return;
   }
 
+  const logoUrl =
+    window.location.origin +
+    "/assets/logo.png";
+
   const receipt = window.open("", "_blank");
 
   receipt.document.write(`
   <html>
+
   <head>
-    <title>JJN HUB Receipt</title>
+
+    <title>
+      JJN HUB Receipt
+    </title>
 
     <style>
 
       body{
         font-family:Arial,sans-serif;
-        padding:40px;
-        color:#222;
-      }
-
-      .header{
-        text-align:center;
-        margin-bottom:30px;
-      }
-
-      .header h1{
         margin:0;
-        color:#d4a017;
+        padding:20px;
+        display:flex;
+        justify-content:center;
+        background:#ffffff;
       }
 
-      .line{
-        border-top:2px solid #d4a017;
-        margin:15px 0;
+      .receipt{
+        width:350px;
+        padding:20px;
+        border:1px solid #ccc;
       }
 
-      .section{
-        margin:20px 0;
+      .logo{
+        width:120px;
+        display:block;
+        margin:0 auto 10px;
       }
 
-      .label{
-        font-weight:bold;
-      }
-
-      .footer{
-        margin-top:40px;
+      .center{
         text-align:center;
+      }
+
+      hr{
+        border:none;
+        border-top:1px dashed #000;
+        margin:10px 0;
+      }
+
+      p{
+        margin:4px 0;
+        line-height:1.4;
+      }
+
+      h2,h3{
+        margin:5px 0;
       }
 
     </style>
@@ -278,90 +292,140 @@ function printReceipt(){
 
   <body>
 
-    <div class="header">
+    <div class="receipt">
 
-      <h1>JJN HUB</h1>
+      <img
+        src="${logoUrl}"
+        class="logo"
+      >
 
-      <p>
-      Jesse & Jeslyn Nigeria Limited
-      </p>
+      <div class="center">
 
-      <div class="line"></div>
+        <h2>JJN HUB</h2>
 
-      <h2>Customer Receipt</h2>
+        <p>
+          Jesse & Jeslyn Nigeria Limited
+        </p>
 
-    </div>
+      </div>
 
-    <div class="section">
+      <hr>
 
-      <p>
-      <span class="label">Receipt No:</span>
-      JJN-${currentCustomer.id}
-      </p>
+      <div class="center">
 
-      <p>
-      <span class="label">Date:</span>
-      ${new Date().toLocaleDateString()}
-      </p>
+        <h3>
+          CUSTOMER REGISTRATION RECEIPT
+        </h3>
 
-    </div>
-
-    <div class="line"></div>
-
-    <div class="section">
-
-      <h3>Customer Details</h3>
+      </div>
 
       <p>
-      <span class="label">Name:</span>
-      ${currentCustomer.customer_name}
+        <strong>Receipt No:</strong><br>
+        JJN-CUS-${String(currentCustomer.id).padStart(6,"0")}
       </p>
 
       <p>
-      <span class="label">Company:</span>
-      ${currentCustomer.company_name}
+        <strong>Date Issued:</strong><br>
+        ${new Date().toLocaleDateString()}
+      </p>
+
+      <hr>
+
+      <strong>
+        CUSTOMER DETAILS
+      </strong>
+
+      <p>
+        Customer Name:<br>
+        ${currentCustomer.customer_name}
       </p>
 
       <p>
-      <span class="label">Email:</span>
-      ${currentCustomer.email}
+        Company:<br>
+        ${currentCustomer.company_name}
       </p>
 
       <p>
-      <span class="label">Phone:</span>
-      ${currentCustomer.phone}
+        Email:<br>
+        ${currentCustomer.email}
       </p>
 
       <p>
-      <span class="label">Address:</span>
-      ${currentCustomer.address}
-      </p>
-
-    </div>
-
-    <div class="line"></div>
-
-    <div class="footer">
-
-      <p>
-      Authorized By: JJN HUB ADMIN
+        Phone:<br>
+        ${currentCustomer.phone}
       </p>
 
       <p>
-      www.jjnhub.com
+        Address:<br>
+        ${currentCustomer.address}
       </p>
 
-      <h3>
-      Thank You For Doing Business With Us
-      </h3>
+      <hr>
+
+      <strong>
+        ACCOUNT INFORMATION
+      </strong>
+
+      <p>
+        Customer ID:<br>
+        ${currentCustomer.id}
+      </p>
+
+      <p>
+        Status:<br>
+        Active
+      </p>
+
+      <p>
+        Department:<br>
+        Engineering
+      </p>
+
+      <hr>
+
+      <strong>
+        AUTHORIZATION
+      </strong>
+
+      <p>
+        Authorized By:<br>
+        JJN HUB ADMIN
+      </p>
+
+      <p>
+        Website:<br>
+        www.jjnhub.com
+      </p>
+
+      <hr>
+
+      <div class="center">
+
+        <p>
+          This document confirms that
+          the above customer has been
+          successfully registered in
+          the JJN HUB system.
+        </p>
+
+        <br>
+
+        <strong>
+          Thank You For Your Business
+        </strong>
+
+      </div>
 
     </div>
 
   </body>
+
   </html>
   `);
 
   receipt.document.close();
+
+  receipt.focus();
 
   receipt.print();
 
