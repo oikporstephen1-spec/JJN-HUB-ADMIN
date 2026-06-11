@@ -2408,3 +2408,31 @@ grid-template-columns:repeat(2,1fr);
 gap:12px;
 margin-top:25px;
 }
+body{
+  font-family:Arial,sans-serif;
+  display:flex;
+  justify-content:center;
+  margin:0;
+  padding:20px;
+}
+
+.receipt{
+  width:320px;
+  padding:20px;
+  border:1px solid #ccc;
+}
+
+.logo{
+  width:120px;
+  display:block;
+  margin:0 auto 10px;
+}
+
+.center{
+  text-align:center;
+}
+
+hr{
+  border:none;
+  border-top:1px dashed #000;
+}
