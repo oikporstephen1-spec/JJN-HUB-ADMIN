@@ -2436,3 +2436,24 @@ hr{
   border:none;
   border-top:1px dashed #000;
 }
+.receipt{
+  width:350px;
+  padding:20px;
+  border:1px solid #ccc;
+
+  page-break-inside: avoid;
+  break-inside: avoid;
+}
+@media print{
+
+  body{
+    margin:0;
+    padding:0;
+  }
+
+  .receipt{
+    page-break-inside: avoid;
+    break-inside: avoid;
+  }
+
+}
