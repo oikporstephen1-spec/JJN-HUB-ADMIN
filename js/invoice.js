@@ -173,3 +173,9 @@ if(
   );
   return;
 }
+function closeInvoice(){
+
+  window.location.href =
+    "customers.html";
+
+}
