@@ -65,20 +65,26 @@ form.addEventListener("submit", async (e) => {
   try {
 
     let error;
-
+console.log(
+  "SUBMIT EDITING ID:",
+  editingCustomerId
+);
     if(editingCustomerId){
 
-      const result = await customerSupabase
-        .from("customers")
-        .update({
-          customer_name,
-          company_name,
-          email,
-          phone,
-          address
-        })
-        .eq("id", editingCustomerId);
+     const result = await customerSupabase
+  .from("customers")
+  .update({
+    customer_name,
+    company_name,
+    email,
+    phone,
+    address
+  })
+  .eq("id", editingCustomerId)
+  .select();
 
+console.log("UPDATE DATA:", result.data);
+console.log("UPDATE ERROR:", result.error);
       error = result.error;
 
       editingCustomerId = null;
