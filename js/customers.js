@@ -312,16 +312,35 @@ function createInvoice(){
 
   <body>
 
-    <h1>JJN HUB INVOICE</h1>
+<div style="text-align:center;">
 
-    <hr>
+  <img
+    src="assets/logo.png"
+    alt="JJN HUB Logo"
+    style="
+      width:120px;
+      margin-bottom:10px;
+    "
+  >
 
-    <p>
-      <strong>Invoice No:</strong>
-      INV-${Date.now()}
-    </p>
+  <h1>
+    JJN HUB INVOICE
+  </h1>
 
-    <p>
+  <p>
+    Jesse & Jeslyn Nigeria Limited
+  </p>
+
+</div>
+
+<hr>
+
+<p>
+  <strong>Invoice No:</strong>
+  INV-${new Date().getFullYear()}-${currentCustomer.id}
+</p>
+
+      <p>
       <strong>Customer:</strong>
       ${currentCustomer.customer_name}
     </p>
