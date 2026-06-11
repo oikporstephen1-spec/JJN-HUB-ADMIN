@@ -256,11 +256,27 @@ function printReceipt(){
       }
 
       .receipt{
-        width:350px;
-        padding:20px;
-        border:1px solid #ccc;
-      }
+  width:350px;
+  padding:20px;
+  border:1px solid #ccc;
 
+  page-break-inside: avoid;
+  break-inside: avoid;
+}
+
+@media print{
+
+  body{
+    margin:0;
+    padding:0;
+  }
+
+  .receipt{
+    page-break-inside: avoid;
+    break-inside: avoid;
+  }
+
+}
       .logo{
         width:120px;
         display:block;
@@ -334,52 +350,26 @@ function printReceipt(){
       <strong>
         CUSTOMER DETAILS
       </strong>
+ <p><strong>Customer Name:</strong> ${currentCustomer.customer_name}</p>
 
-      <p>
-        Customer Name:<br>
-        ${currentCustomer.customer_name}
-      </p>
+<p><strong>Company:</strong> ${currentCustomer.company_name}</p>
 
-      <p>
-        Company:<br>
-        ${currentCustomer.company_name}
-      </p>
+<p><strong>Email:</strong> ${currentCustomer.email}</p>
 
-      <p>
-        Email:<br>
-        ${currentCustomer.email}
-      </p>
+<p><strong>Phone:</strong> ${currentCustomer.phone}</p>
 
-      <p>
-        Phone:<br>
-        ${currentCustomer.phone}
-      </p>
-
-      <p>
-        Address:<br>
-        ${currentCustomer.address}
-      </p>
-
+<p><strong>Address:</strong> ${currentCustomer.address}</p>
       <hr>
 
       <strong>
         ACCOUNT INFORMATION
       </strong>
 
-      <p>
-        Customer ID:<br>
-        ${currentCustomer.id}
-      </p>
+     <p><strong>Customer ID:</strong> ${currentCustomer.id}</p>
 
-      <p>
-        Status:<br>
-        Active
-      </p>
+<p><strong>Status:</strong> Active</p>
 
-      <p>
-        Department:<br>
-        Engineering
-      </p>
+<p><strong>Department:</strong> Engineering</p>
 
       <hr>
 
@@ -387,15 +377,9 @@ function printReceipt(){
         AUTHORIZATION
       </strong>
 
-      <p>
-        Authorized By:<br>
-        JJN HUB ADMIN
-      </p>
+     <p><strong>Authorized By:</strong> JJN HUB ADMIN</p>
 
-      <p>
-        Website:<br>
-        www.jjnhub.com
-      </p>
+<p><strong>Website:</strong> www.jjnhub.com</p>
 
       <hr>
 
