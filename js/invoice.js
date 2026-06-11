@@ -113,14 +113,17 @@ await invoiceSupabase
 .from("invoices")
 .insert([
 {
-customer_id:
-customer.id,
+customer_id: customer.id,
+customer_name: customer.customer_name,
+company_name: customer.company_name,
+customer_email: customer.email,
 invoice_number,
 description,
 quantity,
 unit_price,
 total,
-due_date
+due_date,
+status: "Draft"
 }
 ]);
 
@@ -135,6 +138,24 @@ return;
 alert(
 "Invoice Saved Successfully"
 );
+
+document.getElementById(
+"invoiceForm"
+).reset();
+
+document.getElementById(
+"customer_name"
+).value =
+customer.customer_name;
+
+document.getElementById(
+"company_name"
+).value =
+customer.company_name;
+
+document.getElementById(
+"total"
+).value = "0";
 
 }
 );
