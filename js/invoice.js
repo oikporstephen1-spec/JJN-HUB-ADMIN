@@ -93,7 +93,17 @@ document.getElementById(
 "total"
 ).value
 );
-
+if(
+  !description ||
+  !quantity ||
+  !unit_price ||
+  !due_date
+){
+  alert(
+    "All invoice fields are required."
+  );
+  return;
+}
 const invoice_number =
 "INV-" +
 Date.now();
@@ -162,30 +172,7 @@ JJN HUB`;
     `mailto:${customer.email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
 
 }
-if(
-  !description ||
-  !quantity ||
-  !unit_price ||
-  !due_date
-){
-  alert(
-    "All invoice fields are required."
-  );
-  return;
-}
-function closeInvoice(){
 
-  window.location.href =
-    "customers.html";
-
-}
-function emailInvoice(){
-
-  alert(
-    "Email Invoice Module Coming Next"
-  );
-
-}
 function closeInvoice(){
 
   window.location.href =
