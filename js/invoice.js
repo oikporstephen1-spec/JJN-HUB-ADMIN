@@ -179,3 +179,16 @@ function closeInvoice(){
     "customers.html";
 
 }
+function emailInvoice(){
+
+  alert(
+    "Email Invoice Module Coming Next"
+  );
+
+}
+function closeInvoice(){
+
+  window.location.href =
+    "customers.html";
+
+}
