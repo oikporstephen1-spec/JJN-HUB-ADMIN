@@ -17,24 +17,24 @@ customer.company_name;
 
 function calculateTotal(){
 
-const qty =
-Number(
-document.getElementById(
-"quantity"
-).value
-);
+  const qty =
+    Number(
+      document.getElementById(
+        "quantity"
+      ).value
+    ) || 0;
 
-const price =
-Number(
-document.getElementById(
-"unit_price"
-).value
-);
+  const price =
+    Number(
+      document.getElementById(
+        "unit_price"
+      ).value
+    ) || 0;
 
-document.getElementById(
-"total"
-).value =
-qty * price;
+  document.getElementById(
+    "total"
+  ).value =
+    (qty * price).toFixed(2);
 
 }
 
@@ -128,3 +128,48 @@ alert(
 
 }
 );
+function emailInvoice(){
+
+  const description =
+    document.getElementById(
+      "description"
+    ).value;
+
+  const total =
+    document.getElementById(
+      "total"
+    ).value;
+
+  const subject =
+    "JJN HUB Invoice";
+
+  const body =
+`Dear ${customer.customer_name},
+
+Invoice Details
+
+Description:
+${description}
+
+Total Amount:
+₦${total}
+
+Thank you for doing business with us.
+
+JJN HUB`;
+
+  window.location.href =
+    `mailto:${customer.email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+
+}
+if(
+  !description ||
+  !quantity ||
+  !unit_price ||
+  !due_date
+){
+  alert(
+    "All invoice fields are required."
+  );
+  return;
+}
