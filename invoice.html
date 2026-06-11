@@ -20,7 +20,17 @@ href="css/admin.css">
 <div class="main-content">
 
 <section class="dashboard-panel">
+<div style="text-align:center;margin-bottom:20px;">
 
+  <img
+    src="assets/logo.png"
+    alt="JJN HUB Logo"
+    style="
+      width:120px;
+      height:auto;
+    ">
+
+</div>
 <h2>Create Invoice</h2>
 
 <form id="invoiceForm">
@@ -120,7 +130,14 @@ onclick="window.print()">
 Print Invoice
 
 </button>
+<button
+type="button"
+class="action-btn"
+onclick="emailInvoice()">
 
+Email Invoice
+
+</button>
 </form>
 
 </section>
