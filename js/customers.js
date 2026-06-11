@@ -232,49 +232,109 @@ function printReceipt(){
   const receipt = window.open("", "_blank");
 
   receipt.document.write(`
-    <html>
-    <head>
-      <title>JJN HUB Receipt</title>
-      <style>
-        body{
-          font-family:Arial,sans-serif;
-          padding:30px;
-        }
-        h2{
-          color:#d4a017;
-        }
-      </style>
-    </head>
-    <body>
+  <html>
+  <head>
+  <title>JJN HUB Receipt</title>
 
-      <h2>JJN HUB CUSTOMER RECEIPT</h2>
+  <style>
 
-      <hr>
+  body{
+    font-family:Arial,sans-serif;
+    margin:0;
+    padding:20px;
+    display:flex;
+    justify-content:center;
+  }
 
-      <p><strong>Name:</strong>
-      ${currentCustomer.customer_name}</p>
+  .receipt{
+    width:320px;
+    border:1px solid #ccc;
+    padding:20px;
+  }
 
-      <p><strong>Company:</strong>
-      ${currentCustomer.company_name}</p>
+  h2,h3,p{
+    margin:5px 0;
+  }
 
-      <p><strong>Email:</strong>
-      ${currentCustomer.email}</p>
+  .center{
+    text-align:center;
+  }
 
-      <p><strong>Phone:</strong>
-      ${currentCustomer.phone}</p>
+  hr{
+    border:none;
+    border-top:1px dashed #000;
+    margin:10px 0;
+  }
 
-      <p><strong>Address:</strong>
-      ${currentCustomer.address}</p>
+  </style>
+  </head>
 
-      <hr>
+  <body>
+
+  <div class="receipt">
+
+    <div class="center">
+
+      <h2>JJN HUB</h2>
+
+      <p>Customer Receipt</p>
 
       <p>
-      Generated:
-      ${new Date().toLocaleString()}
+      #JJN-${currentCustomer.id}
       </p>
 
-    </body>
-    </html>
+    </div>
+
+    <hr>
+
+    <p>
+    <strong>Name:</strong>
+    ${currentCustomer.customer_name}
+    </p>
+
+    <p>
+    <strong>Company:</strong>
+    ${currentCustomer.company_name}
+    </p>
+
+    <p>
+    <strong>Email:</strong>
+    ${currentCustomer.email}
+    </p>
+
+    <p>
+    <strong>Phone:</strong>
+    ${currentCustomer.phone}
+    </p>
+
+    <p>
+    <strong>Address:</strong>
+    ${currentCustomer.address}
+    </p>
+
+    <hr>
+
+    <p>
+    Date:
+    ${new Date().toLocaleDateString()}
+    </p>
+
+    <div class="center">
+
+      <p>
+      Thank You
+      </p>
+
+      <p>
+      www.jjnhub.com
+      </p>
+
+    </div>
+
+  </div>
+
+  </body>
+  </html>
   `);
 
   receipt.document.close();
@@ -282,7 +342,6 @@ function printReceipt(){
   receipt.print();
 
 }
-
 function sendInvoice(){
 
   alert("Invoice Generator Coming Next");
