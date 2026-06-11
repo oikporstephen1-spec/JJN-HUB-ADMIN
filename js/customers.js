@@ -45,22 +45,61 @@ async function loadCustomers() {
 
 form.addEventListener("submit", async (e) => {
 
-  e.preventDefault();
+e.preventDefault();
 
-  const customer_name =
-    document.getElementById("customer_name").value.trim();
+const customer_name =
+  document.getElementById("customer_name").value.trim();
 
-  const company_name =
-    document.getElementById("company_name").value.trim();
+const company_name =
+  document.getElementById("company_name").value.trim();
 
-  const email =
-    document.getElementById("email").value.trim();
+const email =
+  document.getElementById("email").value.trim();
 
-  const phone =
-    document.getElementById("phone").value.trim();
+const phone =
+  document.getElementById("phone").value.trim();
 
-  const address =
-    document.getElementById("address").value.trim();
+const address =
+  document.getElementById("address").value.trim();
+
+if(
+  !customer_name ||
+  !company_name ||
+  !email ||
+  !phone ||
+  !address
+){
+  alert(
+    "All customer fields are required."
+  );
+  return;
+}
+if(
+  !customer_name ||
+  !company_name ||
+  !email ||
+  !phone ||
+  !address
+){
+  alert(
+    "All customer fields are required."
+  );
+  return;
+}
+
+if(!email.includes("@")){
+  alert(
+    "Enter a valid email address."
+  );
+  return;
+}
+
+if(phone.length < 8){
+  alert(
+    "Enter a valid phone number."
+  );
+  return;
+}
 
   try {
 
