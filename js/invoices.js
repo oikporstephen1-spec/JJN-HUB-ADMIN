@@ -1,4 +1,4 @@
-
+alert("Invoices JS Loaded");
 const invoiceSupabase =
 window.supabaseClient;
 
