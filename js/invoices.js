@@ -1,3 +1,4 @@
+
 const invoiceSupabase =
 window.supabaseClient;
 
@@ -5,6 +6,9 @@ const tableBody =
 document.getElementById(
 "invoiceTableBody"
 );
+console.log("Invoices JS Loaded");
+console.log("TABLE:", tableBody);
+console.log("SUPABASE:", invoiceSupabase);
 
 async function loadInvoices(){
 
@@ -16,7 +20,9 @@ async function loadInvoices(){
   {
     ascending:false
   });
-
+console.log("DATA:", data);
+console.log("ERROR:", error);
+  
   if(error){
 
     alert(error.message);
