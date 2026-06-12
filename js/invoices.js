@@ -1,3 +1,133 @@
+const invoiceSupabase =
+window.supabaseClient;
+
+const tableBody =
+document.getElementById(
+"invoiceTableBody"
+);
+
+async function loadInvoices(){
+
+  const { data, error } =
+  await invoiceSupabase
+  .from("invoices")
+  .select("*")
+  .order("id", {
+    ascending:false
+  });
+
+  if(error){
+    alert(error.message);
+    return;
+  }
+
+  tableBody.innerHTML = "";
+
+  data.forEach(invoice => {
+
+    tableBody.innerHTML += `
+    <tr>
+
+      <td>${invoice.id}</td>
+
+      <td>${invoice.invoice_number}</td>
+
+      <td>
+        ${invoice.customer_name || "Unknown"}
+      </td>
+
+      <td>
+        ₦${Number(
+          invoice.total
+        ).toLocaleString()}
+      </td>
+
+      <td>
+
+        <span style="
+          color:${
+            invoice.status === "Paid"
+            ? "lime"
+            : "orange"
+          };
+          font-weight:bold;
+        ">
+
+        ${invoice.status}
+
+        </span>
+
+      </td>
+
+      <td>
+
+        <button
+        class="action-btn"
+        onclick="viewInvoice(${invoice.id})">
+        View
+        </button>
+
+        <button
+        class="action-btn"
+        onclick="printInvoice(${invoice.id})">
+        Print
+        </button>
+
+        <button
+        class="action-btn"
+        onclick="emailInvoice(${invoice.id})">
+        Email
+        </button>
+
+        <button
+        class="action-btn"
+        onclick="markPaid(${invoice.id})">
+        Paid
+        </button>
+
+        <button
+        class="action-btn"
+        onclick="deleteInvoice(${invoice.id})">
+        Delete
+        </button>
+
+      </td>
+
+    </tr>
+    `;
+
+  });
+
+}
+
+async function viewInvoice(id){
+
+  const { data, error } =
+  await invoiceSupabase
+  .from("invoices")
+  .select("*")
+  .eq("id", id)
+  .single();
+
+  if(error){
+    alert(error.message);
+    return;
+  }
+
+  alert(
+`Invoice No: ${data.invoice_number}
+
+Customer: ${data.customer_name}
+
+Description: ${data.description}
+
+Amount: ₦${Number(data.total).toLocaleString()}
+
+Status: ${data.status}`
+  );
+
+}
+
 async function printInvoice(id){
 
   const { data, error } =
@@ -44,15 +174,12 @@ async function printInvoice(id){
   }
 
   .watermark{
-    position:absolute;
-    top:50%;
-    left:50%;
-    transform:translate(-50%,-50%);
-    font-size:140px;
-    font-weight:bold;
-    color:rgba(212,160,23,.05);
-    pointer-events:none;
-    z-index:0;
+  position:absolute;
+  top:50%;
+  left:50%;
+  transform:translate(-50%,-50%);
+  pointer-events:none;
+  z-index:0;
   }
 
   .header{
@@ -79,23 +206,25 @@ async function printInvoice(id){
     letter-spacing:2px;
   }
 
-  .cards{
-    display:grid;
-    grid-template-columns:
-    repeat(4,1fr);
-    gap:15px;
-    padding:25px;
-    position:relative;
-    z-index:1;
-  }
+.cards{
+  display:flex;
+  gap:15px;
+  padding:25px;
+  position:relative;
+  z-index:1;
+  flex-wrap:wrap;
+}
 
-  .card{
-    background:#fafafa;
-    border-left:4px solid #d4a017;
-    padding:15px;
-    border-radius:8px;
-    min-height:180px;
-  }
+.card{
+  flex:1 1 240px;
+  background:#fafafa;
+  border-left:4px solid #d4a017;
+  padding:15px;
+  border-radius:8px;
+  min-height:180px;
+  box-sizing:border-box;
+  overflow-wrap:break-word;
+}
 
   .card h3{
     color:#d4a017;
@@ -118,11 +247,12 @@ async function printInvoice(id){
     color:#fff;
   }
 
-  .total-card h1{
-    color:#d4a017;
-    font-size:38px;
-    margin-top:30px;
-  }
+ .total-card h1{
+  color:#d4a017;
+  font-size:32px;
+  margin-top:20px;
+  word-break:break-word;
+}
 
   .verify{
     margin:20px;
@@ -149,17 +279,25 @@ async function printInvoice(id){
 
   @media print{
 
-    body{
-      background:#fff;
-      padding:0;
-    }
-
-    .invoice-card{
-      box-shadow:none;
-      max-width:100%;
-    }
-
+  body{
+    background:#fff;
+    padding:0;
   }
+
+  .invoice-card{
+    box-shadow:none;
+    max-width:100%;
+  }
+
+  .cards{
+    flex-wrap:nowrap;
+  }
+
+  .card{
+    min-height:auto;
+  }
+
+}
 
   </style>
 
@@ -170,8 +308,15 @@ async function printInvoice(id){
   <div class="invoice-card">
 
     <div class="watermark">
-      JJN HUB
-    </div>
+
+  <img
+  src="${window.location.origin}/assets/logo.png"
+  style="
+  width:500px;
+  opacity:0.05;
+  ">
+
+</div>
 
     <div class="header">
 
@@ -330,3 +475,93 @@ async function printInvoice(id){
   }, 500);
 
 }
+async function emailInvoice(id){
+
+  const { data, error } =
+  await invoiceSupabase
+  .from("invoices")
+  .select("*")
+  .eq("id", id)
+  .single();
+
+  if(error){
+    alert(error.message);
+    return;
+  }
+
+  const subject =
+  `Invoice ${data.invoice_number}`;
+
+  const body =
+`Invoice Number:
+${data.invoice_number}
+
+Description:
+${data.description}
+
+Amount:
+₦${Number(data.total).toLocaleString()}
+
+Thank you for doing business with us.
+
+JJN HUB`;
+
+  window.location.href =
+  `mailto:${data.customer_email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+
+}
+
+async function markPaid(id){
+
+  const { error } =
+  await invoiceSupabase
+  .from("invoices")
+  .update({
+    status:"Paid"
+  })
+  .eq("id", id);
+
+  if(error){
+    alert(error.message);
+    return;
+  }
+
+  loadInvoices();
+
+}
+
+async function deleteInvoice(id){
+
+  if(!confirm("Delete Invoice?")){
+    return;
+  }
+
+  const { error } =
+  await invoiceSupabase
+  .from("invoices")
+  .delete()
+  .eq("id", id);
+
+  if(error){
+    alert(error.message);
+    return;
+  }
+
+  loadInvoices();
+
+}
+
+window.exitInvoices = function(){
+
+  window.location.href =
+  "dashboard.html";
+
+};
+
+window.viewInvoice = viewInvoice;
+window.printInvoice = printInvoice;
+window.emailInvoice = emailInvoice;
+window.markPaid = markPaid;
+window.deleteInvoice = deleteInvoice;
+
+loadInvoices();
