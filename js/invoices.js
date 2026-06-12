@@ -134,295 +134,285 @@ Status: ${data.status}`
 
 }
 
-async function printInvoice(id){
-
-  const { data, error } =
-  await invoiceSupabase
-  .from("invoices")
-  .select("*")
-  .eq("id", id)
-  .single();
-
-  if(error){
-    alert(error.message);
-    return;
-  }
-
-  const win =
-  window.open("", "_blank");
-
-  win.document.write(`
-
-  <html>
-
-  <head>
-
-  <title>
-  ${data.invoice_number}
-  </title>
-
-  <style>
-
-  body{
-    font-family:Arial,sans-serif;
-    background:#f5f5f5;
-    padding:30px;
-  }
-
-  .invoice-card{
-    max-width:650px;
-    margin:auto;
-    background:#fff;
-    border-radius:15px;
-    overflow:hidden;
-    box-shadow:0 0 20px rgba(0,0,0,.15);
-  }
-
-  .header{
-    background:#111;
-    color:#fff;
-    text-align:center;
-    padding:30px;
-  }
-
-  .logo{
-    width:90px;
-    margin-bottom:10px;
-  }
-
-  .company{
-    font-size:28px;
-    font-weight:bold;
-    color:#d4a017;
-  }
-
-  .subtitle{
-    margin-top:5px;
-    font-size:14px;
-  }
-
-  .invoice-title{
-    margin-top:15px;
-    font-size:22px;
-    letter-spacing:2px;
-  }
-
-  .content{
-    padding:30px;
-  }
-
-  .section{
-    margin-bottom:25px;
-  }
-
-  .section-title{
-    color:#d4a017;
-    font-weight:bold;
-    margin-bottom:10px;
-    text-transform:uppercase;
-  }
-
-  .amount-box{
-    background:#111;
-    color:#fff;
-    text-align:center;
-    padding:20px;
-    border-radius:10px;
-    margin-top:20px;
-  }
-
-  .amount-box h1{
-    margin:0;
-    color:#d4a017;
-    font-size:36px;
-  }
+win.document.write(`
+<html>
+
+<head>
+
+<title>${data.invoice_number}</title>
+
+<style>
+
+body{
+  font-family:Arial,sans-serif;
+  background:#f2f2f2;
+  padding:20px;
+}
+
+.invoice-card{
+  max-width:700px;
+  margin:auto;
+  background:#fff;
+  border-radius:15px;
+  overflow:hidden;
+  box-shadow:0 0 15px rgba(0,0,0,.15);
+}
+
+.header{
+  background:#000;
+  color:#fff;
+  text-align:center;
+  padding:25px;
+}
+
+.logo{
+  width:90px;
+  margin-bottom:10px;
+}
+
+.company{
+  color:#d4a017;
+  font-size:32px;
+  font-weight:bold;
+}
+
+.subtitle{
+  font-size:14px;
+  margin-top:5px;
+}
+
+.invoice-title{
+  font-size:24px;
+  margin-top:15px;
+  letter-spacing:2px;
+}
+
+.content{
+  padding:25px;
+}
+
+.section{
+  margin-bottom:25px;
+}
+
+.section-title{
+  color:#d4a017;
+  font-weight:bold;
+  margin-bottom:10px;
+  font-size:18px;
+}
+
+.info-box{
+  background:#fafafa;
+  border-left:4px solid #d4a017;
+  padding:15px;
+  border-radius:5px;
+}
+
+table{
+  width:100%;
+  border-collapse:collapse;
+}
+
+table th{
+  background:#111;
+  color:#fff;
+  padding:10px;
+}
+
+table td{
+  padding:10px;
+  border:1px solid #ddd;
+}
+
+.total-box{
+  background:#000;
+  color:#fff;
+  text-align:center;
+  padding:20px;
+  border-radius:10px;
+}
+
+.total-box h1{
+  color:#d4a017;
+  margin:10px 0 0;
+  font-size:48px;
+}
 
-  .footer{
-    text-align:center;
-    font-size:13px;
-    color:#666;
-    padding:20px;
-    border-top:1px solid #ddd;
-  }
+.verify-box{
+  border:2px solid #d4a017;
+  padding:15px;
+  border-radius:10px;
+  background:#fffdf5;
+}
 
-  .row{
-    margin:8px 0;
-  }
+.footer{
+  text-align:center;
+  padding:20px;
+  color:#666;
+  border-top:1px solid #ddd;
+}
 
-  .label{
-    font-weight:bold;
-  }
+</style>
 
-  </style>
+</head>
 
-  </head>
+<body>
 
-  <body>
+<div class="invoice-card">
 
-  <div class="invoice-card">
+<div class="header">
 
-    <div class="header">
+<img
+src="${window.location.origin}/assets/logo.png"
+class="logo">
 
-      <img
-      src="${window.location.origin}/assets/logo.png"
-      class="logo">
+<div class="company">
+JJN HUB
+</div>
 
-      <div class="company">
-      JJN HUB
-      </div>
+<div class="subtitle">
+Jesse & Jeslyn Nigeria Limited
+</div>
 
-      <div class="subtitle">
-      Jesse & Jeslyn Nigeria Limited
-      </div>
+<div class="invoice-title">
+PROFESSIONAL INVOICE
+</div>
 
-      <div class="invoice-title">
-      PROFESSIONAL INVOICE
-      </div>
+</div>
 
-    </div>
+<div class="content">
 
-    <div class="content">
+<div class="section">
 
-      <div class="section">
+<div class="section-title">
+INVOICE INFORMATION
+</div>
 
-        <div class="section-title">
-        Invoice Information
-        </div>
+<div class="info-box">
 
-        <div class="row">
-        <span class="label">
-        Invoice No:
-        </span>
-        ${data.invoice_number}
-        </div>
+<p>
+<strong>Invoice No:</strong>
+${data.invoice_number}
+</p>
 
-        <div class="row">
-        <span class="label">
-        Date:
-        </span>
-        ${new Date(
-          data.created_at
-        ).toLocaleDateString()}
-        </div>
+<p>
+<strong>Issue Date:</strong>
+${new Date(data.created_at).toLocaleDateString()}
+</p>
 
-        <div class="row">
-        <span class="label">
-        Status:
-        </span>
-        ${data.status}
-        </div>
+<p>
+<strong>Due Date:</strong>
+${data.due_date}
+</p>
 
-      </div>
+<p>
+<strong>Status:</strong>
+${data.status}
+</p>
 
-      <div class="section">
+</div>
 
-        <div class="section-title">
-        Customer
-        </div>
+</div>
 
-        <div class="row">
-        ${data.customer_name}
-        </div>
+<div class="section">
 
-        <div class="row">
-        ${data.company_name}
-        </div>
+<div class="section-title">
+BILL TO
+</div>
 
-        <div class="row">
-        ${data.customer_email}
-        </div>
+<div class="info-box">
 
-      </div>
+<p>${data.customer_name}</p>
 
-      <div class="section">
+<p>${data.company_name}</p>
 
-        <div class="section-title">
-        Service Description
-        </div>
+<p>${data.customer_email}</p>
 
-        <div class="row">
-        ${data.description}
-        </div>
+</div>
 
-        <div class="row">
-        Qty: ${data.quantity}
-        </div>
+</div>
 
-        <div class="row">
-        Unit Price:
-        ₦${Number(
-          data.unit_price
-        ).toLocaleString()}
-        </div>
+<div class="section">
 
-      </div>
+<div class="section-title">
+SERVICE DETAILS
+</div>
 
-      <div class="amount-box">
+<table>
 
-        <div>
-        TOTAL AMOUNT
-        </div>
+<tr>
+<th>Description</th>
+<th>Qty</th>
+<th>Amount</th>
+</tr>
 
-        <h1>
-        ₦${Number(
-          data.total
-        ).toLocaleString()}
-        </h1>
+<tr>
+<td>${data.description}</td>
+<td>${data.quantity}</td>
+<td>
+₦${Number(data.total).toLocaleString()}
+</td>
+</tr>
 
-      </div>
+</table>
 
-      <div class="section">
+</div>
 
-        <div class="section-title">
-        Verification
-        </div>
+<div class="total-box">
 
-        <div class="row">
-        Generated by JJN HUB
-        Business Management System
-        </div>
+<div>
+GRAND TOTAL
+</div>
 
-        <div class="row">
-        Reference:
-        ${data.invoice_number}
-        </div>
+<h1>
+₦${Number(data.total).toLocaleString()}
+</h1>
 
-        <div class="row">
-        This invoice is digitally
-        generated and valid without
-        signature.
-        </div>
+</div>
 
-      </div>
+<br>
 
-    </div>
+<div class="verify-box">
 
-    <div class="footer">
+<strong>
+✓ VERIFIED JJN HUB DOCUMENT
+</strong>
 
-      www.jjnhub.com
+<br><br>
 
-      <br><br>
+Reference:
+${data.invoice_number}
 
-      Automotive • Engineering • Marine • Logistics
+<br><br>
 
-    </div>
+Digitally generated by
+JJN HUB Business Management System.
 
-  </div>
+</div>
 
-  </body>
+</div>
 
-  </html>
+<div class="footer">
 
-  `);
+www.jjnhub.com
 
-  win.document.close();
+<br><br>
 
-  setTimeout(() => {
+JJN HUB Business Platform
 
-    win.print();
+<br>
 
-  }, 500);
+Automotive • Engineering • Marine • Logistics
 
+</div>
+
+</div>
+
+</body>
+
+</html>
+`);
 }
 async function emailInvoice(id){
 
