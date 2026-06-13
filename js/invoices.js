@@ -524,7 +524,7 @@ if(response.ok){
   );
 
 }
-
+}
 async function markPaid(id){
 
   const { error } =
