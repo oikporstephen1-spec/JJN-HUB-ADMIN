@@ -507,19 +507,21 @@ async function emailInvoice(id){
   }
 );
 
-  if(response.ok){
+  const result = await response.json();
 
-    alert(
-      "Invoice sent successfully from admin@jjnhub.com"
-    );
+console.log(result);
 
-  }else{
+if(response.ok){
 
-    alert(
-      "Failed to send invoice"
-    );
+  alert(
+    "Invoice sent successfully from admin@jjnhub.com"
+  );
 
-  }
+}else{
+
+  alert(
+    JSON.stringify(result)
+  );
 
 }
 
