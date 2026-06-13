@@ -490,28 +490,22 @@ async function emailInvoice(id){
   }
 
   const response = await fetch(
-    "https://YOUR-PROJECT.supabase.co/functions/v1/send-invoice",
-    {
-      method:"POST",
-      headers:{
-        "Content-Type":"application/json"
-      },
-      body:JSON.stringify({
-
-        email:data.customer_email,
-
-        invoiceNumber:
-        data.invoice_number,
-
-        description:
-        data.description,
-
-        total:
-        data.total
-
-      })
-    }
-  );
+  "https://aosewocqcpoffckmnfpn.supabase.co/functions/v1/send-invoice",
+  {
+    method:"POST",
+    headers:{
+      "Content-Type":"application/json",
+      "apikey":"sb_publishable_WNSkNQmm7cKzxUAK0efAGQ_M6a6569N",
+      "Authorization":"Bearer sb_publishable_WNSkNQmm7cKzxUAK0efAGQ_M6a6569N"
+    },
+    body:JSON.stringify({
+      email:data.customer_email,
+      invoiceNumber:data.invoice_number,
+      description:data.description,
+      total:data.total
+    })
+  }
+);
 
   if(response.ok){
 
