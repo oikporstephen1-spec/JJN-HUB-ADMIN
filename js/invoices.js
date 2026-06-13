@@ -489,25 +489,43 @@ async function emailInvoice(id){
     return;
   }
 
-  const subject =
-  `Invoice ${data.invoice_number}`;
+  const response = await fetch(
+    "https://YOUR-PROJECT.supabase.co/functions/v1/send-invoice",
+    {
+      method:"POST",
+      headers:{
+        "Content-Type":"application/json"
+      },
+      body:JSON.stringify({
 
-  const body =
-`Invoice Number:
-${data.invoice_number}
+        email:data.customer_email,
 
-Description:
-${data.description}
+        invoiceNumber:
+        data.invoice_number,
 
-Amount:
-₦${Number(data.total).toLocaleString()}
+        description:
+        data.description,
 
-Thank you for doing business with us.
+        total:
+        data.total
 
-JJN HUB`;
+      })
+    }
+  );
 
-  window.location.href =
-  `mailto:${data.customer_email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+  if(response.ok){
+
+    alert(
+      "Invoice sent successfully from admin@jjnhub.com"
+    );
+
+  }else{
+
+    alert(
+      "Failed to send invoice"
+    );
+
+  }
 
 }
 
