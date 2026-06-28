@@ -356,7 +356,306 @@ Save Vehicle
 </form>
 
 </section>
+<!-- ============================= -->
+<!-- VEHICLE IMPORT COST CALCULATOR -->
+<!-- PART 1 -->
+<!-- ============================= -->
 
+<section class="dashboard-panel">
+
+<h2>Vehicle Import Cost Calculator</h2>
+
+<form id="vehicleCalculator" class="vehicle-form">
+
+<div class="form-group">
+<label>Vehicle Make</label>
+<input
+type="text"
+id="make"
+placeholder="Toyota">
+</div>
+
+<div class="form-group">
+<label>Vehicle Model</label>
+<input
+type="text"
+id="model"
+placeholder="Corolla">
+</div>
+
+<div class="form-group">
+<label>Year</label>
+<input
+type="number"
+id="year"
+placeholder="2022">
+</div>
+
+<div class="form-group">
+<label>VIN Number</label>
+<input
+type="text"
+id="vin"
+placeholder="JTDBU4EEXXXXXXXXX">
+</div>
+
+<div class="form-group">
+<label>Auction</label>
+
+<select id="auction">
+
+<option value="Copart">
+
+Copart
+
+</option>
+
+<option value="IAAI">
+
+IAAI
+
+</option>
+
+<option value="Dealer">
+
+Dealer
+
+</option>
+
+<option value="Private Seller">
+
+Private Seller
+
+</option>
+
+</select>
+
+</div>
+
+<div class="form-group">
+  
+<label>Loading Port</label>
+
+<select id="loadingPort">
+
+<option>Newark</option>
+
+<option>Baltimore</option>
+
+<option>New York</option>
+
+<option>Savannah</option>
+
+<option>Jacksonville</option>
+
+<option>Houston</option>
+
+<option>Tacoma</option>
+
+<option>Los Angeles</option>
+
+</select>
+
+</div>
+
+<div class="form-group">
+<label>Destination</label>
+
+<select id="destinationPort">
+
+<option>Lagos</option>
+
+<option>Tema</option>
+
+<option>Cotonou</option>
+
+</select>
+
+</div>
+
+<div class="form-group">
+<label>Shipping Type</label>
+
+<select id="shippingType">
+
+<option>RoRo</option>
+
+<option>Container</option>
+
+</select>
+
+</div>
+
+<hr>
+
+<h3>Vehicle Costs (USD)</h3>
+
+<div class="form-group">
+<label>Purchase Price ($)</label>
+
+<input
+type="number"
+id="purchasePrice"
+class="cost-input"
+placeholder="0">
+</div>
+
+<div class="form-group">
+<label>Auction Fee ($)</label>
+
+<input
+type="number"
+id="auctionFee"
+class="cost-input"
+placeholder="0">
+</div>
+
+<div class="form-group">
+<label>Inland Transport ($)</label>
+
+<input
+type="number"
+id="inlandTransport"
+class="cost-input"
+placeholder="0">
+</div>
+
+<div class="form-group">
+<label>Ocean Freight ($)</label>
+
+<input
+type="number"
+id="shippingCost"
+class="cost-input"
+placeholder="0">
+</div>
+
+<div class="form-group">
+<label>Marine Insurance ($)</label>
+
+<input
+type="number"
+id="insurance"
+class="cost-input"
+placeholder="0">
+</div>
+
+<div class="form-group">
+<label>Documentation ($)</label>
+
+<input
+type="number"
+id="documentation"
+class="cost-input"
+placeholder="0">
+</div>
+
+<hr>
+
+<h3>Nigeria Costs</h3>
+
+<div class="form-group">
+<label>Exchange Rate (₦/$)</label>
+
+<input
+type="number"
+id="exchangeRate"
+class="cost-input"
+placeholder="1600">
+</div>
+
+<div class="form-group">
+<label>Clearing Cost (₦)</label>
+
+<input
+type="number"
+id="clearingCost"
+class="cost-input"
+placeholder="0">
+</div>
+
+<div class="form-group">
+<label>Other Expenses (₦)</label>
+
+<input
+type="number"
+id="otherCost"
+class="cost-input"
+placeholder="0">
+</div>
+
+<div class="form-group">
+<label>Desired Profit (₦)</label>
+
+<input
+type="number"
+id="profit"
+class="cost-input"
+placeholder="0">
+</div>
+  <div class="dashboard-cards">
+
+<div class="dashboard-card">
+<h3>Total USD Cost</h3>
+<h2 id="usdTotal">$0.00</h2>
+</div>
+
+<div class="dashboard-card">
+<h3>Total Landed Cost</h3>
+<h2 id="nairaTotal">₦0.00</h2>
+</div>
+
+<div class="dashboard-card">
+<h3>Recommended Selling Price</h3>
+<h2 id="sellingPrice">₦0.00</h2>
+</div>
+
+</div>
+
+<br>
+
+<div style="display:flex;gap:15px;flex-wrap:wrap;">
+
+<button
+type="button"
+class="action-btn"
+onclick="calculateVehicleCost()">
+Calculate
+</button>
+
+<button
+type="button"
+class="action-btn"
+onclick="saveEstimate()">
+Save Estimate
+</button>
+
+<button
+type="button"
+class="action-btn"
+onclick="printEstimate()">
+Print Estimate
+</button>
+
+<button
+type="button"
+class="action-btn"
+onclick="emailEstimate()">
+Email Estimate
+</button>
+
+<button
+type="button"
+class="action-btn"
+onclick="resetCalculator()">
+Reset
+</button>
+
+</div>
+
+</form>
+
+</section>
 <section class="dashboard-panel">
 
 <h2>
@@ -677,6 +976,7 @@ View
 <script src="js/logout.js"></script>
 
 <script src="js/admin.js"></script>
+  <script src="js/automotive.js"></script>
 
 </body>
 
