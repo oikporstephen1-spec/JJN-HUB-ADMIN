@@ -356,10 +356,11 @@ Save Vehicle
 </form>
 
 </section>
-<!-- ============================= -->
-<!-- VEHICLE IMPORT COST CALCULATOR -->
-<!-- PART 1 -->
-<!-- ============================= -->
+
+<!-- ===================================== -->
+<!-- JJN HUB VEHICLE IMPORT CALCULATOR -->
+<!-- PART 1 - VEHICLE INFORMATION -->
+<!-- ===================================== -->
 
 <section class="dashboard-panel">
 
@@ -367,120 +368,77 @@ Save Vehicle
 
 <form id="vehicleCalculator" class="vehicle-form">
 
+<h3>Vehicle Information</h3>
+
 <div class="form-group">
+
 <label>Vehicle Make</label>
+
 <input
 type="text"
 id="make"
 placeholder="Toyota">
+
 </div>
 
 <div class="form-group">
+
 <label>Vehicle Model</label>
+
 <input
 type="text"
 id="model"
 placeholder="Corolla">
+
 </div>
 
 <div class="form-group">
+
 <label>Year</label>
+
 <input
 type="number"
 id="year"
 placeholder="2022">
+
 </div>
 
 <div class="form-group">
+
 <label>VIN Number</label>
+
 <input
 type="text"
 id="vin"
-placeholder="JTDBU4EEXXXXXXXXX">
-</div>
-
-<div class="form-group">
-<label>Auction</label>
-
-<select id="auction">
-
-<option value="Copart">
-
-Copart
-
-</option>
-
-<option value="IAAI">
-
-IAAI
-
-</option>
-
-<option value="Dealer">
-
-Dealer
-
-</option>
-
-<option value="Private Seller">
-
-Private Seller
-
-</option>
-
-</select>
+placeholder="JTDBU4EE123456789">
 
 </div>
 
 <div class="form-group">
-  
-<label>Loading Port</label>
 
-<select id="loadingPort">
+<label>Vehicle Type</label>
 
-<option>Newark</option>
+<select id="vehicleType">
 
-<option>Baltimore</option>
+<option value="Sedan">
+Sedan
+</option>
 
-<option>New York</option>
+<option value="SUV">
+SUV
+</option>
 
-<option>Savannah</option>
+<option value="Pickup">
+Pickup
+</option>
 
-<option>Jacksonville</option>
+<option value="Van">
+Van
+</option>
 
-<option>Houston</option>
-
-<option>Tacoma</option>
-
-<option>Los Angeles</option>
-
-</select>
-
-</div>
-
-<div class="form-group">
-<label>Destination</label>
-
-<select id="destinationPort">
-
-<option>Lagos</option>
-
-<option>Tema</option>
-
-<option>Cotonou</option>
-
-</select>
-
-</div>
-
-<div class="form-group">
-<label>Shipping Type</label>
-
-<select id="shippingType">
-
-<option>RoRo</option>
-
-<option>Container</option>
+<option value="Truck">
+Truck
+</option>
 
 </select>
 
@@ -488,431 +446,516 @@ Private Seller
 
 <hr>
 
-<h3>Vehicle Costs (USD)</h3>
+<h3>Purchase Information</h3>
+<!-- ===================================== -->
+<!-- PART 2 - PURCHASE INFORMATION -->
+<!-- ===================================== -->
 
 <div class="form-group">
-<label>Purchase Price ($)</label>
+
+<label>Auction House</label>
+
+<select id="auction">
+
+<option value="">Select Auction House</option>
+
+<option value="Copart">Copart</option>
+
+<option value="IAAI">IAAI</option>
+
+<option value="Dealer">Dealer</option>
+
+<option value="Private Seller">Private Seller</option>
+
+</select>
+
+</div>
+
+<div class="form-group">
+
+<label>Auction Yard</label>
+
+<select id="auctionYard">
+
+<option value="">Select Auction Yard</option>
+
+<option value="New Jersey">New Jersey</option>
+
+<option value="New York">New York</option>
+
+<option value="Baltimore">Baltimore</option>
+
+<option value="Savannah">Savannah</option>
+
+<option value="Jacksonville">Jacksonville</option>
+
+<option value="Atlanta">Atlanta</option>
+
+<option value="Houston">Houston</option>
+
+<option value="Chicago">Chicago</option>
+
+<option value="Dallas">Dallas</option>
+
+<option value="Miami">Miami</option>
+
+<option value="Los Angeles">Los Angeles</option>
+
+<option value="Tacoma">Tacoma</option>
+
+</select>
+
+</div>
+
+<div class="form-group">
+
+<label>Purchase Price (USD)</label>
 
 <input
 type="number"
 id="purchasePrice"
-class="cost-input"
-placeholder="0">
+placeholder="0.00">
+
 </div>
 
 <div class="form-group">
-<label>Auction Fee ($)</label>
+
+<label>Auction Fee (Auto)</label>
 
 <input
 type="number"
 id="auctionFee"
-class="cost-input"
-placeholder="0">
+readonly
+style="background:#f4f4f4;">
+
 </div>
 
 <div class="form-group">
-<label>Inland Transport ($)</label>
+
+<label>Total Buying Cost (USD)</label>
+
+<input
+type="number"
+id="buyingCost"
+readonly
+style="
+background:#fff7d6;
+font-weight:bold;
+color:#000;">
+
+</div>
+
+<div class="form-group">
+
+<label>Buyer Type</label>
+
+<select id="buyerType">
+
+<option value="Business">
+Business Account
+</option>
+
+<option value="Individual">
+Individual
+</option>
+
+</select>
+
+</div>
+
+<div class="form-group">
+
+<label>Vehicle Title</label>
+
+<select id="titleType">
+
+<option value="Clean">
+Clean Title
+</option>
+
+<option value="Salvage">
+Salvage
+</option>
+
+<option value="Rebuildable">
+Rebuildable
+</option>
+
+<option value="Non Repairable">
+Non Repairable
+</option>
+
+</select>
+
+</div>
+
+<hr>
+
+<h3>Shipping Information</h3>
+<!-- ===================================== -->
+<!-- PART 3 - SHIPPING INFORMATION -->
+<!-- ===================================== -->
+
+<div class="form-group">
+
+<label>Destination Country</label>
+
+<select id="destinationCountry">
+
+<option value="Nigeria">Nigeria</option>
+
+<option value="Ghana">Ghana</option>
+
+<option value="Benin">Benin Republic</option>
+
+</select>
+
+</div>
+
+<div class="form-group">
+
+<label>Destination Port</label>
+
+<select id="destinationPort">
+
+<option value="Lagos">Lagos</option>
+
+<option value="Tema">Tema</option>
+
+<option value="Cotonou">Cotonou</option>
+
+</select>
+
+</div>
+
+<div class="form-group">
+
+<label>Shipping Method</label>
+
+<select id="shippingType">
+
+<option value="RoRo">
+
+RoRo
+
+</option>
+
+<option value="Container">
+
+Container
+
+</option>
+
+</select>
+
+</div>
+
+<div class="form-group">
+
+<label>Loading Port (Auto)</label>
+
+<input
+type="text"
+id="loadingPort"
+readonly
+style="
+background:#f4f4f4;">
+
+</div>
+
+<div class="form-group">
+
+<label>Inland Transport (USD)</label>
 
 <input
 type="number"
 id="inlandTransport"
-class="cost-input"
-placeholder="0">
+readonly
+style="
+background:#f4f4f4;">
+
 </div>
 
 <div class="form-group">
-<label>Ocean Freight ($)</label>
+
+<label>Ocean Freight (USD)</label>
 
 <input
 type="number"
 id="shippingCost"
-class="cost-input"
-placeholder="0">
+readonly
+style="
+background:#f4f4f4;">
+
 </div>
 
 <div class="form-group">
-<label>Marine Insurance ($)</label>
+
+<label>Marine Insurance (USD)</label>
 
 <input
 type="number"
 id="insurance"
-class="cost-input"
-placeholder="0">
+readonly
+style="
+background:#f4f4f4;">
+
 </div>
 
 <div class="form-group">
-<label>Documentation ($)</label>
+
+<label>Documentation Fee (USD)</label>
 
 <input
 type="number"
 id="documentation"
-class="cost-input"
-placeholder="0">
+readonly
+style="
+background:#f4f4f4;">
+
+</div>
+
+<div class="form-group">
+
+<label>Port Handling Fee (USD)</label>
+
+<input
+type="number"
+id="portHandling"
+readonly
+style="
+background:#f4f4f4;">
+
+</div>
+
+<div class="form-group">
+
+<label>Terminal Storage (USD)</label>
+
+<input
+type="number"
+id="terminalStorage"
+readonly
+style="
+background:#f4f4f4;">
+
+</div>
+
+<div class="form-group">
+
+<label>Total Shipping Cost (USD)</label>
+
+<input
+type="number"
+id="totalShipping"
+readonly
+style="
+background:#fff7d6;
+font-weight:bold;
+color:#000;">
+
 </div>
 
 <hr>
 
 <h3>Nigeria Costs</h3>
+<!-- ===================================== -->
+<!-- PART 4 - NIGERIA COSTS -->
+<!-- ===================================== -->
 
 <div class="form-group">
-<label>Exchange Rate (₦/$)</label>
+
+<label>Exchange Rate (₦ / USD)</label>
 
 <input
 type="number"
 id="exchangeRate"
-class="cost-input"
+value="1600"
 placeholder="1600">
+
 </div>
 
 <div class="form-group">
-<label>Clearing Cost (₦)</label>
+
+<label>Customs Duty (₦)</label>
+
+<input
+type="number"
+id="customDuty"
+placeholder="0">
+
+</div>
+
+<div class="form-group">
+
+<label>Port Clearing Charges (₦)</label>
 
 <input
 type="number"
 id="clearingCost"
-class="cost-input"
 placeholder="0">
+
 </div>
 
 <div class="form-group">
+
+<label>Local Delivery (₦)</label>
+
+<input
+type="number"
+id="deliveryCost"
+placeholder="0">
+
+</div>
+
+<div class="form-group">
+
 <label>Other Expenses (₦)</label>
 
 <input
 type="number"
 id="otherCost"
-class="cost-input"
 placeholder="0">
+
 </div>
 
 <div class="form-group">
+
 <label>Desired Profit (₦)</label>
 
 <input
 type="number"
 id="profit"
-class="cost-input"
 placeholder="0">
-</div>
-  <div class="dashboard-cards">
 
-<div class="dashboard-card">
-<h3>Total USD Cost</h3>
-<h2 id="usdTotal">$0.00</h2>
 </div>
 
+<hr>
+
+<h3>Cost Summary</h3>
+
+<div class="dashboard-cards">
+
 <div class="dashboard-card">
-<h3>Total Landed Cost</h3>
-<h2 id="nairaTotal">₦0.00</h2>
+
+<h4>Buying Cost</h4>
+
+<h2 id="buyingCostDisplay">
+
+$0.00
+
+</h2>
+
 </div>
 
 <div class="dashboard-card">
-<h3>Recommended Selling Price</h3>
-<h2 id="sellingPrice">₦0.00</h2>
+
+<h4>Shipping Cost</h4>
+
+<h2 id="shippingCostDisplay">
+
+$0.00
+
+</h2>
+
+</div>
+
+<div class="dashboard-card">
+
+<h4>Total USD</h4>
+
+<h2 id="usdTotal">
+
+$0.00
+
+</h2>
+
+</div>
+
+<div class="dashboard-card">
+
+<h4>Landed Cost</h4>
+
+<h2 id="nairaTotal">
+
+₦0.00
+
+</h2>
+
+</div>
+
+<div class="dashboard-card">
+
+<h4>Selling Price</h4>
+
+<h2 id="sellingPrice">
+
+₦0.00
+
+</h2>
+
 </div>
 
 </div>
 
 <br>
 
-<div style="display:flex;gap:15px;flex-wrap:wrap;">
+<div
+style="
+display:flex;
+flex-wrap:wrap;
+gap:15px;
+justify-content:center;
+">
 
 <button
 type="button"
 class="action-btn"
 onclick="calculateVehicleCost()">
+
 Calculate
-</button>
 
-<button
-type="button"
-class="action-btn"
-onclick="saveEstimate()">
-Save Estimate
-</button>
-
-<button
-type="button"
-class="action-btn"
-onclick="printEstimate()">
-Print Estimate
-</button>
-
-<button
-type="button"
-class="action-btn"
-onclick="emailEstimate()">
-Email Estimate
 </button>
 
 <button
 type="button"
 class="action-btn"
 onclick="resetCalculator()">
+
 Reset
+
+</button>
+
+<button
+type="button"
+class="action-btn"
+onclick="saveEstimate()">
+
+Save Estimate
+
+</button>
+
+<button
+type="button"
+class="action-btn"
+onclick="printEstimate()">
+
+Print Estimate
+
+</button>
+
+<button
+type="button"
+class="action-btn"
+onclick="emailEstimate()">
+
+Email Estimate
+
 </button>
 
 </div>
 
 </form>
-
-</section>
-<section class="dashboard-panel">
-
-<h2>
-
-Vehicle Inventory
-
-</h2>
-
-<div class="customer-table-wrapper">
-
-<table class="automotive-table">
-
-<thead>
-
-<tr>
-
-<th>Stock No.</th>
-
-<th>Vehicle</th>
-
-<th>Year</th>
-
-<th>Status</th>
-
-<th>Cost ($)</th>
-
-<th>Price ($)</th>
-
-<th>Action</th>
-
-</tr>
-
-</thead>
-
-<tbody>
-
-<tr>
-
-<td>
-
-AUTO-001
-
-</td>
-
-<td>
-
-Toyota Corolla
-
-</td>
-
-<td>
-
-2020
-
-</td>
-
-<td class="status-active">
-
-Available
-
-</td>
-
-<td>
-
-5,000
-
-</td>
-
-<td>
-
-6,500
-
-</td>
-
-<td>
-
-<button class="action-btn">
-
-View
-
-</button>
-
-</td>
-
-</tr>
-
-<tr>
-
-<td>
-
-AUTO-002
-
-</td>
-
-<td>
-
-Toyota Venza
-
-</td>
-
-<td>
-
-2012
-
-</td>
-
-<td class="status-pending">
-
-Reserved
-
-</td>
-
-<td>
-
-6,200
-
-</td>
-
-<td>
-
-8,000
-
-</td>
-
-<td>
-
-<button class="action-btn">
-
-View
-
-</button>
-
-</td>
-
-</tr>
-
-</tbody>
-
-</table>
-
-</div>
-
-</section>
-
-<section class="dashboard-panel">
-
-<h2>
-
-Customer Orders
-
-</h2>
-
-<div class="customer-table-wrapper">
-
-<table class="automotive-table">
-
-<thead>
-
-<tr>
-
-<th>Order No.</th>
-
-<th>Customer</th>
-
-<th>Vehicle Requested</th>
-
-<th>Status</th>
-
-<th>Action</th>
-
-</tr>
-
-</thead>
-
-<tbody>
-
-<tr>
-
-<td>
-
-ORD-2026-001
-
-</td>
-
-<td>
-
-ABC Logistics
-
-</td>
-
-<td>
-
-Toyota Corolla 2020
-
-</td>
-
-<td class="status-active">
-
-Processing
-
-</td>
-
-<td>
-
-<button class="action-btn">
-
-View
-
-</button>
-
-</td>
-
-</tr>
-
-<tr>
-
-<td>
-
-ORD-2026-002
-
-</td>
-
-<td>
-
-John Smith
-
-</td>
-
-<td>
-
-Toyota Venza 2012
-
-</td>
-
-<td class="status-pending">
-
-Pending
-
-</td>
-
-<td>
-
-<button class="action-btn">
-
-View
-
-</button>
-
-</td>
-
-</tr>
-
-</tbody>
-
-</table>
-
-</div>
 
 </section>
 
