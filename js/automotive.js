@@ -1,907 +1,1121 @@
-/*=========================================
-JJN HUB Automotive Calculator
-Part 1
-=========================================*/
+// ======================================
+// JJN HUB AUTOMOTIVE CALCULATOR
+// PART 1 - SUPABASE & INITIALIZATION
+// ======================================
 
-//==============================
-// DOM Helpers
-//==============================
+// ----------------------------
+// Supabase
+// ----------------------------
 
-const $ = (id) => document.getElementById(id);
+const supabase = window.supabaseClient;
 
-//==============================
-// Form Controls
-//==============================
+// ----------------------------
+// Form Elements
+// ----------------------------
 
-const auction = $("auction");
-const auctionYard = $("auctionYard");
-const purchasePrice = $("purchasePrice");
+const auction = document.getElementById("auction");
+const auctionYard = document.getElementById("auctionYard");
+const destinationPort = document.getElementById("destinationPort");
+const shippingType = document.getElementById("shippingType");
 
-const buyingCost = $("buyingCost");
-const auctionFee = $("auctionFee");
+const purchasePrice = document.getElementById("purchasePrice");
+const exchangeRate = document.getElementById("exchangeRate");
 
-const destinationCountry = $("destinationCountry");
-const destinationPort = $("destinationPort");
-const shippingType = $("shippingType");
+const auctionFee = document.getElementById("auctionFee");
+const buyingCost = document.getElementById("buyingCost");
 
-const loadingPort = $("loadingPort");
-const inlandTransport = $("inlandTransport");
-const shippingCost = $("shippingCost");
-const insurance = $("insurance");
-const documentation = $("documentation");
-const portHandling = $("portHandling");
-const terminalStorage = $("terminalStorage");
-const totalShipping = $("totalShipping");
+const loadingPort = document.getElementById("loadingPort");
+const inlandTransport = document.getElementById("inlandTransport");
 
-const exchangeRate = $("exchangeRate");
-const customDuty = $("customDuty");
-const clearingCost = $("clearingCost");
-const deliveryCost = $("deliveryCost");
-const otherCost = $("otherCost");
-const profit = $("profit");
+const shippingCost = document.getElementById("shippingCost");
+const insurance = document.getElementById("insurance");
+const documentation = document.getElementById("documentation");
+const portHandling = document.getElementById("portHandling");
+const terminalStorage = document.getElementById("terminalStorage");
 
-const buyingCostDisplay = $("buyingCostDisplay");
-const shippingCostDisplay = $("shippingCostDisplay");
-const usdTotal = $("usdTotal");
-const nairaTotal = $("nairaTotal");
-const sellingPrice = $("sellingPrice");
+const totalShipping = document.getElementById("totalShipping");
 
-//==============================
-// Configuration
-//==============================
+const clearingCost = document.getElementById("clearingCost");
+const otherCost = document.getElementById("otherCost");
+const desiredProfit = document.getElementById("profit");
 
-// Temporary values.
-// Later these will come from Supabase.
+const usdTotal = document.getElementById("usdTotal");
+const nairaTotal = document.getElementById("nairaTotal");
+const sellingPrice = document.getElementById("sellingPrice");
 
-const CONFIG = {
+// ----------------------------
+// Cached Database Records
+// ----------------------------
 
-    documentationFee:85,
+let auctionFees = [];
+let inlandRates = [];
+let shippingRates = [];
 
-    portHandling:120,
+// ----------------------------
+// Load Database
+// ----------------------------
 
-    terminalStorage:50,
+async function loadDatabase() {
 
-    insurancePercent:0.015
+    // Auction Fees
 
-};
+    let { data, error } = await supabase
+        .from("auction_fees")
+        .select("*");
 
-//==============================
-// Auction Fee Rules
-//==============================
+    if (error) {
 
-// Temporary estimates.
-// Later replace with official
-// Copart / IAAI fee schedule.
+        console.error(error);
 
-const auctionFeePercent={
+    } else {
 
-    Copart:0.12,
-
-    IAAI:0.10,
-
-    Dealer:0,
-
-    "Private Seller":0
-
-};
-
-//==============================
-// Auction Yard Information
-//==============================
-
-const auctionYards={
-
-    "New Jersey":{
-
-        loadingPort:"Newark",
-
-        inland:150
-
-    },
-
-    "New York":{
-
-        loadingPort:"New York",
-
-        inland:180
-
-    },
-
-    Baltimore:{
-
-        loadingPort:"Baltimore",
-
-        inland:250
-
-    },
-
-    Savannah:{
-
-        loadingPort:"Savannah",
-
-        inland:220
-
-    },
-
-    Jacksonville:{
-
-        loadingPort:"Jacksonville",
-
-        inland:240
-
-    },
-
-    Atlanta:{
-
-        loadingPort:"Savannah",
-
-        inland:320
-
-    },
-
-    Houston:{
-
-        loadingPort:"Houston",
-
-        inland:450
-
-    },
-
-    Chicago:{
-
-        loadingPort:"Chicago",
-
-        inland:420
-
-    },
-
-    Dallas:{
-
-        loadingPort:"Houston",
-
-        inland:480
-
-    },
-
-    Miami:{
-
-        loadingPort:"Miami",
-
-        inland:200
-
-    },
-
-    "Los Angeles":{
-
-        loadingPort:"Los Angeles",
-
-        inland:120
-
-    },
-
-    Tacoma:{
-
-        loadingPort:"Tacoma",
-
-        inland:100
+        auctionFees = data;
 
     }
 
-};
+    // Inland Rates
 
-//==============================
-// Shipping Rates
-//==============================
+    ({ data, error } = await supabase
+        .from("inland_rates")
+        .select("*"));
 
-// Temporary estimates.
-// Later these should come
-// from Supabase.
+    if (error) {
 
-const shippingRates={
+        console.error(error);
 
-    Newark:{
-        RoRo:950,
-        Container:1800
-    },
+    } else {
 
-    Baltimore:{
-        RoRo:980,
-        Container:1850
-    },
-
-    Savannah:{
-        RoRo:1000,
-        Container:1900
-    },
-
-    Jacksonville:{
-        RoRo:1025,
-        Container:1925
-    },
-
-    Houston:{
-        RoRo:1250,
-        Container:2150
-    },
-
-    Miami:{
-        RoRo:1050,
-        Container:1950
-    },
-
-    "Los Angeles":{
-        RoRo:1600,
-        Container:2500
-    },
-
-    Tacoma:{
-        RoRo:1700,
-        Container:2600
-    },
-
-    "New York":{
-        RoRo:975,
-        Container:1825
-    },
-
-    Chicago:{
-        RoRo:1100,
-        Container:2000
-    }
-
-};
-
-//==============================
-// Utilities
-//==============================
-
-function num(value){
-
-    return Number(value)||0;
-
-}
-
-function money(value){
-
-    return Number(value).toLocaleString(
-        undefined,
-        {
-            minimumFractionDigits:2,
-            maximumFractionDigits:2
-        }
-    );
-
-}
-
-//==============================
-// Event Listeners
-//==============================
-
-auction.addEventListener(
-"change",
-calculateVehicleCost
-);
-
-auctionYard.addEventListener(
-"change",
-calculateVehicleCost
-);
-
-purchasePrice.addEventListener(
-"input",
-calculateVehicleCost
-);
-
-shippingType.addEventListener(
-"change",
-calculateVehicleCost
-);
-
-exchangeRate.addEventListener(
-"input",
-calculateVehicleCost
-);
-
-customDuty.addEventListener(
-"input",
-calculateVehicleCost
-);
-
-clearingCost.addEventListener(
-"input",
-calculateVehicleCost
-);
-
-deliveryCost.addEventListener(
-"input",
-calculateVehicleCost
-);
-
-otherCost.addEventListener(
-"input",
-calculateVehicleCost
-);
-
-profit.addEventListener(
-"input",
-calculateVehicleCost
-);
-/*=========================================
-JJN HUB Automotive Calculator
-Part 2
-Calculation Engine
-=========================================*/
-
-function calculateVehicleCost(){
-
-    //-------------------------------------
-    // Purchase Price
-    //-------------------------------------
-
-    const price = num(purchasePrice.value);
-
-    //-------------------------------------
-    // Auction Fee
-    //-------------------------------------
-
-    const fee =
-calculateAuctionFee(price);
-    auctionFee.value =
-        fee.toFixed(2);
-
-    //-------------------------------------
-    // Buying Cost
-    //-------------------------------------
-
-    const buying =
-        price + fee;
-
-    buyingCost.value =
-        buying.toFixed(2);
-
-    buyingCostDisplay.innerHTML =
-        "$" + money(buying);
-
-    //-------------------------------------
-    // Auction Yard
-    //-------------------------------------
-
-    const yard =
-        auctionYards[
-            auctionYard.value
-        ];
-
-    let inland = 0;
-
-    let loadPort = "";
-
-    if(yard){
-
-        inland =
-            yard.inland;
-
-        loadPort =
-            yard.loadingPort;
+        inlandRates = data;
 
     }
 
-    loadingPort.value =
-        loadPort;
+    // Shipping Rates
 
-    inlandTransport.value =
-        inland.toFixed(2);
+    ({ data, error } = await supabase
+        .from("shipping_rates")
+        .select("*"));
 
-    //-------------------------------------
-    // Shipping
-    //-------------------------------------
+    if (error) {
 
-    let freight = 0;
+        console.error(error);
 
-    if(
-        shippingRates[
-            loadPort
-        ]
-    ){
+    } else {
 
-        freight =
-        shippingRates[
-            loadPort
-        ][
-            shippingType.value
-        ] || 0;
+        shippingRates = data;
 
     }
 
-    shippingCost.value =
-        freight.toFixed(2);
-
-    //-------------------------------------
-    // Insurance
-    //-------------------------------------
-
-    const insure =
-        buying *
-        CONFIG.insurancePercent;
-
-    insurance.value =
-        insure.toFixed(2);
-
-    //-------------------------------------
-    // Documentation
-    //-------------------------------------
-
-    documentation.value =
-        CONFIG.documentationFee.toFixed(2);
-
-    //-------------------------------------
-    // Port Handling
-    //-------------------------------------
-
-    portHandling.value =
-        CONFIG.portHandling.toFixed(2);
-
-    //-------------------------------------
-    // Terminal Storage
-    //-------------------------------------
-
-    terminalStorage.value =
-        CONFIG.terminalStorage.toFixed(2);
-
-    //-------------------------------------
-    // Total Shipping
-    //-------------------------------------
-
-    const shippingTotal =
-
-        inland +
-
-        freight +
-
-        insure +
-
-        CONFIG.documentationFee +
-
-        CONFIG.portHandling +
-
-        CONFIG.terminalStorage;
-
-    totalShipping.value =
-        shippingTotal.toFixed(2);
-
-    shippingCostDisplay.innerHTML =
-        "$" +
-        money(
-            shippingTotal
-        );
-
-    //-------------------------------------
-    // Total USD
-    //-------------------------------------
-
-    const usd =
-
-        buying +
-
-        shippingTotal;
-
-    usdTotal.innerHTML =
-        "$" +
-        money(usd);
-
-    //-------------------------------------
-    // Convert to Naira
-    //-------------------------------------
-
-    const rate =
-        num(
-            exchangeRate.value
-        );
-
-    const usdToNaira =
-        usd * rate;
-
-    //-------------------------------------
-    // Nigeria Costs
-    //-------------------------------------
-
-    const customs =
-        num(
-            customDuty.value
-        );
-
-    const clearing =
-        num(
-            clearingCost.value
-        );
-
-    const delivery =
-        num(
-            deliveryCost.value
-        );
-
-    const other =
-        num(
-            otherCost.value
-        );
-
-    //-------------------------------------
-    // Landed Cost
-    //-------------------------------------
-
-    const landed =
-
-        usdToNaira +
-
-        customs +
-
-        clearing +
-
-        delivery +
-
-        other;
-
-    nairaTotal.innerHTML =
-        "₦" +
-        money(
-            landed
-        );
-
-    //-------------------------------------
-    // Selling Price
-    //-------------------------------------
-
-    const sell =
-
-        landed +
-
-        num(
-            profit.value
-        );
-
-    sellingPrice.innerHTML =
-        "₦" +
-        money(
-            sell
-        );
-
-}
-/*=========================================
-JJN HUB Automotive Calculator
-Part 3
-Auction Fee Schedule
-=========================================*/
-
-//------------------------------------------
-// COPART AUCTION FEES
-//------------------------------------------
-
-function getCopartFee(price){
-
-    if(price<=99) return 25;
-    if(price<=199) return 60;
-    if(price<=299) return 85;
-    if(price<=349) return 100;
-    if(price<=399) return 110;
-    if(price<=499) return 125;
-    if(price<=749) return 160;
-    if(price<=999) return 205;
-    if(price<=1499) return 255;
-    if(price<=1999) return 305;
-    if(price<=3999) return 420;
-    if(price<=5999) return 520;
-    if(price<=7999) return 620;
-    if(price<=9999) return 720;
-
-    return price*0.08;
+    console.log("Auction Fees:", auctionFees.length);
+    console.log("Inland Rates:", inlandRates.length);
+    console.log("Shipping Rates:", shippingRates.length);
 
 }
 
-//------------------------------------------
-// IAAI AUCTION FEES
-//------------------------------------------
+// ----------------------------
+// Utility
+// ----------------------------
 
-function getIAAIFee(price){
+function money(value) {
 
-    if(price<=99) return 20;
-    if(price<=199) return 50;
-    if(price<=299) return 70;
-    if(price<=399) return 90;
-    if(price<=499) return 105;
-    if(price<=749) return 145;
-    if(price<=999) return 185;
-    if(price<=1499) return 235;
-    if(price<=1999) return 285;
-    if(price<=3999) return 395;
-    if(price<=5999) return 495;
-    if(price<=7999) return 595;
-    if(price<=9999) return 695;
+    return Number(value || 0).toLocaleString(undefined, {
 
-    return price*0.075;
+        minimumFractionDigits: 2,
+
+        maximumFractionDigits: 2
+
+    });
 
 }
 
-//------------------------------------------
-// Dealer Fees
-//------------------------------------------
+function number(id) {
 
-function getDealerFee(price){
-
-    return 0;
+    return Number(document.getElementById(id).value) || 0;
 
 }
 
-//------------------------------------------
-// Private Seller Fees
-//------------------------------------------
+// ----------------------------
+// Page Startup
+// ----------------------------
 
-function getPrivateSellerFee(price){
+window.addEventListener("load", async () => {
 
-    return 0;
+    await loadDatabase();
 
-}
+    console.log("Automotive Calculator Ready");
 
-//------------------------------------------
-// Master Fee Function
-//------------------------------------------
+});
+// ======================================
+// PART 2 - DATABASE LOOKUPS
+// ======================================
 
-function calculateAuctionFee(price){
+// ----------------------------
+// Auction Fee Lookup
+// ----------------------------
 
-    switch(auction.value){
+function getAuctionFee(price) {
 
-        case "Copart":
+    const row = auctionFees.find(item =>
 
-            return getCopartFee(price);
-
-        case "IAAI":
-
-            return getIAAIFee(price);
-
-        case "Dealer":
-
-            return getDealerFee(price);
-
-        case "Private Seller":
-
-            return getPrivateSellerFee(price);
-
-        default:
-
-            return 0;
-
-    }
-
-}
-/*=========================================
-JJN HUB Automotive Calculator
-Part 4
-Utilities
-=========================================*/
-
-//------------------------------------------
-// Reset Calculator
-//------------------------------------------
-
-function resetCalculator(){
-
-    document
-    .getElementById("vehicleCalculator")
-    .reset();
-
-    auctionFee.value="";
-    buyingCost.value="";
-    loadingPort.value="";
-    inlandTransport.value="";
-    shippingCost.value="";
-    insurance.value="";
-    documentation.value="";
-    portHandling.value="";
-    terminalStorage.value="";
-    totalShipping.value="";
-
-    buyingCostDisplay.innerHTML="$0.00";
-    shippingCostDisplay.innerHTML="$0.00";
-    usdTotal.innerHTML="$0.00";
-    nairaTotal.innerHTML="₦0.00";
-    sellingPrice.innerHTML="₦0.00";
-
-}
-
-//------------------------------------------
-// Print Estimate
-//------------------------------------------
-
-function printEstimate(){
-
-    window.print();
-
-}
-
-//------------------------------------------
-// Email Estimate
-//------------------------------------------
-
-function emailEstimate(){
-
-    const subject="JJN HUB Vehicle Import Estimate";
-
-    const body=`
-
-JJN HUB VEHICLE IMPORT ESTIMATE
-
-Vehicle:
-${$("make").value} ${$("model").value}
-
-Year:
-${$("year").value}
-
-Auction:
-${auction.value}
-
-Auction Yard:
-${auctionYard.value}
-
-Buying Cost:
-${buyingCostDisplay.innerText}
-
-Shipping Cost:
-${shippingCostDisplay.innerText}
-
-Landed Cost:
-${nairaTotal.innerText}
-
-Recommended Selling Price:
-${sellingPrice.innerText}
-
-Generated by JJN HUB
-`;
-
-    window.location.href=
-
-`mailto:?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
-
-}
-
-//------------------------------------------
-// Save Estimate
-//------------------------------------------
-
-function saveEstimate(){
-
-    const estimate={
-
-        make:$("make").value,
-
-        model:$("model").value,
-
-        year:$("year").value,
-
-        vin:$("vin").value,
-
-        vehicleType:$("vehicleType").value,
-
-        auction:auction.value,
-
-        auctionYard:auctionYard.value,
-
-        purchasePrice:purchasePrice.value,
-
-        auctionFee:auctionFee.value,
-
-        buyingCost:buyingCost.value,
-
-        loadingPort:loadingPort.value,
-
-        inlandTransport:inlandTransport.value,
-
-        shippingCost:shippingCost.value,
-
-        insurance:insurance.value,
-
-        documentation:documentation.value,
-
-        portHandling:portHandling.value,
-
-        terminalStorage:terminalStorage.value,
-
-        totalShipping:totalShipping.value,
-
-        exchangeRate:exchangeRate.value,
-
-        customs:customDuty.value,
-
-        clearing:clearingCost.value,
-
-        delivery:deliveryCost.value,
-
-        other:otherCost.value,
-
-        profit:profit.value,
-
-        landedCost:nairaTotal.innerText,
-
-        sellingPrice:sellingPrice.innerText,
-
-        created:new Date().toISOString()
-
-    };
-
-    localStorage.setItem(
-
-        "lastVehicleEstimate",
-
-        JSON.stringify(estimate)
+        item.auction_house === auction.value &&
+        price >= Number(item.min_price) &&
+        price <= Number(item.max_price)
 
     );
 
-    alert("Estimate saved successfully.");
+    return row ? Number(row.fee) : 0;
 
 }
 
-//------------------------------------------
-// Load Last Estimate
-//------------------------------------------
+// ----------------------------
+// Inland Transport Lookup
+// ----------------------------
 
-function loadLastEstimate(){
+function getInlandRate() {
 
-    const saved=
+    const row = inlandRates.find(item =>
 
-    localStorage.getItem(
-        "lastVehicleEstimate"
+        item.auction_house === auction.value &&
+        item.auction_yard === auctionYard.value
+
     );
 
-    if(!saved){
+    if (!row) {
+
+        loadingPort.value = "";
+        inlandTransport.value = "0";
 
         return;
 
     }
 
-    const data=
+    loadingPort.value = row.loading_port;
 
-    JSON.parse(saved);
-
-    $("make").value=data.make||"";
-    $("model").value=data.model||"";
-    $("year").value=data.year||"";
-    $("vin").value=data.vin||"";
-
-    $("vehicleType").value=data.vehicleType||"";
-
-    auction.value=data.auction||"";
-
-    auctionYard.value=data.auctionYard||"";
-
-    purchasePrice.value=data.purchasePrice||"";
-
-    exchangeRate.value=data.exchangeRate||"";
-
-    customDuty.value=data.customs||"";
-
-    clearingCost.value=data.clearing||"";
-
-    deliveryCost.value=data.delivery||"";
-
-    otherCost.value=data.other||"";
-
-    profit.value=data.profit||"";
-
-    calculateVehicleCost();
+    inlandTransport.value = Number(
+        row.inland_cost
+    ).toFixed(2);
 
 }
 
-//------------------------------------------
-// Page Startup
-//------------------------------------------
+// ----------------------------
+// Shipping Lookup
+// ----------------------------
 
-window.addEventListener(
+function getShippingRate() {
 
-"load",
+    const row = shippingRates.find(item =>
 
-function(){
+        item.loading_port === loadingPort.value &&
+        item.destination_port === destinationPort.value &&
+        item.shipping_type === shippingType.value
 
-    loadLastEstimate();
+    );
+
+    if (!row) {
+
+        shippingCost.value = "0";
+        insurance.value = "0";
+        documentation.value = "0";
+        portHandling.value = "0";
+        terminalStorage.value = "0";
+        totalShipping.value = "0";
+
+        return;
+
+    }
+
+    shippingCost.value = Number(
+        row.freight
+    ).toFixed(2);
+
+    insurance.value = Number(
+        row.insurance
+    ).toFixed(2);
+
+    documentation.value = Number(
+        row.documentation
+    ).toFixed(2);
+
+    portHandling.value = Number(
+        row.port_handling
+    ).toFixed(2);
+
+    terminalStorage.value = Number(
+        row.terminal_storage
+    ).toFixed(2);
+
+    const shippingTotal =
+
+        Number(row.freight) +
+        Number(row.insurance) +
+        Number(row.documentation) +
+        Number(row.port_handling) +
+        Number(row.terminal_storage);
+
+    totalShipping.value = shippingTotal.toFixed(2);
+
+}
+
+// ----------------------------
+// Refresh All Rates
+// ----------------------------
+
+function refreshRates() {
+
+    const price = number("purchasePrice");
+
+    auctionFee.value = getAuctionFee(price).toFixed(2);
+
+    buyingCost.value = (
+
+        price +
+
+        Number(auctionFee.value)
+
+    ).toFixed(2);
+
+    getInlandRate();
+
+    getShippingRate();
+
+}
+
+// ----------------------------
+// Auto Refresh
+// ----------------------------
+
+auction.addEventListener("change", refreshRates);
+
+auctionYard.addEventListener("change", refreshRates);
+
+destinationPort.addEventListener("change", refreshRates);
+
+shippingType.addEventListener("change", refreshRates);
+
+purchasePrice.addEventListener("input", refreshRates);
+// ======================================
+// PART 3 - CALCULATIONS
+// ======================================
+
+// ----------------------------
+// Main Calculator
+// ----------------------------
+
+function calculateVehicleCost() {
+
+    refreshRates();
+
+    // USD VALUES
+
+    const buying = number("buyingCost");
+
+    const inland = number("inlandTransport");
+
+    const freight = number("shippingCost");
+
+    const insure = number("insurance");
+
+    const docs = number("documentation");
+
+    const handling = number("portHandling");
+
+    const storage = number("terminalStorage");
+
+    // SHIPPING TOTAL
+
+    const shippingTotal =
+
+        inland +
+        freight +
+        insure +
+        docs +
+        handling +
+        storage;
+
+    totalShipping.value = shippingTotal.toFixed(2);
+
+    // GRAND USD
+
+    const totalUSD =
+
+        buying +
+        shippingTotal;
+
+    usdTotal.innerHTML =
+        "$" + money(totalUSD);
+
+    // NIGERIA VALUES
+
+    const rate = number("exchangeRate");
+
+    const clearing = number("clearingCost");
+
+    const other = number("otherCost");
+
+    const profit = number("profit");
+
+    // LANDED COST
+
+    const landed =
+
+        (totalUSD * rate) +
+
+        clearing +
+
+        other;
+
+    nairaTotal.innerHTML =
+        "₦" + money(landed);
+
+    // SELLING PRICE
+
+    const selling =
+
+        landed +
+
+        profit;
+
+    sellingPrice.innerHTML =
+        "₦" + money(selling);
+
+}
+
+// ----------------------------
+// Live Calculation
+// ----------------------------
+
+exchangeRate.addEventListener(
+
+    "input",
+
+    calculateVehicleCost
+
+);
+
+clearingCost.addEventListener(
+
+    "input",
+
+    calculateVehicleCost
+
+);
+
+otherCost.addEventListener(
+
+    "input",
+
+    calculateVehicleCost
+
+);
+
+desiredProfit.addEventListener(
+
+    "input",
+
+    calculateVehicleCost
+
+);
+
+// ----------------------------
+// Calculate Button
+// ----------------------------
+
+window.calculateVehicleCost =
+calculateVehicleCost;
+
+// ----------------------------
+// First Calculation
+// ----------------------------
+
+setTimeout(() => {
 
     calculateVehicleCost();
+
+},1000);
+// ======================================
+// PART 4 - SUPABASE ESTIMATES
+// ======================================
+
+// ----------------------------
+// Save Estimate
+// ----------------------------
+
+async function saveEstimate() {
+
+    const estimate = {
+
+        make: document.getElementById("make").value,
+
+        model: document.getElementById("model").value,
+
+        year: Number(document.getElementById("year").value),
+
+        vin: document.getElementById("vin").value,
+
+        vehicle_type: document.getElementById("vehicleType").value,
+
+        auction_house: auction.value,
+
+        auction_yard: auctionYard.value,
+
+        purchase_price: number("purchasePrice"),
+
+        auction_fee: number("auctionFee"),
+
+        buying_cost: number("buyingCost"),
+
+        loading_port: loadingPort.value,
+
+        inland_transport: number("inlandTransport"),
+
+        shipping_cost: number("shippingCost"),
+
+        insurance: number("insurance"),
+
+        documentation: number("documentation"),
+
+        port_handling: number("portHandling"),
+
+        terminal_storage: number("terminalStorage"),
+
+        total_shipping: number("totalShipping"),
+
+        exchange_rate: number("exchangeRate"),
+
+        clearing: number("clearingCost"),
+
+        other_cost: number("otherCost"),
+
+        desired_profit: number("profit"),
+
+        landed_cost: parseFloat(
+            nairaTotal.innerText
+                .replace("₦","")
+                .replace(/,/g,"")
+        ),
+
+        selling_price: parseFloat(
+            sellingPrice.innerText
+                .replace("₦","")
+                .replace(/,/g,"")
+        )
+
+    };
+
+    const { error } = await supabase
+
+        .from("vehicle_estimates")
+
+        .insert([estimate]);
+
+    if(error){
+
+        alert(error.message);
+
+        return;
+
+    }
+
+    alert("Estimate Saved Successfully.");
+
+    loadEstimateHistory();
+
+}
+
+// ----------------------------
+// Load Estimates
+// ----------------------------
+
+async function loadEstimateHistory(){
+
+    const { data, error } = await supabase
+
+        .from("vehicle_estimates")
+
+        .select("*")
+
+        .order("id",{ascending:false});
+
+    if(error){
+
+        console.log(error);
+
+        return;
+
+    }
+
+    console.table(data);
+
+}
+
+// ----------------------------
+// Delete Estimate
+// ----------------------------
+
+async function deleteEstimate(id){
+
+    if(!confirm("Delete this estimate?")){
+
+        return;
+
+    }
+
+    const { error } = await supabase
+
+        .from("vehicle_estimates")
+
+        .delete()
+
+        .eq("id",id);
+
+    if(error){
+
+        alert(error.message);
+
+        return;
+
+    }
+
+    loadEstimateHistory();
+
+}
+
+// ----------------------------
+// Reset Calculator
+// ----------------------------
+
+function resetCalculator(){
+
+    document.getElementById("vehicleCalculator").reset();
+
+    auctionFee.value="";
+
+    buyingCost.value="";
+
+    loadingPort.value="";
+
+    inlandTransport.value="";
+
+    shippingCost.value="";
+
+    insurance.value="";
+
+    documentation.value="";
+
+    portHandling.value="";
+
+    terminalStorage.value="";
+
+    totalShipping.value="";
+
+    usdTotal.innerHTML="$0.00";
+
+    nairaTotal.innerHTML="₦0.00";
+
+    sellingPrice.innerHTML="₦0.00";
+
+}
+
+// ----------------------------
+// Expose Functions
+// ----------------------------
+
+window.saveEstimate = saveEstimate;
+
+window.deleteEstimate = deleteEstimate;
+
+window.resetCalculator = resetCalculator;
+
+// ----------------------------
+// Initial Load
+// ----------------------------
+
+loadEstimateHistory();
+// ======================================
+// PART 5 - PRINT, EMAIL & HISTORY
+// ======================================
+
+// ----------------------------
+// Print Estimate
+// ----------------------------
+
+function printEstimate() {
+
+    const win = window.open("", "_blank");
+
+    win.document.write(`
+
+    <html>
+
+    <head>
+
+    <title>JJN HUB Vehicle Estimate</title>
+
+    <style>
+
+    body{
+        font-family:Arial;
+        padding:40px;
+        line-height:1.8;
+    }
+
+    h1{
+        color:#d4a017;
+    }
+
+    table{
+        width:100%;
+        border-collapse:collapse;
+        margin-top:20px;
+    }
+
+    td,th{
+        border:1px solid #ddd;
+        padding:10px;
+    }
+
+    th{
+        background:#000;
+        color:#fff;
+    }
+
+    </style>
+
+    </head>
+
+    <body>
+
+    <h1>JJN HUB</h1>
+
+    <h2>Vehicle Import Cost Estimate</h2>
+
+    <table>
+
+    <tr>
+
+    <th>Description</th>
+
+    <th>Value</th>
+
+    </tr>
+
+    <tr>
+
+    <td>Vehicle</td>
+
+    <td>
+
+    ${make.value}
+
+    ${model.value}
+
+    ${year.value}
+
+    </td>
+
+    </tr>
+
+    <tr>
+
+    <td>VIN</td>
+
+    <td>${vin.value}</td>
+
+    </tr>
+
+    <tr>
+
+    <td>Auction</td>
+
+    <td>${auction.value}</td>
+
+    </tr>
+
+    <tr>
+
+    <td>Buying Cost</td>
+
+    <td>$${money(number("buyingCost"))}</td>
+
+    </tr>
+
+    <tr>
+
+    <td>Total Shipping</td>
+
+    <td>$${money(number("totalShipping"))}</td>
+
+    </tr>
+
+    <tr>
+
+    <td>Total Landed Cost</td>
+
+    <td>${nairaTotal.innerHTML}</td>
+
+    </tr>
+
+    <tr>
+
+    <td>Recommended Selling Price</td>
+
+    <td>${sellingPrice.innerHTML}</td>
+
+    </tr>
+
+    </table>
+
+    </body>
+
+    </html>
+
+    `);
+
+    win.document.close();
+
+    win.print();
+
+}
+
+// ----------------------------
+// Email Estimate
+// ----------------------------
+
+async function emailEstimate(){
+
+    const email = prompt("Customer Email");
+
+    if(!email) return;
+
+    const response = await fetch(
+
+        "https://YOUR-PROJECT.supabase.co/functions/v1/send-estimate",
+
+        {
+
+            method:"POST",
+
+            headers:{
+
+                "Content-Type":"application/json"
+
+            },
+
+            body:JSON.stringify({
+
+                email,
+
+                vehicle:
+
+                `${make.value}
+                 ${model.value}
+                 ${year.value}`,
+
+                landed:
+
+                nairaTotal.innerHTML,
+
+                selling:
+
+                sellingPrice.innerHTML
+
+            })
+
+        }
+
+    );
+
+    if(response.ok){
+
+        alert("Estimate emailed successfully.");
+
+    }else{
+
+        alert("Unable to send email.");
+
+    }
+
+}
+
+// ----------------------------
+// Search Estimates
+// ----------------------------
+
+async function searchEstimate(keyword){
+
+    const {data,error}=await supabase
+
+    .from("vehicle_estimates")
+
+    .select("*")
+
+    .or(
+
+`make.ilike.%${keyword}%,
+model.ilike.%${keyword}%,
+vin.ilike.%${keyword}%`
+
+    );
+
+    if(error){
+
+        console.log(error);
+
+        return;
+
+    }
+
+    console.table(data);
+
+}
+
+// ----------------------------
+// Open Estimate
+// ----------------------------
+
+async function openEstimate(id){
+
+const {data,error}=await supabase
+
+.from("vehicle_estimates")
+
+.select("*")
+
+.eq("id",id)
+
+.single();
+
+if(error){
+
+alert(error.message);
+
+return;
+
+}
+
+document.getElementById("make").value=data.make;
+
+document.getElementById("model").value=data.model;
+
+document.getElementById("year").value=data.year;
+
+document.getElementById("vin").value=data.vin;
+
+auction.value=data.auction_house;
+
+auctionYard.value=data.auction_yard;
+
+purchasePrice.value=data.purchase_price;
+
+exchangeRate.value=data.exchange_rate;
+
+clearingCost.value=data.clearing;
+
+otherCost.value=data.other_cost;
+
+desiredProfit.value=data.desired_profit;
+
+calculateVehicleCost();
+
+}
+
+// ----------------------------
+// Export
+// ----------------------------
+
+window.printEstimate=printEstimate;
+
+window.emailEstimate=emailEstimate;
+
+window.searchEstimate=searchEstimate;
+
+window.openEstimate=openEstimate;
+// ======================================
+// PART 6 - ESTIMATE HISTORY TABLE
+// ======================================
+
+const estimateTableBody =
+document.getElementById(
+"estimateTableBody"
+);
+
+const estimateSearch =
+document.getElementById(
+"estimateSearch"
+);
+
+// ----------------------------
+// Load Estimate History
+// ----------------------------
+
+async function loadEstimateHistory(){
+
+const {data,error}=await supabase
+
+.from("vehicle_estimates")
+
+.select("*")
+
+.order("id",{ascending:false});
+
+if(error){
+
+console.log(error);
+
+return;
+
+}
+
+displayEstimateTable(data);
+
+}
+
+// ----------------------------
+// Display Table
+// ----------------------------
+
+function displayEstimateTable(data){
+
+estimateTableBody.innerHTML="";
+
+data.forEach(item=>{
+
+estimateTableBody.innerHTML+=`
+
+<tr>
+
+<td>${item.id}</td>
+
+<td>
+
+${item.make}
+
+${item.model}
+
+${item.year}
+
+</td>
+
+<td>
+
+${item.auction_house}
+
+</td>
+
+<td>
+
+$${money(item.purchase_price)}
+
+</td>
+
+<td>
+
+₦${money(item.landed_cost)}
+
+</td>
+
+<td>
+
+₦${money(item.selling_price)}
+
+</td>
+
+<td>
+
+${new Date(item.created_at).toLocaleDateString()}
+
+</td>
+
+<td>
+
+<button
+class="action-btn"
+onclick="openEstimate(${item.id})">
+
+View
+
+</button>
+
+<button
+class="action-btn"
+onclick="printEstimate()">
+
+Print
+
+</button>
+
+<button
+class="action-btn"
+onclick="deleteEstimate(${item.id})">
+
+Delete
+
+</button>
+
+</td>
+
+</tr>
+
+`;
+
+});
+
+}
+
+// ----------------------------
+// Search
+// ----------------------------
+
+estimateSearch.addEventListener(
+
+"input",
+
+async ()=>{
+
+const keyword=
+estimateSearch.value;
+
+if(keyword===""){
+
+loadEstimateHistory();
+
+return;
+
+}
+
+const {data,error}=await supabase
+
+.from("vehicle_estimates")
+
+.select("*")
+
+.or(
+
+`make.ilike.%${keyword}%,
+model.ilike.%${keyword}%,
+vin.ilike.%${keyword}%,
+auction_house.ilike.%${keyword}%`
+
+);
+
+if(error){
+
+console.log(error);
+
+return;
+
+}
+
+displayEstimateTable(data);
 
 }
 
 );
+
+// ----------------------------
+// Refresh Every Save/Delete
+// ----------------------------
+
+window.loadEstimateHistory=
+loadEstimateHistory;
+
+loadEstimateHistory();
