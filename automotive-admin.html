@@ -362,85 +362,9 @@ Save Vehicle
 <!-- PART 1 - VEHICLE INFORMATION -->
 <!-- ===================================== -->
 
-<section class="dashboard-panel">
-
-<h2>Vehicle Import Cost Calculator</h2>
-
-<form id="vehicleCalculator" class="vehicle-form">
-
-<h3>Vehicle Information</h3>
-
-<div class="form-group">
-
-<label>Vehicle Make</label>
-
-<input
-type="text"
-id="make"
-placeholder="Toyota">
-
-</div>
-
-<div class="form-group">
-
-<label>Vehicle Model</label>
-
-<input
-type="text"
-id="model"
-placeholder="Corolla">
-
-</div>
-
-<div class="form-group">
-
-<label>Year</label>
-
-<input
-type="number"
-id="year"
-placeholder="2022">
-
-</div>
-
-<div class="form-group">
-
-<label>VIN Number</label>
-
-<input
-type="text"
-id="vin"
-placeholder="JTDBU4EE123456789">
-
-</div>
-
-<div class="form-group">
-
-<label>Vehicle Type</label>
-
-<select id="vehicleType">
-
-<option value="Sedan">
-Sedan
-</option>
-
-<option value="SUV">
-SUV
-</option>
-
-<option value="Pickup">
-Pickup
-</option>
-
-<option value="Van">
-Van
-</option>
-
-<option value="Truck">
-Truck
-</option>
-
-</select>
+<!-- ===================================== -->
+<!-- IMPORT COST SUMMARY -->
+<!-- ===================================== -->
 
 </div>
 
@@ -829,24 +753,130 @@ id="profit"
 placeholder="0">
 
 </div>
+<section class="dashboard-panel">
+
+<h2>Vehicle Import Summary</h2>
+
+<table class="automotive-table">
+
+<tr>
+<th colspan="2">PURCHASE COST</th>
+</tr>
+
+<tr>
+<td>Purchase Price</td>
+<td id="summaryPurchase">$0.00</td>
+</tr>
+
+<tr>
+<td>Auction Fee</td>
+<td id="summaryAuctionFee">$0.00</td>
+</tr>
+
+<tr style="font-weight:bold;background:#fff7d6;">
+<td>Total Buying Cost</td>
+<td id="summaryBuying">$0.00</td>
+</tr>
+
+<tr>
+<th colspan="2">SHIPPING COST</th>
+</tr>
+
+<tr>
+<td>Inland Transport</td>
+<td id="summaryInland">$0.00</td>
+</tr>
+
+<tr>
+<td>Ocean Freight</td>
+<td id="summaryFreight">$0.00</td>
+</tr>
+
+<tr>
+<td>Marine Insurance</td>
+<td id="summaryInsurance">$0.00</td>
+</tr>
+
+<tr>
+<td>Documentation</td>
+<td id="summaryDocumentation">$0.00</td>
+</tr>
+
+<tr>
+<td>Port Handling</td>
+<td id="summaryHandling">$0.00</td>
+</tr>
+
+<tr>
+<td>Terminal Storage</td>
+<td id="summaryStorage">$0.00</td>
+</tr>
+
+<tr style="font-weight:bold;background:#fff7d6;">
+<td>Total Shipping</td>
+<td id="summaryShipping">$0.00</td>
+</tr>
+
+<tr>
+<th colspan="2">NIGERIA COSTS</th>
+</tr>
+
+<tr>
+<td>Exchange Rate</td>
+<td id="summaryRate">₦0.00</td>
+</tr>
+
+<tr>
+<td>Custom Duty</td>
+<td id="summaryDuty">₦0.00</td>
+</tr>
+
+<tr>
+<td>Clearing Charges</td>
+<td id="summaryClearing">₦0.00</td>
+</tr>
+
+<tr>
+<td>Delivery</td>
+<td id="summaryDelivery">₦0.00</td>
+</tr>
+
+<tr>
+<td>Other Expenses</td>
+<td id="summaryOther">₦0.00</td>
+</tr>
+
+<tr style="font-weight:bold;background:#fff7d6;">
+<td>Total Landed Cost</td>
+<td id="summaryLanded">₦0.00</td>
+</tr>
+
+<tr>
+<th colspan="2">SELLING PRICE</th>
+</tr>
+
+<tr style="
+background:#000;
+color:#d4a017;
+font-size:22px;
+font-weight:bold;
+">
+
+<td>Recommended Selling Price</td>
+
+<td id="summarySelling">
+
+₦0.00
+
+</td>
+
+</tr>
+
+</table>
+
+</section>
 
 <hr>
-
-<h3>Cost Summary</h3>
-
-<div class="dashboard-cards">
-
-<div class="dashboard-card">
-
-<h4>Buying Cost</h4>
-
-<h2 id="buyingCostDisplay">
-
-$0.00
-
-</h2>
-
-</div>
 
 <div class="dashboard-card">
 
