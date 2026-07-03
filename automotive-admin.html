@@ -1,25 +1,18 @@
-<!-- AUTOMOTIVE ADMIN PART 1 START -->
-
 <!DOCTYPE html>
-
 <html lang="en">
 
 <head>
 
 <meta charset="UTF-8">
 
-<meta
-name="viewport"
+<meta name="viewport"
 content="width=device-width, initial-scale=1.0">
 
 <title>
-
 JJN HUB Automotive Administration
-
 </title>
 
-<link
-rel="stylesheet"
+<link rel="stylesheet"
 href="css/admin.css">
 
 <link
@@ -40,38 +33,41 @@ onclick="toggleAdminMenu()">
 
 <div class="dashboard-layout">
 
+<!-- ========================= -->
+<!-- SIDEBAR -->
+<!-- ========================= -->
+
 <aside class="sidebar">
 
 <div class="sidebar-logo">
 
 <img
 src="assets/logo.png"
-alt="JJN HUB Logo"
 class="sidebar-logo-img">
 
-<h2>
+<h2>JJN HUB</h2>
 
-JJN HUB
-
-</h2>
-
-<p>
-
-ADMIN PORTAL
-
-</p>
+<p>ADMIN PORTAL</p>
 
 </div>
 
 <nav class="sidebar-nav">
 
-<a href="dashboard.html">Dashboard</a>
+<a href="dashboard.html">
+Dashboard
+</a>
 
-<a href="customers.html">Customers</a>
+<a href="customers.html">
+Customers
+</a>
 
-<a href="documents.html">Documents</a>
+<a href="documents.html">
+Documents
+</a>
 
-<a href="projects.html">Projects</a>
+<a href="projects.html">
+Projects
+</a>
 
 <a
 href="automotive-admin.html"
@@ -81,23 +77,41 @@ Automotive
 
 </a>
 
-<a href="engineering-admin.html">Engineering</a>
+<a href="engineering-admin.html">
+Engineering
+</a>
 
-<a href="marine-admin.html">Marine</a>
+<a href="marine-admin.html">
+Marine
+</a>
 
-<a href="logistics-admin.html">Logistics</a>
+<a href="logistics-admin.html">
+Logistics
+</a>
 
-<a href="procurement-admin.html">Procurement</a>
+<a href="procurement-admin.html">
+Procurement
+</a>
 
-<a href="quality.html">Quality Management</a>
+<a href="quality.html">
+Quality
+</a>
 
-<a href="reports.html">Reports</a>
+<a href="reports.html">
+Reports
+</a>
 
-<a href="settings.html">Settings</a>
+<a href="settings.html">
+Settings
+</a>
 
 </nav>
 
 </aside>
+
+<!-- ========================= -->
+<!-- MAIN -->
+<!-- ========================= -->
 
 <main class="main-content">
 
@@ -105,13 +119,15 @@ Automotive
 
 <h1>
 
-Automotive Management
+Automotive Management System
 
 </h1>
 
 <div class="user-actions">
 
-<span id="userName" class="user-name">
+<span
+id="userName"
+class="user-name">
 
 Loading...
 
@@ -124,9 +140,14 @@ class="logout-btn">
 Logout
 
 </button>
+
 </div>
 
 </header>
+
+<!-- ========================= -->
+<!-- DASHBOARD -->
+<!-- ========================= -->
 
 <section class="dashboard-cards">
 
@@ -138,9 +159,9 @@ Vehicles Available
 
 </h3>
 
-<h2>
+<h2 id="availableVehicles">
 
-45
+0
 
 </h2>
 
@@ -154,9 +175,9 @@ Vehicles Sold
 
 </h3>
 
-<h2>
+<h2 id="soldVehicles">
 
-18
+0
 
 </h2>
 
@@ -170,9 +191,9 @@ Import Requests
 
 </h3>
 
-<h2>
+<h2 id="importRequests">
 
-12
+0
 
 </h2>
 
@@ -182,13 +203,13 @@ Import Requests
 
 <h3>
 
-Customer Orders
+Saved Estimates
 
 </h3>
 
-<h2>
+<h2 id="savedEstimates">
 
-27
+0
 
 </h2>
 
@@ -196,15 +217,31 @@ Customer Orders
 
 </section>
 
+<!-- ========================= -->
+<!-- VEHICLE IMPORT CALCULATOR -->
+<!-- ========================= -->
+
 <section class="dashboard-panel">
 
 <h2>
 
-Add Vehicle Record
+Vehicle Import Calculator
 
 </h2>
 
-<form class="vehicle-form">
+<form
+id="vehicleCalculator"
+class="vehicle-form">
+
+<!-- ========================= -->
+<!-- VEHICLE INFORMATION -->
+<!-- ========================= -->
+
+<h3>
+
+Vehicle Information
+
+</h3>
 
 <div class="form-group">
 
@@ -216,6 +253,7 @@ Vehicle Make
 
 <input
 type="text"
+id="make"
 placeholder="Toyota">
 
 </div>
@@ -230,6 +268,7 @@ Vehicle Model
 
 <input
 type="text"
+id="model"
 placeholder="Corolla">
 
 </div>
@@ -244,7 +283,8 @@ Year
 
 <input
 type="number"
-placeholder="2020">
+id="year"
+placeholder="2022">
 
 </div>
 
@@ -258,126 +298,53 @@ VIN Number
 
 <input
 type="text"
+id="vin"
 placeholder="Vehicle Identification Number">
 
 </div>
-
-<!-- AUTOMOTIVE ADMIN PART 1 END -->
-<!-- AUTOMOTIVE ADMIN PART 2 START -->
 
 <div class="form-group">
 
 <label>
 
-Vehicle Status
+Vehicle Type
 
 </label>
 
-<select>
+<select id="vehicleType">
 
-<option>
+<option>Sedan</option>
 
-Available
+<option>SUV</option>
 
-</option>
+<option>Pickup</option>
 
-<option>
+<option>Van</option>
 
-Reserved
-
-</option>
-
-<option>
-
-Sold
-
-</option>
-
-<option>
-
-In Transit
-
-</option>
+<option>Truck</option>
 
 </select>
 
 </div>
 
-<div class="form-group">
-
-<label>
-
-Purchase Cost ($)
-
-</label>
-
-<input
-type="number"
-placeholder="5000">
-
-</div>
-
-<div class="form-group">
-
-<label>
-
-Selling Price ($)
-
-</label>
-
-<input
-type="number"
-placeholder="6500">
-
-</div>
-
-<div class="form-group">
-
-<label>
-
-Location
-
-</label>
-
-<input
-type="text"
-placeholder="Lagos, Nigeria">
-
-</div>
-
-<button
-type="submit"
-class="action-btn">
-
-Save Vehicle
-
-</button>
-
-</form>
-
-</section>
-
-<!-- ===================================== -->
-<!-- JJN HUB VEHICLE IMPORT CALCULATOR -->
-<!-- PART 1 - VEHICLE INFORMATION -->
-<!-- ===================================== -->
-
-<!-- ===================================== -->
-<!-- IMPORT COST SUMMARY -->
-<!-- ===================================== -->
-
-</div>
-
 <hr>
 
-<h3>Purchase Information</h3>
+<h3>
+
+Purchase Information
+
+</h3>
 <!-- ===================================== -->
 <!-- PART 2 - PURCHASE INFORMATION -->
 <!-- ===================================== -->
 
 <div class="form-group">
 
-<label>Auction House</label>
+<label>
+
+Auction House
+
+</label>
 
 <select id="auction">
 
@@ -397,7 +364,11 @@ Save Vehicle
 
 <div class="form-group">
 
-<label>Auction Yard</label>
+<label>
+
+Auction Yard
+
+</label>
 
 <select id="auctionYard">
 
@@ -417,11 +388,9 @@ Save Vehicle
 
 <option value="Houston">Houston</option>
 
-<option value="Chicago">Chicago</option>
-
 <option value="Dallas">Dallas</option>
 
-<option value="Miami">Miami</option>
+<option value="Chicago">Chicago</option>
 
 <option value="Los Angeles">Los Angeles</option>
 
@@ -433,7 +402,11 @@ Save Vehicle
 
 <div class="form-group">
 
-<label>Purchase Price (USD)</label>
+<label>
+
+Purchase Price (USD)
+
+</label>
 
 <input
 type="number"
@@ -444,7 +417,11 @@ placeholder="0.00">
 
 <div class="form-group">
 
-<label>Auction Fee (Auto)</label>
+<label>
+
+Auction Fee (USD)
+
+</label>
 
 <input
 type="number"
@@ -456,7 +433,11 @@ style="background:#f4f4f4;">
 
 <div class="form-group">
 
-<label>Total Buying Cost (USD)</label>
+<label>
+
+Total Buying Cost (USD)
+
+</label>
 
 <input
 type="number"
@@ -465,22 +446,30 @@ readonly
 style="
 background:#fff7d6;
 font-weight:bold;
-color:#000;">
+">
 
 </div>
 
 <div class="form-group">
 
-<label>Buyer Type</label>
+<label>
+
+Buyer Type
+
+</label>
 
 <select id="buyerType">
 
 <option value="Business">
+
 Business Account
+
 </option>
 
 <option value="Individual">
+
 Individual
+
 </option>
 
 </select>
@@ -489,24 +478,36 @@ Individual
 
 <div class="form-group">
 
-<label>Vehicle Title</label>
+<label>
+
+Vehicle Title
+
+</label>
 
 <select id="titleType">
 
 <option value="Clean">
+
 Clean Title
+
 </option>
 
 <option value="Salvage">
+
 Salvage
+
 </option>
 
 <option value="Rebuildable">
+
 Rebuildable
+
 </option>
 
 <option value="Non Repairable">
+
 Non Repairable
+
 </option>
 
 </select>
@@ -515,22 +516,43 @@ Non Repairable
 
 <hr>
 
-<h3>Shipping Information</h3>
 <!-- ===================================== -->
-<!-- PART 3 - SHIPPING INFORMATION -->
+<!-- SHIPPING INFORMATION -->
 <!-- ===================================== -->
+
+<h3>
+
+Shipping Information
+
+</h3>
 
 <div class="form-group">
 
-<label>Destination Country</label>
+<label>
+
+Destination Country
+
+</label>
 
 <select id="destinationCountry">
 
-<option value="Nigeria">Nigeria</option>
+<option value="Nigeria">
 
-<option value="Ghana">Ghana</option>
+Nigeria
 
-<option value="Benin">Benin Republic</option>
+</option>
+
+<option value="Ghana">
+
+Ghana
+
+</option>
+
+<option value="Benin Republic">
+
+Benin Republic
+
+</option>
 
 </select>
 
@@ -538,15 +560,31 @@ Non Repairable
 
 <div class="form-group">
 
-<label>Destination Port</label>
+<label>
+
+Destination Port
+
+</label>
 
 <select id="destinationPort">
 
-<option value="Lagos">Lagos</option>
+<option value="Lagos">
 
-<option value="Tema">Tema</option>
+Lagos
 
-<option value="Cotonou">Cotonou</option>
+</option>
+
+<option value="Tema">
+
+Tema
+
+</option>
+
+<option value="Cotonou">
+
+Cotonou
+
+</option>
 
 </select>
 
@@ -554,7 +592,11 @@ Non Repairable
 
 <div class="form-group">
 
-<label>Shipping Method</label>
+<label>
+
+Shipping Method
+
+</label>
 
 <select id="shippingType">
 
@@ -576,98 +618,123 @@ Container
 
 <div class="form-group">
 
-<label>Loading Port (Auto)</label>
+<label>
+
+Loading Port
+
+</label>
 
 <input
 type="text"
 id="loadingPort"
 readonly
-style="
-background:#f4f4f4;">
+style="background:#f4f4f4;">
 
 </div>
 
 <div class="form-group">
 
-<label>Inland Transport (USD)</label>
+<label>
+
+Inland Transport (USD)
+
+</label>
 
 <input
 type="number"
 id="inlandTransport"
 readonly
-style="
-background:#f4f4f4;">
+style="background:#f4f4f4;">
 
 </div>
 
 <div class="form-group">
 
-<label>Ocean Freight (USD)</label>
+<label>
+
+Ocean Freight (USD)
+
+</label>
 
 <input
 type="number"
 id="shippingCost"
 readonly
-style="
-background:#f4f4f4;">
+style="background:#f4f4f4;">
 
 </div>
 
 <div class="form-group">
 
-<label>Marine Insurance (USD)</label>
+<label>
+
+Marine Insurance (USD)
+
+</label>
 
 <input
 type="number"
 id="insurance"
 readonly
-style="
-background:#f4f4f4;">
+style="background:#f4f4f4;">
 
 </div>
 
 <div class="form-group">
 
-<label>Documentation Fee (USD)</label>
+<label>
+
+Documentation Fee (USD)
+
+</label>
 
 <input
 type="number"
 id="documentation"
 readonly
-style="
-background:#f4f4f4;">
+style="background:#f4f4f4;">
 
 </div>
 
 <div class="form-group">
 
-<label>Port Handling Fee (USD)</label>
+<label>
+
+Port Handling Fee (USD)
+
+</label>
 
 <input
 type="number"
 id="portHandling"
 readonly
-style="
-background:#f4f4f4;">
+style="background:#f4f4f4;">
 
 </div>
 
 <div class="form-group">
 
-<label>Terminal Storage (USD)</label>
+<label>
+
+Terminal Storage (USD)
+
+</label>
 
 <input
 type="number"
 id="terminalStorage"
 readonly
-style="
-background:#f4f4f4;">
+style="background:#f4f4f4;">
 
 </div>
 
 <div class="form-group">
 
-<label>Total Shipping Cost (USD)</label>
+<label>
+
+Total Shipping Cost (USD)
+
+</label>
 
 <input
 type="number"
@@ -676,32 +743,43 @@ readonly
 style="
 background:#fff7d6;
 font-weight:bold;
-color:#000;">
+">
 
 </div>
 
 <hr>
 
-<h3>Nigeria Costs</h3>
+<h3>
+
+Nigeria Costs
+
+</h3>
 <!-- ===================================== -->
-<!-- PART 4 - NIGERIA COSTS -->
+<!-- PART 3 - NIGERIA COSTS -->
 <!-- ===================================== -->
 
 <div class="form-group">
 
-<label>Exchange Rate (₦ / USD)</label>
+<label>
+
+Exchange Rate (₦/$)
+
+</label>
 
 <input
 type="number"
 id="exchangeRate"
-value="1600"
 placeholder="1600">
 
 </div>
 
 <div class="form-group">
 
-<label>Customs Duty (₦)</label>
+<label>
+
+Custom Duty (₦)
+
+</label>
 
 <input
 type="number"
@@ -712,7 +790,11 @@ placeholder="0">
 
 <div class="form-group">
 
-<label>Port Clearing Charges (₦)</label>
+<label>
+
+Clearing Charges (₦)
+
+</label>
 
 <input
 type="number"
@@ -723,7 +805,11 @@ placeholder="0">
 
 <div class="form-group">
 
-<label>Local Delivery (₦)</label>
+<label>
+
+Delivery Cost (₦)
+
+</label>
 
 <input
 type="number"
@@ -734,7 +820,11 @@ placeholder="0">
 
 <div class="form-group">
 
-<label>Other Expenses (₦)</label>
+<label>
+
+Other Expenses (₦)
+
+</label>
 
 <input
 type="number"
@@ -745,7 +835,11 @@ placeholder="0">
 
 <div class="form-group">
 
-<label>Desired Profit (₦)</label>
+<label>
+
+Desired Profit (₦)
+
+</label>
 
 <input
 type="number"
@@ -753,116 +847,330 @@ id="profit"
 placeholder="0">
 
 </div>
-<section class="dashboard-panel">
 
-<h2>Vehicle Import Summary</h2>
+<hr>
+
+<!-- ===================================== -->
+<!-- VEHICLE IMPORT SUMMARY -->
+<!-- ===================================== -->
+
+<h3>
+
+Vehicle Import Summary
+
+</h3>
 
 <table class="automotive-table">
 
 <tr>
-<th colspan="2">PURCHASE COST</th>
+
+<th colspan="2">
+
+PURCHASE COST
+
+</th>
+
 </tr>
 
 <tr>
-<td>Purchase Price</td>
-<td id="summaryPurchase">$0.00</td>
+
+<td>
+
+Purchase Price
+
+</td>
+
+<td id="summaryPurchase">
+
+$0.00
+
+</td>
+
 </tr>
 
 <tr>
-<td>Auction Fee</td>
-<td id="summaryAuctionFee">$0.00</td>
+
+<td>
+
+Auction Fee
+
+</td>
+
+<td id="summaryAuctionFee">
+
+$0.00
+
+</td>
+
 </tr>
 
-<tr style="font-weight:bold;background:#fff7d6;">
-<td>Total Buying Cost</td>
-<td id="summaryBuying">$0.00</td>
-</tr>
+<tr style="background:#fff7d6;font-weight:bold;">
 
-<tr>
-<th colspan="2">SHIPPING COST</th>
-</tr>
+<td>
 
-<tr>
-<td>Inland Transport</td>
-<td id="summaryInland">$0.00</td>
-</tr>
+Buying Cost
 
-<tr>
-<td>Ocean Freight</td>
-<td id="summaryFreight">$0.00</td>
-</tr>
+</td>
 
-<tr>
-<td>Marine Insurance</td>
-<td id="summaryInsurance">$0.00</td>
-</tr>
+<td id="summaryBuying">
 
-<tr>
-<td>Documentation</td>
-<td id="summaryDocumentation">$0.00</td>
-</tr>
+$0.00
 
-<tr>
-<td>Port Handling</td>
-<td id="summaryHandling">$0.00</td>
+</td>
+
 </tr>
 
 <tr>
-<td>Terminal Storage</td>
-<td id="summaryStorage">$0.00</td>
-</tr>
 
-<tr style="font-weight:bold;background:#fff7d6;">
-<td>Total Shipping</td>
-<td id="summaryShipping">$0.00</td>
-</tr>
+<th colspan="2">
 
-<tr>
-<th colspan="2">NIGERIA COSTS</th>
+SHIPPING COST
+
+</th>
+
 </tr>
 
 <tr>
-<td>Exchange Rate</td>
-<td id="summaryRate">₦0.00</td>
+
+<td>
+
+Inland Transport
+
+</td>
+
+<td id="summaryInland">
+
+$0.00
+
+</td>
+
 </tr>
 
 <tr>
-<td>Custom Duty</td>
-<td id="summaryDuty">₦0.00</td>
+
+<td>
+
+Ocean Freight
+
+</td>
+
+<td id="summaryFreight">
+
+$0.00
+
+</td>
+
 </tr>
 
 <tr>
-<td>Clearing Charges</td>
-<td id="summaryClearing">₦0.00</td>
+
+<td>
+
+Marine Insurance
+
+</td>
+
+<td id="summaryInsurance">
+
+$0.00
+
+</td>
+
 </tr>
 
 <tr>
-<td>Delivery</td>
-<td id="summaryDelivery">₦0.00</td>
+
+<td>
+
+Documentation
+
+</td>
+
+<td id="summaryDocumentation">
+
+$0.00
+
+</td>
+
 </tr>
 
 <tr>
-<td>Other Expenses</td>
-<td id="summaryOther">₦0.00</td>
-</tr>
 
-<tr style="font-weight:bold;background:#fff7d6;">
-<td>Total Landed Cost</td>
-<td id="summaryLanded">₦0.00</td>
+<td>
+
+Port Handling
+
+</td>
+
+<td id="summaryHandling">
+
+$0.00
+
+</td>
+
 </tr>
 
 <tr>
-<th colspan="2">SELLING PRICE</th>
+
+<td>
+
+Terminal Storage
+
+</td>
+
+<td id="summaryStorage">
+
+$0.00
+
+</td>
+
 </tr>
 
-<tr style="
+<tr style="background:#fff7d6;font-weight:bold;">
+
+<td>
+
+Total Shipping
+
+</td>
+
+<td id="summaryShipping">
+
+$0.00
+
+</td>
+
+</tr>
+
+<tr>
+
+<th colspan="2">
+
+NIGERIA COSTS
+
+</th>
+
+</tr>
+
+<tr>
+
+<td>
+
+Exchange Rate
+
+</td>
+
+<td id="summaryRate">
+
+₦0.00
+
+</td>
+
+</tr>
+
+<tr>
+
+<td>
+
+Custom Duty
+
+</td>
+
+<td id="summaryDuty">
+
+₦0.00
+
+</td>
+
+</tr>
+
+<tr>
+
+<td>
+
+Clearing Charges
+
+</td>
+
+<td id="summaryClearing">
+
+₦0.00
+
+</td>
+
+</tr>
+
+<tr>
+
+<td>
+
+Delivery Cost
+
+</td>
+
+<td id="summaryDelivery">
+
+₦0.00
+
+</td>
+
+</tr>
+
+<tr>
+
+<td>
+
+Other Expenses
+
+</td>
+
+<td id="summaryOther">
+
+₦0.00
+
+</td>
+
+</tr>
+
+<tr style="background:#fff7d6;font-weight:bold;">
+
+<td>
+
+Landed Cost
+
+</td>
+
+<td id="summaryLanded">
+
+₦0.00
+
+</td>
+
+</tr>
+
+<tr>
+
+<th colspan="2">
+
+SELLING PRICE
+
+</th>
+
+</tr>
+
+<tr
+style="
 background:#000;
 color:#d4a017;
 font-size:22px;
 font-weight:bold;
 ">
 
-<td>Recommended Selling Price</td>
+<td>
+
+Recommended Selling Price
+
+</td>
 
 <td id="summarySelling">
 
@@ -874,68 +1182,13 @@ font-weight:bold;
 
 </table>
 
-</section>
-
-<hr>
-
-<div class="dashboard-card">
-
-<h4>Shipping Cost</h4>
-
-<h2 id="shippingCostDisplay">
-
-$0.00
-
-</h2>
-
-</div>
-
-<div class="dashboard-card">
-
-<h4>Total USD</h4>
-
-<h2 id="usdTotal">
-
-$0.00
-
-</h2>
-
-</div>
-
-<div class="dashboard-card">
-
-<h4>Landed Cost</h4>
-
-<h2 id="nairaTotal">
-
-₦0.00
-
-</h2>
-
-</div>
-
-<div class="dashboard-card">
-
-<h4>Selling Price</h4>
-
-<h2 id="sellingPrice">
-
-₦0.00
-
-</h2>
-
-</div>
-
-</div>
-
 <br>
 
 <div
 style="
 display:flex;
-flex-wrap:wrap;
 gap:15px;
-justify-content:center;
+flex-wrap:wrap;
 ">
 
 <button
@@ -944,15 +1197,6 @@ class="action-btn"
 onclick="calculateVehicleCost()">
 
 Calculate
-
-</button>
-
-<button
-type="button"
-class="action-btn"
-onclick="resetCalculator()">
-
-Reset
 
 </button>
 
@@ -983,19 +1227,41 @@ Email Estimate
 
 </button>
 
+<button
+type="button"
+class="action-btn"
+onclick="resetCalculator()">
+
+Reset
+
+</button>
+
 </div>
 
 </form>
-  </section>
+
+</section>
+<!-- ===================================== -->
+<!-- PART 4 - SAVED ESTIMATES -->
+<!-- ===================================== -->
+
 <section class="dashboard-panel">
 
-<h2>Saved Vehicle Estimates</h2>
+<h2>
+
+Saved Vehicle Estimates
+
+</h2>
 
 <input
 type="text"
 id="estimateSearch"
-placeholder="Search Vehicle, VIN or Auction..."
-style="width:100%;margin-bottom:20px;padding:12px;">
+placeholder="Search by Vehicle, VIN or Auction..."
+style="
+width:100%;
+padding:12px;
+margin-bottom:20px;
+">
 
 <div class="customer-table-wrapper">
 
@@ -1008,6 +1274,8 @@ style="width:100%;margin-bottom:20px;padding:12px;">
 <th>ID</th>
 
 <th>Vehicle</th>
+
+<th>VIN</th>
 
 <th>Auction</th>
 
@@ -1033,45 +1301,161 @@ style="width:100%;margin-bottom:20px;padding:12px;">
 
 </div>
 
+</section>
+
+<!-- ===================================== -->
+<!-- VEHICLE INVENTORY -->
+<!-- ===================================== -->
+
+<section class="dashboard-panel">
+
+<h2>
+
+Vehicle Inventory
+
+</h2>
+
+<div class="customer-table-wrapper">
+
+<table class="automotive-table">
+
+<thead>
+
+<tr>
+
+<th>Stock No.</th>
+
+<th>Vehicle</th>
+
+<th>Year</th>
+
+<th>Status</th>
+
+<th>Cost ($)</th>
+
+<th>Price ($)</th>
+
+<th>Action</th>
+
+</tr>
+
+</thead>
+
+<tbody id="vehicleInventoryBody">
+
+</tbody>
+
+</table>
+
+</div>
 
 </section>
+
+<!-- ===================================== -->
+<!-- CUSTOMER ORDERS -->
+<!-- ===================================== -->
+
+<section class="dashboard-panel">
+
+<h2>
+
+Customer Orders
+
+</h2>
+
+<div class="customer-table-wrapper">
+
+<table class="automotive-table">
+
+<thead>
+
+<tr>
+
+<th>Order No.</th>
+
+<th>Customer</th>
+
+<th>Vehicle</th>
+
+<th>Status</th>
+
+<th>Action</th>
+
+</tr>
+
+</thead>
+
+<tbody id="customerOrdersBody">
+
+</tbody>
+
+</table>
+
+</div>
+
+</section>
+
+<!-- ===================================== -->
+<!-- FOOTER -->
+<!-- ===================================== -->
 
 <footer class="admin-footer">
 
 <div class="admin-footer-links">
 
-<a href="dashboard.html">Dashboard</a>
+<a href="dashboard.html">
 
-<span>|</span>
-  <a href="invoices.html">Invoices</a>
+Dashboard
 
-<span>|</span>
-
-<a href="customers.html">Customers</a>
+</a>
 
 <span>|</span>
 
-<a href="documents.html">Documents</a>
+<a href="customers.html">
+
+Customers
+
+</a>
 
 <span>|</span>
 
-<a href="projects.html">Projects</a>
+<a href="documents.html">
+
+Documents
+
+</a>
 
 <span>|</span>
 
-<a href="automotive-admin.html">Automotive</a>
+<a href="projects.html">
+
+Projects
+
+</a>
 
 <span>|</span>
 
-<a href="quality.html">Quality</a>
+<a href="automotive-admin.html">
+
+Automotive
+
+</a>
 
 <span>|</span>
 
-<a href="reports.html">Reports</a>
+<a href="reports.html">
+
+Reports
+
+</a>
 
 <span>|</span>
 
-<a href="settings.html">Settings</a>
+<a href="settings.html">
+
+Settings
+
+</a>
 
 </div>
 
@@ -1087,6 +1471,10 @@ style="width:100%;margin-bottom:20px;padding:12px;">
 
 </div>
 
+<!-- ===================================== -->
+<!-- JAVASCRIPT -->
+<!-- ===================================== -->
+
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
 <script src="js/auth.js"></script>
@@ -1096,9 +1484,9 @@ style="width:100%;margin-bottom:20px;padding:12px;">
 <script src="js/logout.js"></script>
 
 <script src="js/admin.js"></script>
-  <script src="js/automotive.js"></script>
+
+<script src="js/automotive.js"></script>
 
 </body>
 
 </html>
-<!-- AUTOMOTIVE ADMIN PART 2 END -->
