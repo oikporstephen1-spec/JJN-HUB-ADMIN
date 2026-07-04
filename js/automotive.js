@@ -918,3 +918,185 @@ async function openEstimate(id) {
     calculateVehicleCost();
 
 }
+// =====================================================
+// PART 5 - UTILITIES & INITIALIZATION
+// =====================================================
+
+// -----------------------------------------------------
+// Generate Estimate Number
+// -----------------------------------------------------
+
+function generateEstimateNumber() {
+
+    const today = new Date();
+
+    return `EST-${today.getFullYear()}-${Date.now()}`;
+
+}
+
+// -----------------------------------------------------
+// Reset Calculator
+// -----------------------------------------------------
+
+function resetCalculator() {
+
+    document.getElementById("vehicleCalculator").reset();
+
+    [
+        auctionFee,
+        buyingCost,
+        loadingPort,
+        inlandTransport,
+        shippingCost,
+        insurance,
+        documentation,
+        portHandling,
+        terminalStorage,
+        totalShipping
+
+    ].forEach(input => {
+
+        if(input){
+
+            input.value="";
+
+        }
+
+    });
+
+    [
+        summaryPurchase,
+        summaryAuctionFee,
+        summaryBuying,
+        summaryInland,
+        summaryFreight,
+        summaryInsurance,
+        summaryDocumentation,
+        summaryHandling,
+        summaryStorage,
+        summaryShipping,
+        summaryRate,
+        summaryDuty,
+        summaryClearing,
+        summaryDelivery,
+        summaryOther,
+        summaryLanded,
+        summarySelling
+
+    ].forEach(label=>{
+
+        if(label){
+
+            label.innerHTML="0.00";
+
+        }
+
+    });
+
+}
+
+// -----------------------------------------------------
+// Print Estimate
+// -----------------------------------------------------
+
+function printEstimate(){
+
+    calculateVehicleCost();
+
+    window.print();
+
+}
+
+// -----------------------------------------------------
+// Email Estimate
+// -----------------------------------------------------
+
+async function emailEstimate(){
+
+    alert(
+
+        "Email integration will be connected to Brevo SMTP in the next module."
+
+    );
+
+}
+
+// -----------------------------------------------------
+// Dashboard Statistics
+// -----------------------------------------------------
+
+async function loadDashboardStats(){
+
+    const {count,error}=await db
+
+    .from("vehicle_estimates")
+
+    .select("*",{
+
+        count:"exact",
+
+        head:true
+
+    });
+
+    if(error){
+
+        console.error(error);
+
+        return;
+
+    }
+
+    const saved=document.getElementById(
+
+        "savedEstimates"
+
+    );
+
+    if(saved){
+
+        saved.innerHTML=count;
+
+    }
+
+}
+
+// -----------------------------------------------------
+// Initialize
+// -----------------------------------------------------
+
+async function initializeAutomotive(){
+
+    console.log(
+
+        "Initializing Automotive Module..."
+
+    );
+
+    await loadLookupTables();
+
+    await loadEstimateHistory();
+
+    await loadDashboardStats();
+
+    calculateVehicleCost();
+
+    console.log(
+
+        "Automotive Module Ready."
+
+    );
+
+}
+
+// -----------------------------------------------------
+// Page Loaded
+// -----------------------------------------------------
+
+window.addEventListener(
+
+    "DOMContentLoaded",
+
+    initializeAutomotive
+
+);
