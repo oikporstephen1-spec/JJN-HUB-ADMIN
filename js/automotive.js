@@ -284,18 +284,6 @@ async function loadLookupTables(){
 
 }
 
-// -----------------------------------------------------
-// START APPLICATION
-// -----------------------------------------------------
-
-window.addEventListener("load", async ()=>{
-
-    await loadLookupTables();
-
-    console.log("Automotive System Ready.");
-
-});
-
 // =====================================================
 // PART 2 - AUCTION & SHIPPING LOOKUPS
 // =====================================================
