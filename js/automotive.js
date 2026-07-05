@@ -1100,3 +1100,323 @@ window.addEventListener(
     initializeAutomotive
 
 );
+// =====================================================
+// PART 6 - FINAL MODULE
+// Inventory, Orders, Shortcuts & Notifications
+// =====================================================
+
+// --------------------------------------------
+// Toast Notification
+// --------------------------------------------
+
+function showToast(message, type = "success") {
+
+    let toast = document.getElementById("toastMessage");
+
+    if (!toast) {
+
+        toast = document.createElement("div");
+
+        toast.id = "toastMessage";
+
+        toast.style.position = "fixed";
+        toast.style.top = "20px";
+        toast.style.right = "20px";
+        toast.style.padding = "15px 20px";
+        toast.style.borderRadius = "8px";
+        toast.style.color = "#fff";
+        toast.style.fontWeight = "600";
+        toast.style.zIndex = "99999";
+        toast.style.transition = "0.3s";
+
+        document.body.appendChild(toast);
+
+    }
+
+    toast.style.background =
+
+        type === "error"
+
+        ? "#d32f2f"
+
+        : "#198754";
+
+    toast.innerHTML = message;
+
+    toast.style.display = "block";
+
+    setTimeout(() => {
+
+        toast.style.display = "none";
+
+    }, 3000);
+
+}
+
+// --------------------------------------------
+// Vehicle Inventory
+// --------------------------------------------
+
+async function loadVehicleInventory() {
+
+    const body = document.getElementById("vehicleInventoryBody");
+
+    if (!body) return;
+
+    body.innerHTML = "";
+
+    const { data, error } = await db
+
+        .from("vehicle_estimates")
+
+        .select("*")
+
+        .order("created_at", {
+
+            ascending: false
+
+        });
+
+    if (error) {
+
+        console.error(error);
+
+        return;
+
+    }
+
+    data.forEach(car => {
+
+        body.innerHTML += `
+
+<tr>
+
+<td>
+
+${car.estimate_number ?? car.id}
+
+</td>
+
+<td>
+
+${car.make} ${car.model}
+
+</td>
+
+<td>
+
+${car.year}
+
+</td>
+
+<td>
+
+Available
+
+</td>
+
+<td>
+
+$${money(car.buying_cost)}
+
+</td>
+
+<td>
+
+₦${money(car.selling_price)}
+
+</td>
+
+<td>
+
+<button
+
+class="action-btn"
+
+onclick="openEstimate(${car.id})">
+
+Open
+
+</button>
+
+</td>
+
+</tr>
+
+`;
+
+    });
+
+}
+
+// --------------------------------------------
+// Customer Orders
+// --------------------------------------------
+
+async function loadCustomerOrders() {
+
+    const body = document.getElementById(
+
+        "customerOrdersBody"
+
+    );
+
+    if (!body) return;
+
+    body.innerHTML = "";
+
+    const { data, error } = await db
+
+        .from("customers")
+
+        .select("*")
+
+        .limit(20);
+
+    if (error) {
+
+        console.error(error);
+
+        return;
+
+    }
+
+    data.forEach(customer => {
+
+        body.innerHTML += `
+
+<tr>
+
+<td>
+
+${customer.id}
+
+</td>
+
+<td>
+
+${customer.name}
+
+</td>
+
+<td>
+
+${customer.vehicle ?? "-"}
+
+</td>
+
+<td>
+
+Pending
+
+</td>
+
+<td>
+
+<button class="action-btn">
+
+View
+
+</button>
+
+</td>
+
+</tr>
+
+`;
+
+    });
+
+}
+
+// --------------------------------------------
+// Keyboard Shortcuts
+// --------------------------------------------
+
+document.addEventListener(
+
+    "keydown",
+
+    function (e) {
+
+        if (e.ctrlKey && e.key === "s") {
+
+            e.preventDefault();
+
+            saveEstimate();
+
+        }
+
+        if (e.ctrlKey && e.key === "p") {
+
+            e.preventDefault();
+
+            printEstimate();
+
+        }
+
+        if (e.key === "F5") {
+
+            e.preventDefault();
+
+            calculateVehicleCost();
+
+        }
+
+    }
+
+);
+
+// --------------------------------------------
+// Improved Save
+// --------------------------------------------
+
+const oldSaveEstimate = saveEstimate;
+
+saveEstimate = async function () {
+
+    await oldSaveEstimate();
+
+    showToast(
+
+        "Estimate saved successfully."
+
+    );
+
+    await loadEstimateHistory();
+
+    await loadVehicleInventory();
+
+    await loadDashboardStats();
+
+};
+
+// --------------------------------------------
+// Page Ready
+// --------------------------------------------
+
+window.addEventListener(
+
+    "load",
+
+    async () => {
+
+        await loadVehicleInventory();
+
+        await loadCustomerOrders();
+
+        showToast(
+
+            "JJN HUB Automotive System Ready"
+
+        );
+
+    }
+
+);
+
+console.log(
+
+    "Automotive Module Loaded Successfully."
+
+);
