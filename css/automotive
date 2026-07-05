@@ -150,12 +150,15 @@ input[readonly]{
 
 .calculator-actions{
 
-    display:grid;
+    display:flex;
 
-    grid-template-columns:
-    repeat(auto-fit,minmax(180px,1fr));
+    justify-content:center;
+
+    align-items:center;
 
     gap:15px;
+
+    flex-wrap:wrap;
 
     margin-top:30px;
 
@@ -163,29 +166,11 @@ input[readonly]{
 
 .calculator-actions .action-btn{
 
-    width:100%;
+    min-width:180px;
 
     height:52px;
 
-    border:none;
-
-    border-radius:8px;
-
-    background:#d4af37;
-
-    color:white;
-
-    font-size:16px;
-
-    font-weight:700;
-
-    cursor:pointer;
-
-    transition:.3s;
-
-}
-
-.calculator-actions .action-btn:hover{
+}.calculator-actions .action-btn:hover{
 
     background:#b89222;
 
