@@ -371,29 +371,44 @@ function getInlandRate() {
 
     inlandTransport.value = row.inland_cost;
 
-}
+    // Refresh shipping because loading port changed
+    getShippingRate();
 
+}
 // -------------------------------------
 // Find Shipping Rate
 // -------------------------------------
 
 function getShippingRate() {
 
+    const port = loadingPort.value;
     const destination = destinationPort.value;
     const method = shippingType.value;
 
-    if (!destination || !method) return;
+    if (!port || !destination || !method) return;
 
     const row = shippingRates.find(rate =>
 
+        rate.loading_port === port &&
         rate.destination_port === destination &&
         rate.shipping_type === method
 
     );
 
-    if (!row) return;
+    if (!row) {
 
-    shippingCost.value = row.ocean_freight;
+        shippingCost.value = "";
+        insurance.value = "";
+        documentation.value = "";
+        portHandling.value = "";
+        terminalStorage.value = "";
+        totalShipping.value = "";
+
+        return;
+
+    }
+
+    shippingCost.value = row.freight;
 
     insurance.value = row.insurance;
 
@@ -401,12 +416,11 @@ function getShippingRate() {
 
     portHandling.value = row.port_handling;
 
-    terminalStorage.value = row.storage;
+    terminalStorage.value = row.terminal_storage;
 
     calculateShipping();
 
 }
-
 // -------------------------------------
 // Shipping Total
 // -------------------------------------
