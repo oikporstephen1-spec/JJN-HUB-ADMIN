@@ -373,3 +373,88 @@ border:1px solid #ccc;
 }
 
 }
+/* =====================================
+   DARK INPUT THEME
+===================================== */
+
+.vehicle-form input,
+.vehicle-form select,
+.vehicle-form textarea{
+
+    background:#1f2937 !important;
+
+    color:#ffffff !important;
+
+    border:1px solid #555 !important;
+
+}
+
+.vehicle-form input::placeholder{
+
+    color:#b5b5b5;
+
+}
+
+.vehicle-form select option{
+
+    background:#1f2937;
+
+    color:#ffffff;
+
+}
+
+/* Readonly fields */
+
+.vehicle-form input[readonly]{
+
+    background:#2c3440 !important;
+
+    color:#ffd54f !important;
+
+    font-weight:600;
+
+}
+
+/* Summary table */
+
+.automotive-table{
+
+    background:#1f2937;
+
+    color:#ffffff;
+
+}
+
+.automotive-table td{
+
+    background:#1f2937;
+
+    color:#ffffff;
+
+}
+
+.automotive-table th{
+
+    background:#d4a017;
+
+    color:#000;
+
+}
+
+/* Panel */
+
+.dashboard-panel{
+
+    background:#161b22;
+
+    color:#ffffff;
+
+}
+
+/* Horizontal line */
+
+hr{
+
+    border-top:1px solid #555;
+
+}
