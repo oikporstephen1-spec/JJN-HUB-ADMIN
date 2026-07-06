@@ -393,13 +393,6 @@ function getShippingRate() {
     rate.shipping_type.trim().toLowerCase() === method.toLowerCase()
 
 );
-console.log("Looking for Shipping Rate");
-
-console.log({
-    loading_port: port,
-    destination_port: destination,
-    shipping_type: method
-});
     if (!row) {
 
         console.warn("No shipping rate found.");
