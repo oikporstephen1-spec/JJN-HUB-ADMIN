@@ -262,11 +262,11 @@
 
     border-collapse:collapse;
 
+    background:#18222e;
+
+    border-radius:12px;
+
     overflow:hidden;
-
-    border-radius:15px;
-
-    background:#1c2430;
 
 }
 
@@ -276,36 +276,29 @@
 
     color:#111;
 
-    padding:18px;
+    padding:16px;
 
-    font-size:14px;
-
-    text-transform:uppercase;
+    font-weight:700;
 
 }
 
 .automotive-table td{
 
-    padding:15px;
+    background:#18222e;
 
-    color:#f1f1f1;
+    color:#ffffff;
 
-    border-bottom:1px solid rgba(255,255,255,.06);
+    padding:14px;
 
-}
-
-.automotive-table tr{
-
-    transition:.25s;
+    border-bottom:1px solid rgba(255,255,255,.08);
 
 }
 
-.automotive-table tbody tr:hover{
+.automotive-table tbody tr:hover td{
 
-    background:#2b3644;
+    background:#202c39;
 
-}
-/* ---------- Status ---------- */
+}/* ---------- Status ---------- */
 
 .status-active{
 
@@ -413,15 +406,17 @@ border:1px solid #ccc;
 }
 
 }
-.vehicle-form input,
-.vehicle-form select{
+.vehicle-form input[readonly]{
 
-    background:#27313d;
+    background:#202a36 !important;
 
-    color:#fff;
+    color:#ffd54f !important;
+
+    font-weight:700;
+
+    border:1px solid #444 !important;
 
 }
-
 .vehicle-form select option{
 
     background:#27313d;
@@ -466,5 +461,30 @@ body.dashboard-body{
     color:#d4af37;
 
     font-weight:700;
+
+}
+#loadingPort{
+
+    color:#4fc3f7 !important;
+
+    font-weight:700;
+
+}
+#summaryBuying,
+#summaryShipping,
+#summaryLanded,
+#summarySelling{
+
+    color:#ffd54f !important;
+
+    font-weight:800;
+
+    font-size:18px;
+
+}
+input[readonly]{
+
+    box-shadow:
+    inset 0 0 8px rgba(212,175,55,.15);
 
 }
