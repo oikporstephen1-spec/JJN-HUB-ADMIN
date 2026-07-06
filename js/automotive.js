@@ -386,13 +386,21 @@ function getShippingRate() {
 
     const method = shippingType.value.trim();
 
-    const row = shippingRates.find(rate =>
+    const row = shippingRates.find(rate => {
 
-    rate.loading_port.trim().toLowerCase() === port.toLowerCase() &&
-    rate.destination_port.trim().toLowerCase() === destination.toLowerCase() &&
-    rate.shipping_type.trim().toLowerCase() === method.toLowerCase()
+    console.log(rate);
 
-);
+    return (
+
+        rate.loading_port.trim().toLowerCase() === port.toLowerCase() &&
+        rate.destination_port.trim().toLowerCase() === destination.toLowerCase() &&
+        rate.shipping_type.trim().toLowerCase() === method.toLowerCase()
+
+    );
+
+});
+
+console.log("MATCH =", row);
     if (!row) {
 
         console.warn("No shipping rate found.");
@@ -481,8 +489,6 @@ function calculateVehicleCost() {
     getAuctionFee();
 
     getInlandRate();
-
-    getShippingRate();
 
     // ----------------------------------
     // USD Totals
@@ -702,7 +708,6 @@ async function saveEstimate() {
 
         inland_transport: totals.inland,
 
-        ocean_freight: totals.freight,
 
         insurance: totals.insure,
 
@@ -718,10 +723,11 @@ async function saveEstimate() {
 
         custom_duty: num(customDuty.value),
 
-        clearing_cost: num(clearingCost.value),
+        shipping_cost: totals.freight,
 
-        delivery_cost: num(deliveryCost.value),
+clearing: num(clearingCost.value),
 
+delivery_cost: num(deliveryCost.value),
         other_cost: num(otherCost.value),
 
         landed_cost: totals.landed,
@@ -928,8 +934,9 @@ async function openEstimate(id) {
 
     exchangeRate.value = estimate.exchange_rate;
     customDuty.value = estimate.custom_duty;
-    clearingCost.value = estimate.clearing_cost;
-    deliveryCost.value = estimate.delivery_cost;
+    clearingCost.value = estimate.clearing;
+
+deliveryCost.value = estimate.delivery_cost || "";
     otherCost.value = estimate.other_cost;
     profit.value = estimate.desired_profit;
 
