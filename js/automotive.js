@@ -341,25 +341,36 @@ function getAuctionFee() {
 
 function getInlandRate() {
 
-    const yard = auctionYard.value;
-    const destination = destinationPort.value;
-
-    if (!yard || !destination) return;
+    const house = auction.value.trim();
+    const yard = auctionYard.value.trim();
 
     const row = inlandRates.find(rate =>
 
-        rate.auction_yard === yard &&
-        rate.destination_port === destination
+    rate.auction_house.trim().toLowerCase() === house.toLowerCase() &&
+    rate.auction_yard.trim().toLowerCase() === yard.toLowerCase()
 
-    );
+);
+    if (!row) {
 
-    if (!row) return;
+        console.warn("No inland rate found.");
+
+        loadingPort.value = "";
+        inlandTransport.value = "";
+
+        getShippingRate();
+
+        return;
+
+    }
 
     loadingPort.value = row.loading_port;
 
     inlandTransport.value = row.inland_cost;
 
-    // Refresh shipping because loading port changed
+    console.log("Loading Port:", row.loading_port);
+
+    console.log("Inland Cost:", row.inland_cost);
+
     getShippingRate();
 
 }
@@ -369,27 +380,40 @@ function getInlandRate() {
 
 function getShippingRate() {
 
-    const port = loadingPort.value;
-    const destination = destinationPort.value;
-    const method = shippingType.value;
+    const port = loadingPort.value.trim();
 
-    if (!port || !destination || !method) return;
+    const destination = destinationPort.value.trim();
+
+    const method = shippingType.value.trim();
 
     const row = shippingRates.find(rate =>
 
-        rate.loading_port === port &&
-        rate.destination_port === destination &&
-        rate.shipping_type === method
+    rate.loading_port.trim().toLowerCase() === port.toLowerCase() &&
+    rate.destination_port.trim().toLowerCase() === destination.toLowerCase() &&
+    rate.shipping_type.trim().toLowerCase() === method.toLowerCase()
 
-    );
+);
+console.log("Looking for Shipping Rate");
 
+console.log({
+    loading_port: port,
+    destination_port: destination,
+    shipping_type: method
+});
     if (!row) {
 
+        console.warn("No shipping rate found.");
+
         shippingCost.value = "";
+
         insurance.value = "";
+
         documentation.value = "";
+
         portHandling.value = "";
+
         terminalStorage.value = "";
+
         totalShipping.value = "";
 
         return;
@@ -406,8 +430,7 @@ function getShippingRate() {
 
     terminalStorage.value = row.terminal_storage;
 
-    calculateShipping();
-
+   calculateShipping();
 }
 // -------------------------------------
 // Shipping Total
