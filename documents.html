@@ -1,654 +1,1138 @@
-<!-- DOCUMENTS PART 1 START -->
-
 <!DOCTYPE html>
-
 <html lang="en">
 
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<meta charset="UTF-8">
+    <title>JJN HUB | Document Control Center</title>
 
-<meta
-name="viewport"
-content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/admin.css">
 
-<title>
-
-JJN HUB Documents
-
-</title>
-
-<link
-rel="stylesheet"
-href="css/admin.css">
-
-<link
-href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap"
-rel="stylesheet">
-
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap"
+        rel="stylesheet">
 </head>
 
 <body class="dashboard-body">
-<!-- MOBILE MENU BUTTON -->
 
-<button
-class="admin-menu-toggle"
-onclick="toggleAdminMenu()">
-
-☰
-
+<button class="admin-menu-toggle" onclick="toggleAdminMenu()">
+    ☰
 </button>
+
 <div class="dashboard-layout">
 
-<aside class="sidebar">
+    <!-- ========================= -->
+    <!-- SIDEBAR -->
+    <!-- ========================= -->
 
-<div class="sidebar-logo">
+    <aside class="sidebar">
 
-<img
-src="assets/logo.png"
-alt="JJN HUB Logo"
-class="sidebar-logo-img">
+        <div class="sidebar-logo">
 
-<h2>
+            <img src="assets/logo.png"
+                 alt="JJN HUB Logo"
+                 class="sidebar-logo-img">
 
-JJN HUB
+            <h2>JJN HUB</h2>
 
-</h2>
+            <p>ADMIN PORTAL</p>
 
-<p>
+        </div>
 
-ADMIN PORTAL
+        <nav class="sidebar-nav">
 
-</p>
+            <a href="dashboard.html">Dashboard</a>
 
-</div>
+            <a href="customers.html">Customers</a>
 
-<nav class="sidebar-nav">
+            <a href="documents.html" class="active-nav">
+                Documents
+            </a>
 
-<a href="dashboard.html">
+            <a href="projects.html">Projects</a>
 
-Dashboard
+            <a href="automotive-admin.html">Automotive</a>
 
-</a>
+            <a href="engineering-admin.html">Engineering</a>
 
-<a href="customers.html">
+            <a href="marine-admin.html">Marine</a>
 
-Customers
+            <a href="logistics-admin.html">Logistics</a>
 
-</a>
+            <a href="procurement-admin.html">Procurement</a>
 
-<a
-href="documents.html"
-class="active-nav">
+            <a href="quality.html">Quality Management</a>
 
-Documents
+            <a href="reports.html">Reports</a>
 
-</a>
+            <a href="settings.html">Settings</a>
 
-<a href="projects.html">
+        </nav>
 
-Projects
+    </aside>
 
-</a>
+    <!-- ========================= -->
+    <!-- MAIN CONTENT -->
+    <!-- ========================= -->
 
-<a href="automotive-admin.html">
+    <main class="main-content">
 
-Automotive
+        <!-- TOPBAR -->
 
-</a>
+        <header class="topbar">
 
-<a href="engineering-admin.html">
+            <div>
 
-Engineering
+                <h1>Document Control Center</h1>
 
-</a>
+                <p class="page-subtitle">
 
-<a href="marine-admin.html">
+                    Upload, process, control and route business documents
+                    throughout the JJN HUB ERP.
 
-Marine
+                </p>
 
-</a>
+            </div>
 
-<a href="logistics-admin.html">
+            <div class="user-actions">
 
-Logistics
+                <span id="userName" class="user-name">
+                    Loading...
+                </span>
 
-</a>
+                <button id="logoutBtn"
+                        class="logout-btn">
+                    Logout
+                </button>
 
-<a href="procurement-admin.html">
+            </div>
 
-Procurement
+        </header>
 
-</a>
+        <!-- ========================= -->
+        <!-- KPI DASHBOARD -->
+        <!-- ========================= -->
 
-<a href="quality.html">
+        <section class="dashboard-cards">
 
-Quality Management
+            <div class="dashboard-card">
 
-</a>
+                <h3>Total Documents</h3>
 
-<a href="reports.html">
+                <h2 id="totalDocuments">0</h2>
 
-Reports
+                <small>All Uploaded Files</small>
 
-</a>
+            </div>
 
-<a href="settings.html">
+            <div class="dashboard-card">
 
-Settings
+                <h3>Pending Review</h3>
 
-</a>
+                <h2 id="pendingDocuments">0</h2>
 
-</nav>
+                <small>Awaiting Approval</small>
 
-</aside>
+            </div>
 
-<main class="main-content">
+            <div class="dashboard-card">
 
-<header class="topbar">
+                <h3>Approved</h3>
 
-<h1>
+                <h2 id="approvedDocuments">0</h2>
 
-Documents
+                <small>Controlled Documents</small>
 
-</h1>
+            </div>
 
-<div class="user-actions">
+            <div class="dashboard-card">
 
-<span id="userName" class="user-name">
+                <h3>Archived</h3>
 
-Loading...
+                <h2 id="archivedDocuments">0</h2>
 
-</span>
+                <small>Historical Records</small>
 
-<button
-id="logoutBtn"
-class="logout-btn">
+            </div>
 
-Logout
+        </section>
 
-</button>
+        <!-- ========================= -->
+        <!-- QUICK ACTIONS -->
+        <!-- ========================= -->
 
-</div>
+        <section class="dashboard-panel">
 
-</header>
+            <h2>Quick Actions</h2>
 
-<section class="dashboard-panel">
+            <div class="quick-actions-grid">
 
-<h2>
+                <button class="action-btn">
 
-Document Management
+                    📤 Upload Document
 
-</h2>
+                </button>
 
-<p>
+                <button class="action-btn">
 
-Manage quotations,
-invoices,
-technical reports,
-contracts,
-customer records,
-ISO documents
-and all controlled business documentation.
+                    📷 Scan Document
 
-</p>
+                </button>
 
-</section>
+                <button class="action-btn">
 
-<section class="dashboard-panel">
+                    🔍 Search Documents
 
-<h2>
+                </button>
 
-Upload New Document
+                <button class="action-btn">
 
-</h2>
+                    📁 Archive
 
-<form class="document-form">
+                </button>
 
-<div class="form-group">
+                <button class="action-btn">
 
-<label>
+                    📊 Export Register
 
-Document Number
+                </button>
 
-</label>
+                <button class="action-btn">
 
-<input
-type="text"
-placeholder="e.g. MAR-2026-0001">
+                    ⚙ Document Settings
 
-</div>
+                </button>
 
-<div class="form-group">
+            </div>
 
-<label>
+        </section>
+                <!-- ====================================================== -->
+        <!-- SMART DOCUMENT UPLOAD -->
+        <!-- ====================================================== -->
 
-Document Title
+        <section class="dashboard-panel">
 
-</label>
+            <div class="panel-header">
 
-<input
-type="text"
-placeholder="Enter Document Title">
+                <div>
 
-</div>
+                    <h2>Smart Document Upload</h2>
 
-<div class="form-group">
+                    <p>
+                        Upload PDF documents for automatic classification,
+                        data extraction and routing to the appropriate business
+                        module.
+                    </p>
 
-<label>
+                </div>
 
-Department
+            </div>
 
-</label>
+            <form id="documentUploadForm"
+                  class="document-form">
 
-<select>
+                <div class="form-group">
 
-<option>
+                    <label>Document Type</label>
 
-Select Department
+                    <select id="documentType" required>
 
-</option>
+                        <option value="">Select Document Type</option>
 
-<option>
+                        <option value="pr">Purchase Requisition (PR)</option>
 
-Automotive
+                        <option value="rfq">Request For Quotation (RFQ)</option>
 
-</option>
+                        <option value="po">Purchase Order (PO)</option>
 
-<option>
+                        <option value="contract">Contract</option>
 
-Engineering
+                        <option value="invoice">Invoice</option>
 
-</option>
+                        <option value="technical">Technical Report</option>
 
-<option>
+                        <option value="inspection">Inspection Report</option>
 
-Marine
+                        <option value="drawing">Engineering Drawing</option>
 
-</option>
+                        <option value="boq">Bill of Quantities (BOQ)</option>
 
-<option>
+                        <option value="certificate">Certificate</option>
 
-Logistics
+                        <option value="other">Other</option>
 
-</option>
+                    </select>
 
-<option>
+                </div>
 
-Procurement
+                <div class="form-group">
 
-</option>
+                    <label>Department</label>
 
-<option>
+                    <select id="department" required>
 
-Quality Management
+                        <option value="">Select Department</option>
 
-</option>
+                        <option>Engineering</option>
 
-</select>
+                        <option>Marine</option>
 
-</div>
+                        <option>Automotive</option>
 
-<div class="form-group">
+                        <option>Procurement</option>
 
-<label>
+                        <option>Logistics</option>
 
-Customer
+                        <option>Quality Management</option>
 
-</label>
+                        <option>Finance</option>
 
-<input
-type="text"
-placeholder="Customer Name">
+                    </select>
 
-</div>
+                </div>
 
-<!-- DOCUMENTS PART 1 END -->
-<!-- DOCUMENTS PART 2 START -->
+                <div class="form-group">
 
-<div class="form-group">
+                    <label>Destination Module</label>
 
-<label>
+                    <select id="destinationModule">
 
-Version
+                        <option>Auto Detect</option>
 
-</label>
+                        <option>Engineering</option>
 
-<input
-type="text"
-placeholder="Version 1">
+                        <option>Marine</option>
 
-</div>
+                        <option>Automotive</option>
 
-<div class="form-group">
+                        <option>Procurement</option>
 
-<label>
+                        <option>Logistics</option>
 
-Document Status
+                        <option>Quality</option>
 
-</label>
+                    </select>
 
-<select>
+                </div>
 
-<option>
+                <div class="form-group">
 
-Draft
+                    <label>Priority</label>
 
-</option>
+                    <select id="priority">
 
-<option>
+                        <option>Normal</option>
 
-Under Review
+                        <option>High</option>
 
-</option>
+                        <option>Urgent</option>
 
-<option>
+                    </select>
 
-Approved
+                </div>
 
-</option>
+                <div class="form-group">
 
-<option>
+                    <label>
 
-Archived
+                        Drag & Drop PDF
 
-</option>
+                    </label>
 
-</select>
+                    <div id="dropZone"
+                         class="upload-drop-zone">
 
-</div>
+                        <div class="upload-icon">
 
-<div class="form-group">
+                            📄
 
-<label>
+                        </div>
 
-Upload File
+                        <h3>
 
-</label>
+                            Drag & Drop PDF Here
 
-<input
-type="file">
+                        </h3>
 
-</div>
+                        <p>
 
-<div class="form-group">
+                            or
 
-<label>
+                        </p>
 
-Remarks
+                        <input type="file"
+                               id="documentFile"
+                               accept=".pdf,.doc,.docx,.xls,.xlsx,.jpg,.jpeg,.png"
+                               hidden>
 
-</label>
+                        <button type="button"
+                                class="action-btn"
+                                onclick="document.getElementById('documentFile').click()">
 
-<input
-type="text"
-placeholder="Optional Notes">
+                            Browse File
 
-</div>
+                        </button>
 
-<button
-type="submit"
-class="action-btn">
+                        <small>
 
-Upload Document
+                            Supported formats:
+                            PDF,
+                            Word,
+                            Excel,
+                            JPG,
+                            PNG
 
-</button>
+                        </small>
 
-</form>
+                    </div>
 
-</section>
+                </div>
 
-<section class="dashboard-panel">
+                <div class="form-group full-width">
 
-<h2>
+                    <label>
 
-Document Register
+                        Description
 
-</h2>
+                    </label>
 
-<div class="customer-table-wrapper">
+                    <textarea rows="4"
+                              id="documentDescription"
+                              placeholder="Optional description or remarks..."></textarea>
 
-<table class="document-table">
+                </div>
 
-<thead>
+                <!-- ======================================== -->
+                <!-- EXTRACTION OPTIONS -->
+                <!-- ======================================== -->
 
-<tr>
+                <div class="checkbox-grid">
 
-<th>Document No.</th>
+                    <label>
 
-<th>Title</th>
+                        <input type="checkbox"
+                               checked
+                               id="autoExtract">
 
-<th>Department</th>
+                        Automatically Extract Information
 
-<th>Version</th>
+                    </label>
 
-<th>Status</th>
+                    <label>
 
-<th>Date</th>
+                        <input type="checkbox"
+                               checked
+                               id="createProject">
 
-<th>Action</th>
+                        Create Related Project
 
-</tr>
+                    </label>
 
-</thead>
+                    <label>
 
-<tbody>
+                        <input type="checkbox"
+                               checked
+                               id="generateEstimate">
 
-<tr>
+                        Generate Cost Estimate
 
-<td>
+                    </label>
 
-MAR-2026-0001
+                    <label>
 
-</td>
+                        <input type="checkbox"
+                               checked
+                               id="notifyManager">
 
-<td>
+                        Notify Department Manager
 
-Generator Maintenance Report
+                    </label>
 
-</td>
+                    <label>
 
-<td>
+                        <input type="checkbox"
+                               checked
+                               id="enableWorkflow">
 
-Marine
+                        Start Approval Workflow
 
-</td>
+                    </label>
 
-<td>
+                </div>
 
-V1
+                <!-- ======================================== -->
+                <!-- UPLOAD BUTTONS -->
+                <!-- ======================================== -->
 
-</td>
+                <div class="button-group">
 
-<td class="status-active">
+                    <button type="submit"
+                            class="action-btn">
 
-Approved
+                        Upload & Process
 
-</td>
+                    </button>
 
-<td>
+                    <button type="reset"
+                            class="action-btn secondary-btn">
 
-06/06/2026
+                        Clear
 
-</td>
+                    </button>
 
-<td>
+                </div>
 
-<button class="action-btn">
+            </form>
 
-View
+        </section>
 
-</button>
+        <!-- ====================================================== -->
+        <!-- UPLOAD PROGRESS -->
+        <!-- ====================================================== -->
 
-</td>
+        <section class="dashboard-panel">
 
-</tr>
+            <h2>Processing Status</h2>
 
-<tr>
+            <div class="processing-card">
 
-<td>
+                <div class="progress-stage">
 
-ENG-2026-0002
+                    <span>Upload File</span>
 
-</td>
+                    <progress value="0"
+                              max="100"
+                              id="uploadProgress"></progress>
 
-<td>
+                </div>
 
-Electrical Inspection Report
+                <div class="progress-stage">
 
-</td>
+                    <span>OCR & Text Extraction</span>
 
-<td>
+                    <progress value="0"
+                              max="100"
+                              id="ocrProgress"></progress>
 
-Engineering
+                </div>
 
-</td>
+                <div class="progress-stage">
 
-<td>
+                    <span>AI Data Extraction</span>
 
-V2
+                    <progress value="0"
+                              max="100"
+                              id="aiProgress"></progress>
 
-</td>
+                </div>
 
-<td class="status-pending">
+                <div class="progress-stage">
 
-Under Review
+                    <span>Create ERP Records</span>
 
-</td>
+                    <progress value="0"
+                              max="100"
+                              id="erpProgress"></progress>
 
-<td>
+                </div>
 
-06/06/2026
+            </div>
 
-</td>
+        </section>
+                <!-- ====================================================== -->
+        <!-- EXTRACTION PREVIEW -->
+        <!-- ====================================================== -->
 
-<td>
+        <section class="dashboard-panel">
 
-<button class="action-btn">
+            <div class="panel-header">
 
-View
+                <div>
 
-</button>
+                    <h2>Extraction Preview</h2>
 
-</td>
+                    <p>
+                        Review information extracted from the uploaded document
+                        before it is committed to the ERP database.
+                    </p>
 
-</tr>
+                </div>
 
-<tr>
+                <div>
 
-<td>
+                    <span class="status-active">
 
-QMS-2026-0001
+                        Waiting for Upload
 
-</td>
+                    </span>
 
-<td>
+                </div>
 
-Quality Procedure Manual
+            </div>
 
-</td>
+            <div class="preview-grid">
 
-<td>
+                <div class="preview-card">
 
-Quality Management
+                    <label>Client</label>
 
-</td>
+                    <input
+                        type="text"
+                        id="clientName"
+                        placeholder="Auto Extracted">
 
-<td>
+                </div>
 
-V1
+                <div class="preview-card">
 
-</td>
+                    <label>Document Number</label>
 
-<td class="status-active">
+                    <input
+                        type="text"
+                        id="documentNumber"
+                        placeholder="Auto Generated">
 
-Approved
+                </div>
 
-</td>
+                <div class="preview-card">
 
-<td>
+                    <label>Purchase Requisition</label>
 
-06/06/2026
+                    <input
+                        type="text"
+                        id="prNumber"
+                        placeholder="Detected PR Number">
 
-</td>
+                </div>
 
-<td>
+                <div class="preview-card">
 
-<button class="action-btn">
+                    <label>Project</label>
 
-View
+                    <input
+                        type="text"
+                        id="projectName"
+                        placeholder="Detected Project">
 
-</button>
+                </div>
 
-</td>
+                <div class="preview-card">
 
-</tr>
+                    <label>Department</label>
 
-</tbody>
+                    <input
+                        type="text"
+                        id="departmentName">
 
-</table>
+                </div>
 
-</div>
+                <div class="preview-card">
 
-</section>
-<!-- ADMIN FOOTER -->
+                    <label>Location</label>
 
-<footer class="admin-footer">
+                    <input
+                        type="text"
+                        id="projectLocation">
 
-<div class="admin-footer-links">
+                </div>
 
-<a href="dashboard.html">Dashboard</a>
+                <div class="preview-card">
 
-<span>|</span>
+                    <label>Contact Person</label>
 
-<a href="customers.html">Customers</a>
+                    <input
+                        type="text"
+                        id="contactPerson">
 
-<span>|</span>
-  <a href="invoices.html">Invoices</a>
+                </div>
 
-<span>|</span>
+                <div class="preview-card">
 
-<a href="documents.html">Documents</a>
+                    <label>Email</label>
 
-<span>|</span>
+                    <input
+                        type="email"
+                        id="contactEmail">
 
-<a href="projects.html">Projects</a>
+                </div>
 
-<span>|</span>
+            </div>
 
-<a href="quality.html">Quality</a>
+        </section>
 
-<span>|</span>
 
-<a href="reports.html">Reports</a>
 
-<span>|</span>
+        <!-- ====================================================== -->
+        <!-- DETECTED ITEMS -->
+        <!-- ====================================================== -->
 
-<a href="settings.html">Settings</a>
+        <section class="dashboard-panel">
 
-</div>
+            <div class="panel-header">
 
-<div class="admin-footer-copy">
+                <h2>Detected Line Items</h2>
 
-© 2026 Jesse & Jeslyn Nigeria Limited (JJN HUB)
+                <button class="action-btn">
 
-</div>
+                    + Add Item
 
-</footer>
-</main>
+                </button>
+
+            </div>
+
+            <div class="customer-table-wrapper">
+
+                <table class="document-table">
+
+                    <thead>
+
+                        <tr>
+
+                            <th>Description</th>
+
+                            <th>Qty</th>
+
+                            <th>Unit</th>
+
+                            <th>Destination</th>
+
+                            <th>Status</th>
+
+                        </tr>
+
+                    </thead>
+
+                    <tbody id="documentItems">
+
+                        <tr>
+
+                            <td colspan="5">
+
+                                No document processed.
+
+                            </td>
+
+                        </tr>
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- ====================================================== -->
+        <!-- WORKFLOW -->
+        <!-- ====================================================== -->
+
+        <section class="dashboard-panel">
+
+            <h2>Workflow Progress</h2>
+
+            <div class="workflow">
+
+                <div class="workflow-step active">
+
+                    <div class="workflow-circle">
+
+                        1
+
+                    </div>
+
+                    <p>Uploaded</p>
+
+                </div>
+
+                <div class="workflow-line"></div>
+
+                <div class="workflow-step">
+
+                    <div class="workflow-circle">
+
+                        2
+
+                    </div>
+
+                    <p>Extracted</p>
+
+                </div>
+
+                <div class="workflow-line"></div>
+
+                <div class="workflow-step">
+
+                    <div class="workflow-circle">
+
+                        3
+
+                    </div>
+
+                    <p>Reviewed</p>
+
+                </div>
+
+                <div class="workflow-line"></div>
+
+                <div class="workflow-step">
+
+                    <div class="workflow-circle">
+
+                        4
+
+                    </div>
+
+                    <p>Approved</p>
+
+                </div>
+
+                <div class="workflow-line"></div>
+
+                <div class="workflow-step">
+
+                    <div class="workflow-circle">
+
+                        5
+
+                    </div>
+
+                    <p>Engineering</p>
+
+                </div>
+
+                <div class="workflow-line"></div>
+
+                <div class="workflow-step">
+
+                    <div class="workflow-circle">
+
+                        6
+
+                    </div>
+
+                    <p>Quotation</p>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- ====================================================== -->
+        <!-- ERP ACTIONS -->
+        <!-- ====================================================== -->
+
+        <section class="dashboard-panel">
+
+            <h2>ERP Actions</h2>
+
+            <div class="button-group">
+
+                <button class="action-btn"
+                        id="approveDocument">
+
+                    ✔ Approve Document
+
+                </button>
+
+                <button class="action-btn"
+                        id="saveDraft">
+
+                    Save Draft
+
+                </button>
+
+                <button class="action-btn"
+                        id="openEngineering">
+
+                    Open Engineering
+
+                </button>
+
+                <button class="action-btn"
+                        id="generateEstimate">
+
+                    Cost Estimate
+
+                </button>
+
+                <button class="action-btn"
+                        id="generateQuote">
+
+                    Generate Quote
+
+                </button>
+
+            </div>
+
+        </section>
+                <!-- ====================================================== -->
+        <!-- DOCUMENT REGISTER -->
+        <!-- ====================================================== -->
+
+        <section class="dashboard-panel">
+
+            <div class="panel-header">
+
+                <div>
+
+                    <h2>Document Register</h2>
+
+                    <p>
+                        Search, monitor and manage every document stored within
+                        the JJN HUB ERP.
+                    </p>
+
+                </div>
+
+            </div>
+
+            <!-- Search Filters -->
+
+            <div class="filter-grid">
+
+                <input
+                    type="text"
+                    id="searchDocument"
+                    placeholder="Search by Client, PR Number, Document Number...">
+
+                <select id="filterDepartment">
+
+                    <option value="">All Departments</option>
+
+                    <option>Engineering</option>
+
+                    <option>Marine</option>
+
+                    <option>Automotive</option>
+
+                    <option>Logistics</option>
+
+                    <option>Procurement</option>
+
+                    <option>Quality</option>
+
+                </select>
+
+                <select id="filterStatus">
+
+                    <option value="">All Status</option>
+
+                    <option>Draft</option>
+
+                    <option>Pending Review</option>
+
+                    <option>Approved</option>
+
+                    <option>Archived</option>
+
+                </select>
+
+                <button class="action-btn">
+
+                    Search
+
+                </button>
+
+            </div>
+
+            <div class="customer-table-wrapper">
+
+                <table class="document-table">
+
+                    <thead>
+
+                        <tr>
+
+                            <th>Document No.</th>
+
+                            <th>Client</th>
+
+                            <th>Type</th>
+
+                            <th>Department</th>
+
+                            <th>Workflow</th>
+
+                            <th>Status</th>
+
+                            <th>Uploaded</th>
+
+                            <th>Action</th>
+
+                        </tr>
+
+                    </thead>
+
+                    <tbody id="documentsTable">
+
+                        <!-- Loaded from Supabase -->
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- ====================================================== -->
+        <!-- PDF PREVIEW -->
+        <!-- ====================================================== -->
+
+        <section class="dashboard-panel">
+
+            <div class="panel-header">
+
+                <h2>Document Preview</h2>
+
+            </div>
+
+            <div class="pdf-preview">
+
+                <iframe
+                    id="pdfViewer"
+                    src=""
+                    width="100%"
+                    height="700">
+
+                </iframe>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- ====================================================== -->
+        <!-- AUDIT LOG -->
+        <!-- ====================================================== -->
+
+        <section class="dashboard-panel">
+
+            <div class="panel-header">
+
+                <h2>Audit Trail</h2>
+
+            </div>
+
+            <div class="customer-table-wrapper">
+
+                <table class="document-table">
+
+                    <thead>
+
+                        <tr>
+
+                            <th>Date</th>
+
+                            <th>User</th>
+
+                            <th>Activity</th>
+
+                            <th>Department</th>
+
+                            <th>Status</th>
+
+                        </tr>
+
+                    </thead>
+
+                    <tbody id="auditLog">
+
+                        <!-- Loaded from Supabase -->
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- ====================================================== -->
+        <!-- FOOTER -->
+        <!-- ====================================================== -->
+
+        <footer class="admin-footer">
+
+            <div class="admin-footer-links">
+
+                <a href="dashboard.html">Dashboard</a>
+
+                <span>|</span>
+
+                <a href="customers.html">Customers</a>
+
+                <span>|</span>
+
+                <a href="documents.html">Documents</a>
+
+                <span>|</span>
+
+                <a href="projects.html">Projects</a>
+
+                <span>|</span>
+
+                <a href="engineering-admin.html">Engineering</a>
+
+                <span>|</span>
+
+                <a href="marine-admin.html">Marine</a>
+
+                <span>|</span>
+
+                <a href="procurement-admin.html">Procurement</a>
+
+                <span>|</span>
+
+                <a href="quality.html">Quality</a>
+
+                <span>|</span>
+
+                <a href="reports.html">Reports</a>
+
+                <span>|</span>
+
+                <a href="settings.html">Settings</a>
+
+            </div>
+
+            <div class="admin-footer-copy">
+
+                © 2026 Jesse & Jeslyn Nigeria Limited (JJN HUB)
+
+            </div>
+
+        </footer>
+
+    </main>
 
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
 <script src="js/auth.js"></script>
-
 <script src="js/protect.js"></script>
-
 <script src="js/logout.js"></script>
-
 <script src="js/admin.js"></script>
+
+<!-- Document Module -->
+
+<script src="js/documents.js"></script>
+<script src="js/document-upload.js"></script>
+<script src="js/document-register.js"></script>
+<script src="js/document-workflow.js"></script>
+<script src="js/document-preview.js"></script>
 
 </body>
 
 </html>
-<!-- DOCUMENTS PART 2 END -->
