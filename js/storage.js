@@ -2,11 +2,10 @@
 =========================================================
 JJN HUB ERP
 Storage Manager
-Part 1 - Core Configuration & Helpers
+Part 1.1
 =========================================================
 Requires:
-- auth.js
-- config.js
+- supabase.js
 =========================================================
 */
 
@@ -14,13 +13,13 @@ const StorageManager = {
 
     /*
     =========================================================
-    DEFAULT SETTINGS
+    CONFIGURATION
     =========================================================
     */
 
     bucket: STORAGE.DOCUMENTS,
 
-    maxFileSize: 50 * 1024 * 1024, // 50 MB
+    maxFileSize: 50 * 1024 * 1024,
 
     allowedTypes: [
 
@@ -56,7 +55,7 @@ const StorageManager = {
 
                 valid: false,
 
-                message: "No file selected."
+                message: "Please select a file."
 
             };
 
@@ -80,7 +79,7 @@ const StorageManager = {
 
                 valid: false,
 
-                message: "File exceeds maximum upload size."
+                message: "Maximum upload size is 50 MB."
 
             };
 
@@ -98,7 +97,7 @@ const StorageManager = {
 
     /*
     =========================================================
-    SANITIZE FILE NAME
+    FILE NAME
     =========================================================
     */
 
@@ -114,77 +113,25 @@ const StorageManager = {
 
     },
 
-    /*
-    =========================================================
-    FILE EXTENSION
-    =========================================================
-    */
-
     getExtension(filename) {
 
-        return filename.split(".").pop().toLowerCase();
+        return filename
+
+            .split(".")
+
+            .pop()
+
+            .toLowerCase();
 
     },
 
-    /*
-    =========================================================
-    GENERATE UNIQUE FILE NAME
-    =========================================================
-    */
+    generateFileName(file, prefix = "DOC") {
 
-    generateFileName(file, prefix = PREFIX.DOCUMENT) {
+        const extension = this.getExtension(file.name);
 
-        const ext = this.getExtension(file.name);
+        const random = Math.floor(Math.random() * 900000);
 
-        const timestamp = Date.now();
-
-        const random = Math.floor(Math.random() * 9000) + 1000;
-
-        return `${prefix}_${timestamp}_${random}.${ext}`;
-
-    },
-
-    /*
-    =========================================================
-    YEAR
-    =========================================================
-    */
-
-    getYear() {
-
-        return new Date().getFullYear();
-
-    },
-
-    /*
-    =========================================================
-    MONTH
-    =========================================================
-    */
-
-    getMonth() {
-
-        return String(new Date().getMonth() + 1)
-
-            .padStart(2, "0");
-
-    },
-
-    /*
-    =========================================================
-    FOLDER PATH
-    =========================================================
-    */
-
-    buildFolder(department) {
-
-        const dep = (department || "general")
-
-            .toLowerCase()
-
-            .replace(/\s+/g, "-");
-
-        return `${dep}/${this.getYear()}/${this.getMonth()}`;
+        return `${prefix}_${Date.now()}_${random}.${extension}`;
 
     },
 
@@ -194,43 +141,66 @@ const StorageManager = {
     =========================================================
     */
 
-    buildStoragePath(file, department, prefix = PREFIX.DOCUMENT) {
+    getYear() {
 
-        const folder = this.buildFolder(department);
-
-        const filename = this.generateFileName(file, prefix);
-
-        return `${folder}/${filename}`;
+        return new Date().getFullYear();
 
     },
 
+    getMonth() {
+
+        return String(
+
+            new Date().getMonth() + 1
+
+        ).padStart(2, "0");
+
+    },
+
+    buildFolder(department = "general") {
+
+        return `${department.toLowerCase()}/${this.getYear()}/${this.getMonth()}`;
+
+    },
+
+    buildStoragePath(file, department, prefix = "DOC") {
+
+        return `${
+
+            this.buildFolder(department)
+
+        }/${
+
+            this.generateFileName(file, prefix)
+
+        }`;
     /*
     =========================================================
     FILE ICON
     =========================================================
     */
 
-    getIcon(type) {
+    getIcon(type = "") {
+
+        type = type.toLowerCase();
 
         if (type.includes("pdf"))
-
             return "📄";
 
         if (type.includes("image"))
-
-            return "🖼";
+            return "🖼️";
 
         if (type.includes("word"))
-
             return "📝";
 
-        if (type.includes("excel"))
-
+        if (type.includes("excel") || type.includes("sheet"))
             return "📊";
 
         return "📁";
 
     },
+
+
 
     /*
     =========================================================
@@ -238,69 +208,110 @@ const StorageManager = {
     =========================================================
     */
 
-    formatSize(bytes) {
+    formatSize(bytes = 0) {
 
         if (bytes < 1024)
-
             return bytes + " B";
 
         if (bytes < 1024 * 1024)
-
             return (bytes / 1024).toFixed(2) + " KB";
 
         if (bytes < 1024 * 1024 * 1024)
-
             return (bytes / 1024 / 1024).toFixed(2) + " MB";
 
         return (bytes / 1024 / 1024 / 1024).toFixed(2) + " GB";
 
     },
 
+
+
     /*
     =========================================================
-    FILE METADATA
+    DOCUMENT METADATA
     =========================================================
     */
 
-    createMetadata(file, path, department) {
+    createMetadata(file, storagePath, department) {
 
         return {
 
-            original_name: file.name,
+            document_number: generateDocumentNumber("DOC"),
 
-            storage_path: path,
+            storage_path: storagePath,
+
+            file_name: file.name,
 
             mime_type: file.type,
 
-            size: file.size,
+            file_size: file.size,
 
             department: department,
 
-            uploaded_at: new Date().toISOString()
+            workflow_status: WORKFLOW.UPLOADED,
+
+            status: "Uploaded",
+
+            created_at: new Date().toISOString()
 
         };
 
-    }
+    },
+
+
 
     /*
     =========================================================
-    UPLOAD FILE TO SUPABASE STORAGE
+    CHECK FILE TYPE
     =========================================================
     */
 
-    async uploadFile(file, department = "General", prefix = PREFIX.DOCUMENT) {
+    isImage(file) {
+
+        return file.type.startsWith("image/");
+
+    },
+
+
+
+    /*
+    =========================================================
+    CHECK PDF
+    =========================================================
+    */
+
+    isPDF(file) {
+
+        return file.type === "application/pdf";
+
+    },
+
+
+
+    /*
+    =========================================================
+    RESET
+    =========================================================
+    */
+
+    reset() {
+
+        this.bucket = STORAGE.DOCUMENTS;
+
+    },
+        /*
+    =========================================================
+    UPLOAD FILE
+    =========================================================
+    */
+
+    async uploadFile(file, department = "General", prefix = "DOC") {
 
         try {
 
             const validation = this.validate(file);
 
-            if (!validation.valid) {
-
+            if (!validation.valid)
                 throw new Error(validation.message);
-
-            }
-
-            showLoading("Uploading document...");
 
             const storagePath = this.buildStoragePath(
 
@@ -318,7 +329,7 @@ const StorageManager = {
 
                 error
 
-            } = await supabase.storage
+            } = await window.supabaseClient.storage
 
                 .from(this.bucket)
 
@@ -338,9 +349,8 @@ const StorageManager = {
 
                 );
 
-            if (error) throw error;
-
-            hideLoading();
+            if (error)
+                throw error;
 
             return {
 
@@ -354,19 +364,15 @@ const StorageManager = {
 
         }
 
-        catch (err) {
+        catch (error) {
 
-            hideLoading();
-
-            console.error(err);
-
-            notify(err.message, "error");
+            console.error(error);
 
             return {
 
                 success: false,
 
-                error: err.message
+                error: error.message
 
             };
 
@@ -378,7 +384,7 @@ const StorageManager = {
 
     /*
     =========================================================
-    GET PUBLIC URL
+    PUBLIC URL
     =========================================================
     */
 
@@ -388,7 +394,7 @@ const StorageManager = {
 
             data
 
-        } = supabase.storage
+        } = window.supabaseClient.storage
 
             .from(this.bucket)
 
@@ -402,7 +408,7 @@ const StorageManager = {
 
     /*
     =========================================================
-    CREATE SIGNED URL
+    SIGNED URL
     =========================================================
     */
 
@@ -414,7 +420,7 @@ const StorageManager = {
 
             error
 
-        } = await supabase.storage
+        } = await window.supabaseClient.storage
 
             .from(this.bucket)
 
@@ -426,7 +432,8 @@ const StorageManager = {
 
             );
 
-        if (error) throw error;
+        if (error)
+            throw error;
 
         return data.signedUrl;
 
@@ -442,33 +449,22 @@ const StorageManager = {
 
     async downloadFile(path) {
 
-        try {
+        const {
 
-            const {
+            data,
 
-                data,
+            error
 
-                error
+        } = await window.supabaseClient.storage
 
-            } = await supabase.storage
+            .from(this.bucket)
 
-                .from(this.bucket)
+            .download(path);
 
-                .download(path);
+        if (error)
+            throw error;
 
-            if (error) throw error;
-
-            return data;
-
-        }
-
-        catch (err) {
-
-            console.error(err);
-
-            notify(err.message, "error");
-
-        }
+        return data;
 
     },
 
@@ -500,45 +496,56 @@ const StorageManager = {
 
     /*
     =========================================================
+    DELETE FILE
+    =========================================================
+    */
+
+    async deleteFile(path) {
+
+        const {
+
+            error
+
+        } = await window.supabaseClient.storage
+
+            .from(this.bucket)
+
+            .remove([path]);
+
+        if (error)
+            throw error;
+
+        return true;
+
+    },
+        /*
+    =========================================================
     SAVE DOCUMENT METADATA
     =========================================================
     */
 
     async saveMetadata(document) {
 
-        try {
+        const {
 
-            const {
+            data,
 
-                data,
+            error
 
-                error
+        } = await window.supabaseClient
 
-            } = await supabase
+            .from(TABLES.DOCUMENTS)
 
-                .from(TABLES.DOCUMENTS)
+            .insert(document)
 
-                .insert(document)
+            .select()
 
-                .select()
+            .single();
 
-                .single();
+        if (error)
+            throw error;
 
-            if (error) throw error;
-
-            return data;
-
-        }
-
-        catch (err) {
-
-            console.error(err);
-
-            notify(err.message, "error");
-
-            throw err;
-
-        }
+        return data;
 
     },
 
@@ -546,7 +553,42 @@ const StorageManager = {
 
     /*
     =========================================================
-    UPLOAD + SAVE DOCUMENT
+    UPDATE DOCUMENT METADATA
+    =========================================================
+    */
+
+    async updateMetadata(documentId, values) {
+
+        const {
+
+            data,
+
+            error
+
+        } = await window.supabaseClient
+
+            .from(TABLES.DOCUMENTS)
+
+            .update(values)
+
+            .eq("id", documentId)
+
+            .select()
+
+            .single();
+
+        if (error)
+            throw error;
+
+        return data;
+
+    },
+
+
+
+    /*
+    =========================================================
+    UPLOAD DOCUMENT
     =========================================================
     */
 
@@ -558,7 +600,7 @@ const StorageManager = {
 
         department,
 
-        customer = "",
+        customerId = null,
 
         remarks = "",
 
@@ -572,21 +614,24 @@ const StorageManager = {
 
             department,
 
-            documentType
+            "DOC"
 
         );
 
         if (!upload.success)
-
             return upload;
 
         const metadata = {
 
-            document_number: generateDocumentNumber(documentType),
+            document_number:
+
+                generateDocumentNumber("DOC"),
+
+            customer_id: customerId,
+
+            document_title: file.name,
 
             document_type: documentType,
-
-            customer,
 
             department,
 
@@ -600,193 +645,38 @@ const StorageManager = {
 
             file_size: file.size,
 
-            workflow_status: WORKFLOW.UPLOADED,
+            workflow_status:
 
-            status: STATUS.UPLOADED,
+                WORKFLOW.UPLOADED,
+
+            status: "Uploaded",
 
             uploaded_by: uploadedBy,
 
-            created_at: new Date().toISOString()
+            created_at:
+
+                new Date().toISOString()
 
         };
 
-        const record = await this.saveMetadata(metadata);
+        const record = await this.saveMetadata(
+
+            metadata
+
+        );
 
         return {
 
             success: true,
 
-            record
+            record,
+
+            storagePath: upload.path
 
         };
 
     },
-    /*
-    =========================================================
-    DELETE FILE
-    =========================================================
-    */
 
-    async deleteFile(path) {
-
-        try {
-
-            const { error } = await supabase.storage
-                .from(this.bucket)
-                .remove([path]);
-
-            if (error) throw error;
-
-            return true;
-
-        } catch (err) {
-
-            console.error(err);
-
-            notify(err.message, "error");
-
-            return false;
-
-        }
-
-    },
-
-
-    /*
-    =========================================================
-    MOVE FILE
-    =========================================================
-    */
-
-    async moveFile(oldPath, newPath) {
-
-        try {
-
-            const { error } = await supabase.storage
-                .from(this.bucket)
-                .move(oldPath, newPath);
-
-            if (error) throw error;
-
-            return true;
-
-        } catch (err) {
-
-            console.error(err);
-
-            notify(err.message, "error");
-
-            return false;
-
-        }
-
-    },
-
-
-    /*
-    =========================================================
-    COPY FILE
-    =========================================================
-    */
-
-    async copyFile(oldPath, newPath) {
-
-        try {
-
-            const { error } = await supabase.storage
-                .from(this.bucket)
-                .copy(oldPath, newPath);
-
-            if (error) throw error;
-
-            return true;
-
-        } catch (err) {
-
-            console.error(err);
-
-            notify(err.message, "error");
-
-            return false;
-
-        }
-
-    },
-
-
-    /*
-    =========================================================
-    LIST FILES
-    =========================================================
-    */
-
-    async list(folder = "") {
-
-        try {
-
-            const { data, error } = await supabase.storage
-                .from(this.bucket)
-                .list(folder);
-
-            if (error) throw error;
-
-            return data;
-
-        } catch (err) {
-
-            console.error(err);
-
-            return [];
-
-        }
-
-    },
-
-
-    /*
-    =========================================================
-    CHECK FILE EXISTS
-    =========================================================
-    */
-
-    async exists(path) {
-
-        const folder = path.substring(0, path.lastIndexOf("/"));
-
-        const filename = path.split("/").pop();
-
-        const files = await this.list(folder);
-
-        return files.some(file => file.name === filename);
-
-    },
-
-
-    /*
-    =========================================================
-    UPDATE DOCUMENT METADATA
-    =========================================================
-    */
-
-    async updateMetadata(documentId, values) {
-
-        const { data, error } = await supabase
-
-            .from(TABLES.DOCUMENTS)
-
-            .update(values)
-
-            .eq("id", documentId)
-
-            .select()
-
-            .single();
-
-        if (error) throw error;
-
-        return data;
-
-    },
 
 
     /*
@@ -803,17 +693,22 @@ const StorageManager = {
 
             {
 
-                status: STATUS.ARCHIVED,
+                status: "Archived",
 
-                workflow_status: WORKFLOW.ARCHIVED,
+                workflow_status:
 
-                archived_at: new Date().toISOString()
+                    WORKFLOW.ARCHIVED,
+
+                archived_at:
+
+                    new Date().toISOString()
 
             }
 
         );
 
     },
+
 
 
     /*
@@ -830,9 +725,11 @@ const StorageManager = {
 
             {
 
-                status: STATUS.APPROVED,
+                status: "Approved",
 
-                workflow_status: WORKFLOW.APPROVED,
+                workflow_status:
+
+                    WORKFLOW.APPROVED,
 
                 archived_at: null
 
@@ -843,69 +740,10 @@ const StorageManager = {
     },
 
 
-    /*
-    =========================================================
-    DOCUMENT HISTORY
-    =========================================================
-    */
-
-    async history(documentId) {
-
-        const { data, error } = await supabase
-
-            .from(TABLES.DOCUMENT_AUDIT)
-
-            .select("*")
-
-            .eq("document_id", documentId)
-
-            .order("created_at", {
-
-                ascending: false
-
-            });
-
-        if (error) throw error;
-
-        return data;
-
-    },
-
 
     /*
     =========================================================
-    WRITE AUDIT LOG
-    =========================================================
-    */
-
-    async log(documentId, action, remarks = "") {
-
-        const user = await getCurrentUser();
-
-        return await supabase
-
-            .from(TABLES.DOCUMENT_AUDIT)
-
-            .insert({
-
-                document_id: documentId,
-
-                user_id: user?.id,
-
-                action,
-
-                remarks,
-
-                created_at: new Date().toISOString()
-
-            });
-
-    },
-
-
-    /*
-    =========================================================
-    INITIALIZE STORAGE
+    INITIALIZE
     =========================================================
     */
 
@@ -913,11 +751,24 @@ const StorageManager = {
 
         console.log(
 
-            "JJN HUB Storage Manager Ready"
+            "Storage Manager Ready"
 
         );
 
     }
+
+};
+
+
+
+/*
+=========================================================
+INITIALIZE
+=========================================================
+*/
+
 StorageManager.init();
 
 window.StorageManager = StorageManager;
+
+    },
