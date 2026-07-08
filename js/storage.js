@@ -2,7 +2,7 @@
 =========================================================
 JJN HUB ERP
 Storage Manager
-Version 1.2
+Version 1.3
 =========================================================
 Requires:
 - supabase.js
@@ -92,6 +92,53 @@ const StorageManager = {
             message: "File validation successful."
 
         };
+
+    },
+
+    /*
+    =========================================================
+    FORMAT FILE SIZE
+    =========================================================
+    */
+
+    formatSize(bytes) {
+
+        if (bytes < 1024)
+            return bytes + " B";
+
+        if (bytes < 1024 * 1024)
+            return (bytes / 1024).toFixed(2) + " KB";
+
+        if (bytes < 1024 * 1024 * 1024)
+            return (bytes / 1024 / 1024).toFixed(2) + " MB";
+
+        return (bytes / 1024 / 1024 / 1024).toFixed(2) + " GB";
+
+    },
+
+    /*
+    =========================================================
+    FILE ICON
+    =========================================================
+    */
+
+    getIcon(type = "") {
+
+        type = type.toLowerCase();
+
+        if (type.includes("pdf"))
+            return "📄";
+
+        if (type.includes("image"))
+            return "🖼️";
+
+        if (type.includes("word"))
+            return "📝";
+
+        if (type.includes("excel") || type.includes("sheet"))
+            return "📊";
+
+        return "📁";
 
     },
 
