@@ -2015,3 +2015,115 @@ document.addEventListener(
     }
 
 );
+/*
+=========================================================
+UPLOAD FILE TO SUPABASE STORAGE
+=========================================================
+*/
+
+async uploadFile(file, department = "General") {
+
+    try {
+
+        /*
+        -------------------------------
+        Validate file
+        -------------------------------
+        */
+
+        const result = this.validate(file);
+
+        if (!result.valid) {
+
+            notify(result.message, "error");
+
+            return null;
+
+        }
+
+        /*
+        -------------------------------
+        Build Storage Path
+        -------------------------------
+        */
+
+        const storagePath = this.buildStoragePath(
+
+            file,
+
+            department,
+
+            PREFIX.DOCUMENT
+
+        );
+
+        /*
+        -------------------------------
+        Upload to Supabase
+        -------------------------------
+        */
+
+        const { data, error } = await window.supabaseClient
+            .storage
+            .from(this.bucket)
+            .upload(
+
+                storagePath,
+
+                file,
+
+                {
+
+                    cacheControl: "3600",
+
+                    upsert: false
+
+                }
+
+            );
+
+        if (error) {
+
+            throw error;
+
+        }
+
+        notify(
+
+            "Upload Successful",
+
+            "success"
+
+        );
+
+        console.log(data);
+
+        return {
+
+            success: true,
+
+            path: storagePath,
+
+            data
+
+        };
+
+    }
+
+    catch (err) {
+
+        console.error(err);
+
+        notify(
+
+            err.message,
+
+            "error"
+
+        );
+
+        return null;
+
+    }
+
+},
