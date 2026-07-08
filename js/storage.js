@@ -217,6 +217,42 @@ const StorageManager = {
 
     },
     /*
+=========================================================
+CHECK STORAGE CONNECTION
+=========================================================
+*/
+
+async checkConnection() {
+
+    try {
+
+        const { data, error } = await window.supabaseClient.storage
+            .from(this.bucket)
+            .list("", {
+                limit: 1
+            });
+
+        if (error)
+            throw error;
+
+        console.log("✅ Storage connection successful.");
+
+        return true;
+
+    }
+
+    catch (err) {
+
+        console.error(err);
+
+        notify(err.message, "error");
+
+        return false;
+
+    }
+
+},
+    /*
     =========================================================
     INITIALIZE
     =========================================================
