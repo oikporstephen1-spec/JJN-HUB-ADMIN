@@ -1,11 +1,11 @@
 /*
 =========================================================
 JJN HUB ERP
-Documents Module
-Version 1.0
+DOCUMENTS MODULE
+Version 2.0
 =========================================================
-Requires
-
+Dependencies
+---------------------------------------------------------
 auth.js
 config.js
 database.js
@@ -15,11 +15,21 @@ storage.js
 
 const Documents = {
 
+    /*
+    =========================================================
+    APPLICATION STATE
+    =========================================================
+    */
+
     initialized: false,
+
+    loading: false,
 
     currentDocument: null,
 
     documents: [],
+
+    extraction: null,
 
     dashboard: {
 
@@ -37,7 +47,7 @@ const Documents = {
 
     /*
     =========================================================
-    INITIALIZE
+    INITIALIZE MODULE
     =========================================================
     */
 
@@ -45,14 +55,21 @@ const Documents = {
 
         try {
 
+            this.loading = true;
+
             showLoading("Loading Documents...");
 
             await this.loadDashboard();
 
             await this.loadRegister();
 
+            this.registerEvents();
+
             this.initializeDropZone();
+
             this.initialized = true;
+
+            this.loading = false;
 
             hideLoading();
 
@@ -60,13 +77,23 @@ const Documents = {
 
         }
 
-        catch (err) {
+        catch (error) {
+
+            this.loading = false;
 
             hideLoading();
 
-            console.error(err);
+            console.error(error);
 
-            notify(err.message, "error");
+            notify(
+
+                error.message ||
+
+                "Unable to initialize Documents Module.",
+
+                "error"
+
+            );
 
         }
 
@@ -76,37 +103,108 @@ const Documents = {
 
     /*
     =========================================================
+    RELOAD PAGE DATA
+    =========================================================
+    */
+
+    async refresh() {
+
+        await this.loadDashboard();
+
+        await this.loadRegister();
+
+    },
+
+
+
+    /*
+    =========================================================
+    RESET CURRENT DOCUMENT
+    =========================================================
+    */
+
+    clearCurrentDocument() {
+
+        this.currentDocument = null;
+
+        this.extraction = null;
+
+    },
+
+
+
+    /*
+    =========================================================
+    LOADING STATE
+    =========================================================
+    */
+
+    setLoading(state) {
+
+        this.loading = state;
+
+        if (state)
+
+            showLoading("Processing...");
+
+        else
+
+            hideLoading();
+
+    },
+        /*
+    =========================================================
     LOAD DASHBOARD
     =========================================================
     */
 
     async loadDashboard() {
 
-        const documents = await DB.Documents.getAll();
+        try {
 
-        this.documents = documents || [];
+            const documents = await DB.Documents.getAll();
 
-        this.dashboard.total = this.documents.length;
+            this.documents = documents || [];
 
-        this.dashboard.pending = this.documents.filter(
+            this.dashboard.total = this.documents.length;
 
-            d => d.status === STATUS.REVIEW
+            this.dashboard.pending = this.documents.filter(doc =>
 
-        ).length;
+                doc.status === STATUS.REVIEW ||
 
-        this.dashboard.approved = this.documents.filter(
+                doc.workflow_status === WORKFLOW.REVIEW
 
-            d => d.status === STATUS.APPROVED
+            ).length;
 
-        ).length;
+            this.dashboard.approved = this.documents.filter(doc =>
 
-        this.dashboard.archived = this.documents.filter(
+                doc.status === STATUS.APPROVED
 
-            d => d.status === STATUS.ARCHIVED
+            ).length;
 
-        ).length;
+            this.dashboard.archived = this.documents.filter(doc =>
 
-        this.renderDashboard();
+                doc.status === STATUS.ARCHIVED
+
+            ).length;
+
+            this.renderDashboard();
+
+        }
+
+        catch (error) {
+
+            console.error(error);
+
+            notify(
+
+                "Unable to load dashboard.",
+
+                "error"
+
+            );
+
+        }
 
     },
 
@@ -120,45 +218,72 @@ const Documents = {
 
     renderDashboard() {
 
-        const total = document.getElementById("totalDocuments");
+        const cards = {
 
-        const pending = document.getElementById("pendingDocuments");
+            total: document.getElementById("totalDocuments"),
 
-        const approved = document.getElementById("approvedDocuments");
+            pending: document.getElementById("pendingDocuments"),
 
-        const archived = document.getElementById("archivedDocuments");
+            approved: document.getElementById("approvedDocuments"),
 
-        if (total)
+            archived: document.getElementById("archivedDocuments")
 
-            total.textContent = this.dashboard.total;
+        };
 
-        if (pending)
+        if (cards.total)
 
-            pending.textContent = this.dashboard.pending;
+            cards.total.textContent =
 
-        if (approved)
+                this.dashboard.total;
 
-            approved.textContent = this.dashboard.approved;
+        if (cards.pending)
 
-        if (archived)
+            cards.pending.textContent =
 
-            archived.textContent = this.dashboard.archived;
+                this.dashboard.pending;
+
+        if (cards.approved)
+
+            cards.approved.textContent =
+
+                this.dashboard.approved;
+
+        if (cards.archived)
+
+            cards.archived.textContent =
+
+                this.dashboard.archived;
 
     },
-
-
-
-    /*
+        /*
     =========================================================
-    LOAD REGISTER
+    LOAD DOCUMENT REGISTER
     =========================================================
     */
 
     async loadRegister() {
 
-        this.documents = await DB.Documents.getAll();
+        try {
 
-        this.renderRegister();
+            this.documents = await DB.Documents.getAll();
+
+            this.renderRegister();
+
+        }
+
+        catch (error) {
+
+            console.error(error);
+
+            notify(
+
+                "Unable to load document register.",
+
+                "error"
+
+            );
+
+        }
 
     },
 
@@ -172,11 +297,7 @@ const Documents = {
 
     renderRegister() {
 
-        const tbody = document.getElementById(
-
-            "documentsTable"
-
-        );
+        const tbody = document.getElementById("documentsTable");
 
         if (!tbody)
 
@@ -208,37 +329,37 @@ const Documents = {
 
             tbody.innerHTML += `
 
-            <tr>
+                <tr>
 
-                <td>${documentItem.document_number}</td>
+                    <td>${documentItem.document_number ?? "-"}</td>
 
-                <td>${documentItem.customer || "-"}</td>
+                    <td>${documentItem.document_title ?? "-"}</td>
 
-                <td>${documentItem.document_type}</td>
+                    <td>${documentItem.document_type ?? "-"}</td>
 
-                <td>${documentItem.department}</td>
+                    <td>${documentItem.department ?? "-"}</td>
 
-                <td>${documentItem.workflow_status}</td>
+                    <td>${documentItem.workflow_status ?? "-"}</td>
 
-                <td>${documentItem.status}</td>
+                    <td>${documentItem.status ?? "-"}</td>
 
-                <td>${formatDate(documentItem.created_at)}</td>
+                    <td>${formatDate(documentItem.created_at)}</td>
 
-                <td>
+                    <td>
 
-                    <button
+                        <button
 
-                        class="action-btn"
+                            class="action-btn"
 
-                        onclick="Documents.open('${documentItem.id}')">
+                            onclick="Documents.open(${documentItem.id})">
 
-                        Open
+                            Open
 
-                    </button>
+                        </button>
 
-                </td>
+                    </td>
 
-            </tr>
+                </tr>
 
             `;
 
@@ -256,11 +377,43 @@ const Documents = {
 
     async open(id) {
 
-        const documentData = await DB.Documents.get(id);
+        try {
 
-        this.currentDocument = documentData;
+            const documentData = await DB.Documents.get(id);
 
-        console.log(documentData);
+            if (!documentData)
+
+                return;
+
+            this.currentDocument = documentData;
+
+            this.populatePreview(documentData);
+
+            if (documentData.storage_path) {
+
+                await StorageManager.previewFile(
+
+                    documentData.storage_path
+
+                );
+
+            }
+
+        }
+
+        catch (error) {
+
+            console.error(error);
+
+            notify(
+
+                "Unable to open document.",
+
+                "error"
+
+            );
+
+        }
 
     },
 
@@ -268,15 +421,59 @@ const Documents = {
 
     /*
     =========================================================
-    REFRESH
+    SEARCH DOCUMENTS
     =========================================================
     */
 
-    async refresh() {
+    search(event) {
 
-        await this.loadDashboard();
+        const keyword = event.target.value
 
-        await this.loadRegister();
+            .trim()
+
+            .toLowerCase();
+
+        const filtered = this.documents.filter(doc =>
+
+            (doc.document_number || "")
+
+                .toLowerCase()
+
+                .includes(keyword)
+
+            ||
+
+            (doc.document_title || "")
+
+                .toLowerCase()
+
+                .includes(keyword)
+
+            ||
+
+            (doc.document_type || "")
+
+                .toLowerCase()
+
+                .includes(keyword)
+
+            ||
+
+            (doc.department || "")
+
+                .toLowerCase()
+
+                .includes(keyword)
+
+        );
+
+        const original = this.documents;
+
+        this.documents = filtered;
+
+        this.renderRegister();
+
+        this.documents = original;
 
     },
 
@@ -326,54 +523,26 @@ const Documents = {
 
         }
 
+        const approve = document.getElementById(
+
+            "approveDocument"
+
+        );
+
+        if (approve) {
+
+            approve.addEventListener(
+
+                "click",
+
+                this.approveDocument.bind(this)
+
+            );
+
+        }
+
     },
-
-
-
-    /*
-    =========================================================
-    PLACEHOLDERS
-    =========================================================
-    */
-
-    async handleUpload(e) {
-
-        e.preventDefault();
-
-        console.log("Upload handler...");
-
-    },
-
-
-
-    search() {
-
-        console.log("Search...");
-
-    }
-
-};
-
-
-
-/*
-=========================================================
-START MODULE
-=========================================================
-*/
-
-document.addEventListener(
-
-    "DOMContentLoaded",
-
-    () => {
-
-        Documents.init();
-
-    }
-
-);
-    /*
+        /*
     =========================================================
     HANDLE DOCUMENT UPLOAD
     =========================================================
@@ -403,16 +572,36 @@ document.addEventListener(
             const department =
                 document.getElementById("department").value;
 
-            const remarks =
+            const description =
                 document.getElementById("documentDescription").value;
 
-            if (!documentType || !department) {
+            if (!documentType) {
 
-                notify("Document Type and Department are required.", "error");
+                notify("Please select a document type.", "error");
 
                 return;
 
             }
+
+            if (!department) {
+
+                notify("Please select a department.", "error");
+
+                return;
+
+            }
+
+            const validation = StorageManager.validate(file);
+
+            if (!validation.valid) {
+
+                notify(validation.message, "error");
+
+                return;
+
+            }
+
+            this.setLoading(true);
 
             const user = await getCurrentUser();
 
@@ -424,21 +613,21 @@ document.addEventListener(
 
                 department,
 
-                remarks,
+                remarks: description,
 
                 uploadedBy: user ? user.id : null
 
             });
 
+            this.setLoading(false);
+
             if (!result.success) {
 
-                notify("Upload failed.", "error");
+                notify("Document upload failed.", "error");
 
                 return;
 
             }
-
-            notify("Document uploaded successfully.");
 
             this.currentDocument = result.record;
 
@@ -446,19 +635,23 @@ document.addEventListener(
 
             await this.refresh();
 
+            notify("Document uploaded successfully.");
+
             if (document.getElementById("autoExtract")?.checked) {
 
-                this.startExtraction(result.record);
+                await this.startExtraction(result.record);
 
             }
 
         }
 
-        catch (err) {
+        catch (error) {
 
-            console.error(err);
+            this.setLoading(false);
 
-            notify(err.message, "error");
+            console.error(error);
+
+            notify(error.message, "error");
 
         }
 
@@ -468,63 +661,48 @@ document.addEventListener(
 
     /*
     =========================================================
-    POPULATE PREVIEW
+    POPULATE EXTRACTION PREVIEW
     =========================================================
     */
 
     populatePreview(documentData) {
 
-        document.getElementById("documentNumber").value =
-            documentData.document_number || "";
+        const fields = {
 
-        document.getElementById("departmentName").value =
-            documentData.department || "";
+            documentNumber: documentData.document_number,
 
-        document.getElementById("clientName").value =
-            documentData.customer || "";
+            clientName: documentData.customer_name,
+
+            departmentName: documentData.department,
+
+            projectName: documentData.project,
+
+            prNumber: documentData.pr_number,
+
+            projectLocation: documentData.location,
+
+            contactPerson: documentData.contact_person,
+
+            contactEmail: documentData.email
+
+        };
+
+        Object.entries(fields).forEach(([id, value]) => {
+
+            const input = document.getElementById(id);
+
+            if (input) {
+
+                input.value = value || "";
+
+            }
+
+        });
 
     },
-
-
-
-    /*
-    =========================================================
-    START EXTRACTION
-    =========================================================
-    */
-
-    async startExtraction(documentData) {
-
-        console.log(
-
-            "Starting OCR extraction...",
-
-            documentData.id
-
-        );
-
-        notify(
-
-            "Document uploaded. OCR processing will begin.",
-
-            "success"
-
-        );
-
         /*
-        Phase 3
-
-        OCR / AI extraction will be added here.
-
-        */
-
-    },
-
-
-
-    /*
     =========================================================
-    DRAG & DROP
+    INITIALIZE DRAG & DROP
     =========================================================
     */
 
@@ -564,7 +742,7 @@ document.addEventListener(
 
             dropZone.classList.remove("dragging");
 
-            if (e.dataTransfer.files.length === 0)
+            if (!e.dataTransfer.files.length)
 
                 return;
 
@@ -602,24 +780,154 @@ document.addEventListener(
 
         const dropZone = document.getElementById("dropZone");
 
+        if (!dropZone)
+
+            return;
+
         dropZone.innerHTML = `
 
-            <div class="upload-icon">
+            <div class="upload-preview">
 
-                ${StorageManager.getIcon(file.type)}
+                <div class="upload-icon">
+
+                    ${StorageManager.getIcon(file.type)}
+
+                </div>
+
+                <div class="upload-details">
+
+                    <h3>${file.name}</h3>
+
+                    <p>
+
+                        ${StorageManager.formatSize(file.size)}
+
+                    </p>
+
+                </div>
+
+                <button
+
+                    type="button"
+
+                    class="action-btn"
+
+                    onclick="Documents.removeSelectedFile()">
+
+                    Remove
+
+                </button>
 
             </div>
-
-            <h3>${file.name}</h3>
-
-            <p>${StorageManager.formatSize(file.size)}</p>
 
         `;
 
     },
+
+
+
     /*
     =========================================================
-    START EXTRACTION
+    REMOVE FILE
+    =========================================================
+    */
+
+    removeSelectedFile() {
+
+        const fileInput = document.getElementById("documentFile");
+
+        const dropZone = document.getElementById("dropZone");
+
+        if (fileInput)
+
+            fileInput.value = "";
+
+        if (dropZone) {
+
+            dropZone.innerHTML = `
+
+                <div class="upload-placeholder">
+
+                    <div class="upload-icon">
+
+                        📁
+
+                    </div>
+
+                    <h3>
+
+                        Drag & Drop Document
+
+                    </h3>
+
+                    <p>
+
+                        or click here to browse
+
+                    </p>
+
+                    <small>
+
+                        PDF, DOCX, XLSX, JPG, PNG
+
+                    </small>
+
+                </div>
+
+            `;
+
+        }
+
+    },
+
+
+
+    /*
+    =========================================================
+    FILE INFORMATION
+    =========================================================
+    */
+
+    getSelectedFile() {
+
+        const input = document.getElementById("documentFile");
+
+        if (!input || !input.files.length)
+
+            return null;
+
+        return input.files[0];
+
+    },
+
+
+
+    /*
+    =========================================================
+    RESET FORM
+    =========================================================
+    */
+
+    resetUploadForm() {
+
+        const form = document.getElementById(
+
+            "documentUploadForm"
+
+        );
+
+        if (form)
+
+            form.reset();
+
+        this.removeSelectedFile();
+
+        this.clearCurrentDocument();
+
+    },
+        /*
+    =========================================================
+    START DOCUMENT EXTRACTION
     =========================================================
     */
 
@@ -627,7 +935,13 @@ document.addEventListener(
 
         try {
 
-            showLoading("Extracting document...");
+            notify(
+
+                "Starting document extraction...",
+
+                "info"
+
+            );
 
             const { data, error } = await supabase.functions.invoke(
 
@@ -649,23 +963,33 @@ document.addEventListener(
 
             );
 
-            hideLoading();
+            if (error)
 
-            if (error) throw error;
+                throw error;
 
-            notify("Extraction completed.");
+            notify(
+
+                "Extraction completed.",
+
+                "success"
+
+            );
 
             await this.loadExtraction(documentData.id);
 
         }
 
-        catch (err) {
+        catch (error) {
 
-            hideLoading();
+            console.error(error);
 
-            console.error(err);
+            notify(
 
-            notify(err.message, "error");
+                "Extraction failed.",
+
+                "error"
+
+            );
 
         }
 
@@ -681,25 +1005,33 @@ document.addEventListener(
 
     async loadExtraction(documentId) {
 
-        const { data, error } = await supabase
+        try {
 
-            .from(TABLES.DOCUMENT_EXTRACTIONS)
+            const { data, error } = await supabase
 
-            .select("*")
+                .from("document_extractions")
 
-            .eq("document_id", documentId)
+                .select("*")
 
-            .single();
+                .eq("document_id", documentId)
 
-        if (error) {
+                .single();
 
-            console.error(error);
+            if (error)
 
-            return;
+                throw error;
+
+            this.extraction = data;
+
+            this.showExtraction(data);
 
         }
 
-        this.showExtraction(data);
+        catch (error) {
+
+            console.error(error);
+
+        }
 
     },
 
@@ -713,28 +1045,29 @@ document.addEventListener(
 
     showExtraction(data) {
 
-        document.getElementById("clientName").value =
-            data.client || "";
+        if (!data)
 
-        document.getElementById("prNumber").value =
-            data.pr_number || "";
+            return;
 
-        document.getElementById("projectName").value =
-            data.project || "";
+        this.populatePreview({
 
-        document.getElementById("departmentName").value =
-            data.department || "";
+            document_number: this.currentDocument.document_number,
 
-        document.getElementById("projectLocation").value =
-            data.location || "";
+            customer_name: data.client,
 
-        document.getElementById("contactPerson").value =
-            data.contact_person || "";
+            department: data.department,
 
-        document.getElementById("contactEmail").value =
-            data.email || "";
+            project: data.project,
 
-        this.renderItems(data.items || []);
+            pr_number: data.pr_number,
+
+            location: data.location,
+
+            contact_person: data.contact_person,
+
+            email: data.email
+
+        });
 
     },
 
@@ -742,27 +1075,356 @@ document.addEventListener(
 
     /*
     =========================================================
-    DETECTED ITEMS
+    UPLOAD PROGRESS
     =========================================================
     */
 
-    renderItems(items) {
+    setUploadProgress(percent) {
 
-        const tbody = document.getElementById("documentItems");
+        const progress = document.getElementById(
 
-        if (!tbody) return;
+            "uploadProgress"
+
+        );
+
+        const label = document.getElementById(
+
+            "uploadPercentage"
+
+        );
+
+        if (progress)
+
+            progress.value = percent;
+
+        if (label)
+
+            label.textContent = percent + "%";
+
+    },
+
+
+
+    /*
+    =========================================================
+    UPLOAD COMPLETE
+    =========================================================
+    */
+
+    uploadComplete() {
+
+        this.setUploadProgress(100);
+
+        notify(
+
+            "Upload completed successfully.",
+
+            "success"
+
+        );
+
+    },
+
+
+
+    /*
+    =========================================================
+    UPLOAD FAILED
+    =========================================================
+    */
+
+    uploadFailed(message = "Upload failed.") {
+
+        this.setUploadProgress(0);
+
+        notify(
+
+            message,
+
+            "error"
+
+        );
+
+    },
+        /*
+    =========================================================
+    APPROVE DOCUMENT
+    =========================================================
+    */
+
+    async approveDocument() {
+
+        try {
+
+            if (!this.currentDocument) {
+
+                notify(
+
+                    "Please open a document first.",
+
+                    "warning"
+
+                );
+
+                return;
+
+            }
+
+            await DB.Documents.update(
+
+                this.currentDocument.id,
+
+                {
+
+                    status: STATUS.APPROVED,
+
+                    workflow_status: WORKFLOW.APPROVED
+
+                }
+
+            );
+
+            await this.saveWorkflow(
+
+                "Approval",
+
+                "Approved",
+
+                "Document approved."
+
+            );
+
+            await this.addAuditLog(
+
+                "Approved",
+
+                "Document approved."
+
+            );
+
+            notify(
+
+                "Document approved successfully.",
+
+                "success"
+
+            );
+
+            await this.refresh();
+
+        }
+
+        catch (error) {
+
+            console.error(error);
+
+            notify(error.message, "error");
+
+        }
+
+    },
+
+
+
+    /*
+    =========================================================
+    REJECT DOCUMENT
+    =========================================================
+    */
+
+    async rejectDocument(reason = "") {
+
+        try {
+
+            if (!this.currentDocument)
+
+                return;
+
+            await DB.Documents.update(
+
+                this.currentDocument.id,
+
+                {
+
+                    status: STATUS.REJECTED,
+
+                    workflow_status: WORKFLOW.REJECTED,
+
+                    remarks: reason
+
+                }
+
+            );
+
+            await this.saveWorkflow(
+
+                "Review",
+
+                "Rejected",
+
+                reason
+
+            );
+
+            await this.addAuditLog(
+
+                "Rejected",
+
+                reason
+
+            );
+
+            notify(
+
+                "Document rejected.",
+
+                "warning"
+
+            );
+
+            await this.refresh();
+
+        }
+
+        catch (error) {
+
+            console.error(error);
+
+        }
+
+    },
+
+
+
+    /*
+    =========================================================
+    SAVE WORKFLOW
+    =========================================================
+    */
+
+    async saveWorkflow(stage, status, remarks = "") {
+
+        try {
+
+            const user = await getCurrentUser();
+
+            await supabase
+
+                .from("document_workflow")
+
+                .insert({
+
+                    document_id:
+
+                        this.currentDocument.id,
+
+                    stage,
+
+                    status,
+
+                    assigned_to:
+
+                        user?.id,
+
+                    remarks
+
+                });
+
+        }
+
+        catch (error) {
+
+            console.error(error);
+
+        }
+
+    },
+
+
+
+    /*
+    =========================================================
+    LOAD WORKFLOW
+    =========================================================
+    */
+
+    async loadWorkflow(documentId) {
+
+        try {
+
+            const { data, error } = await supabase
+
+                .from("document_workflow")
+
+                .select("*")
+
+                .eq(
+
+                    "document_id",
+
+                    documentId
+
+                )
+
+                .order(
+
+                    "created_at",
+
+                    {
+
+                        ascending: false
+
+                    }
+
+                );
+
+            if (error)
+
+                throw error;
+
+            this.renderWorkflow(data);
+
+        }
+
+        catch (error) {
+
+            console.error(error);
+
+        }
+
+    },
+
+
+
+    /*
+    =========================================================
+    RENDER WORKFLOW
+    =========================================================
+    */
+
+    renderWorkflow(records) {
+
+        const tbody = document.getElementById(
+
+            "workflowTable"
+
+        );
+
+        if (!tbody)
+
+            return;
 
         tbody.innerHTML = "";
 
-        if (items.length === 0) {
+        if (!records.length) {
 
             tbody.innerHTML = `
 
                 <tr>
 
-                    <td colspan="5">
+                    <td colspan="4">
 
-                        No items detected.
+                        No workflow available.
 
                     </td>
 
@@ -774,31 +1436,118 @@ document.addEventListener(
 
         }
 
-        items.forEach(item => {
+        records.forEach(record => {
 
             tbody.innerHTML += `
 
-            <tr>
+                <tr>
 
-                <td>${item.description}</td>
+                    <td>${record.stage}</td>
 
-                <td>${item.quantity}</td>
+                    <td>${record.status}</td>
 
-                <td>${item.unit || "Nos"}</td>
+                    <td>${record.remarks || "-"}</td>
 
-                <td>${item.destination || "Engineering"}</td>
+                    <td>${formatDate(record.created_at)}</td>
 
-                <td>
+                </tr>
 
-                    <span class="status-active">
+            `;
 
-                        Ready
+        });
 
-                    </span>
+    },
+        /*
+    =========================================================
+    LOAD AUDIT TRAIL
+    =========================================================
+    */
 
-                </td>
+    async loadAuditTrail(documentId) {
 
-            </tr>
+        try {
+
+            const { data, error } = await supabase
+
+                .from("document_audit")
+
+                .select("*")
+
+                .eq("document_id", documentId)
+
+                .order("created_at", {
+
+                    ascending: false
+
+                });
+
+            if (error) throw error;
+
+            this.renderAuditTrail(data);
+
+        }
+
+        catch (error) {
+
+            console.error(error);
+
+        }
+
+    },
+
+
+
+    /*
+    =========================================================
+    RENDER AUDIT TRAIL
+    =========================================================
+    */
+
+    renderAuditTrail(records) {
+
+        const tbody = document.getElementById("auditTable");
+
+        if (!tbody)
+
+            return;
+
+        tbody.innerHTML = "";
+
+        if (!records.length) {
+
+            tbody.innerHTML = `
+
+                <tr>
+
+                    <td colspan="4">
+
+                        No audit history available.
+
+                    </td>
+
+                </tr>
+
+            `;
+
+            return;
+
+        }
+
+        records.forEach(record => {
+
+            tbody.innerHTML += `
+
+                <tr>
+
+                    <td>${record.action}</td>
+
+                    <td>${record.remarks || "-"}</td>
+
+                    <td>${record.user_id || "-"}</td>
+
+                    <td>${formatDate(record.created_at)}</td>
+
+                </tr>
 
             `;
 
@@ -810,32 +1559,459 @@ document.addEventListener(
 
     /*
     =========================================================
-    APPROVE EXTRACTION
+    ADD AUDIT LOG
     =========================================================
     */
 
-    async approveDocument() {
+    async addAuditLog(action, remarks = "") {
+
+        try {
+
+            const user = await getCurrentUser();
+
+            await supabase
+
+                .from("document_audit")
+
+                .insert({
+
+                    document_id: this.currentDocument.id,
+
+                    user_id: user?.id,
+
+                    action,
+
+                    remarks
+
+                });
+
+        }
+
+        catch (error) {
+
+            console.error(error);
+
+        }
+
+    },
+
+
+
+    /*
+    =========================================================
+    PREVIEW DOCUMENT
+    =========================================================
+    */
+
+    async previewDocument() {
+
+        try {
+
+            if (!this.currentDocument)
+
+                return;
+
+            await StorageManager.previewFile(
+
+                this.currentDocument.storage_path
+
+            );
+
+        }
+
+        catch (error) {
+
+            console.error(error);
+
+            notify(
+
+                "Unable to preview document.",
+
+                "error"
+
+            );
+
+        }
+
+    },
+
+
+
+    /*
+    =========================================================
+    DOWNLOAD DOCUMENT
+    =========================================================
+    */
+
+    async downloadDocument() {
+
+        try {
+
+            if (!this.currentDocument)
+
+                return;
+
+            const blob = await StorageManager.downloadFile(
+
+                this.currentDocument.storage_path
+
+            );
+
+            if (!blob)
+
+                return;
+
+            const url = URL.createObjectURL(blob);
+
+            const link = document.createElement("a");
+
+            link.href = url;
+
+            link.download =
+
+                this.currentDocument.file_name ||
+
+                "document.pdf";
+
+            document.body.appendChild(link);
+
+            link.click();
+
+            link.remove();
+
+            URL.revokeObjectURL(url);
+
+        }
+
+        catch (error) {
+
+            console.error(error);
+
+            notify(
+
+                "Unable to download document.",
+
+                "error"
+
+            );
+
+        }
+
+    },
+        /*
+    =========================================================
+    ARCHIVE DOCUMENT
+    =========================================================
+    */
+
+    async archiveDocument() {
+
+        try {
+
+            if (!this.currentDocument)
+
+                return;
+
+            await DB.Documents.update(
+
+                this.currentDocument.id,
+
+                {
+
+                    status: STATUS.ARCHIVED,
+
+                    workflow_status: WORKFLOW.ARCHIVED,
+
+                    archived_at: new Date().toISOString()
+
+                }
+
+            );
+
+            await this.addAuditLog(
+
+                "Archived",
+
+                "Document archived."
+
+            );
+
+            notify(
+
+                "Document archived.",
+
+                "success"
+
+            );
+
+            await this.refresh();
+
+        }
+
+        catch (error) {
+
+            console.error(error);
+
+            notify(error.message, "error");
+
+        }
+
+    },
+
+
+
+    /*
+    =========================================================
+    RESTORE DOCUMENT
+    =========================================================
+    */
+
+    async restoreDocument() {
+
+        try {
+
+            if (!this.currentDocument)
+
+                return;
+
+            await DB.Documents.update(
+
+                this.currentDocument.id,
+
+                {
+
+                    status: STATUS.APPROVED,
+
+                    workflow_status: WORKFLOW.APPROVED,
+
+                    archived_at: null
+
+                }
+
+            );
+
+            await this.addAuditLog(
+
+                "Restored",
+
+                "Document restored."
+
+            );
+
+            notify(
+
+                "Document restored.",
+
+                "success"
+
+            );
+
+            await this.refresh();
+
+        }
+
+        catch (error) {
+
+            console.error(error);
+
+        }
+
+    },
+
+
+
+    /*
+    =========================================================
+    DELETE DOCUMENT
+    =========================================================
+    */
+
+    async deleteDocument() {
+
+        try {
+
+            if (!this.currentDocument)
+
+                return;
+
+            if (!confirm(
+
+                "Delete this document permanently?"
+
+            ))
+
+                return;
+
+            await StorageManager.deleteFile(
+
+                this.currentDocument.storage_path
+
+            );
+
+            await DB.Documents.delete(
+
+                this.currentDocument.id
+
+            );
+
+            await this.addAuditLog(
+
+                "Deleted",
+
+                "Document deleted."
+
+            );
+
+            this.resetUploadForm();
+
+            await this.refresh();
+
+            notify(
+
+                "Document deleted.",
+
+                "success"
+
+            );
+
+        }
+
+        catch (error) {
+
+            console.error(error);
+
+            notify(error.message, "error");
+
+        }
+
+    },
+
+
+
+    /*
+    =========================================================
+    PRINT DOCUMENT
+    =========================================================
+    */
+
+    async printDocument() {
+
+        try {
+
+            if (!this.currentDocument)
+
+                return;
+
+            const url = await StorageManager.getSignedUrl(
+
+                this.currentDocument.storage_path
+
+            );
+
+            const win = window.open(
+
+                url,
+
+                "_blank"
+
+            );
+
+            if (win)
+
+                win.print();
+
+        }
+
+        catch (error) {
+
+            console.error(error);
+
+        }
+
+    },
+
+
+
+    /*
+    =========================================================
+    EXPORT DOCUMENT DETAILS
+    =========================================================
+    */
+
+    exportDocument() {
 
         if (!this.currentDocument)
 
             return;
 
-        await DB.Documents.update(
+        const data = JSON.stringify(
 
-            this.currentDocument.id,
+            this.currentDocument,
+
+            null,
+
+            2
+
+        );
+
+        const blob = new Blob(
+
+            [data],
 
             {
 
-                status: STATUS.APPROVED,
-
-                workflow_status: WORKFLOW.APPROVED
+                type: "application/json"
 
             }
 
         );
 
-        notify("Document approved.");
+        const url = URL.createObjectURL(blob);
 
-        await this.refresh();
+        const link = document.createElement("a");
 
-    },
+        link.href = url;
+
+        link.download =
+
+            this.currentDocument.document_number +
+
+            ".json";
+
+        link.click();
+
+        URL.revokeObjectURL(url);
+
+    }
+
+};
+
+
+
+/*
+=========================================================
+GLOBAL ACCESS
+=========================================================
+*/
+
+window.Documents = Documents;
+
+
+
+/*
+=========================================================
+START MODULE
+=========================================================
+*/
+
+document.addEventListener(
+
+    "DOMContentLoaded",
+
+    () => {
+
+        Documents.init();
+
+    }
+
+);
