@@ -17,7 +17,7 @@ GENERIC CRUD
 
 DB.getAll = async function (table, orderBy = "created_at") {
 
-    const { data, error } = await supabase
+    const { data, error } = await window.supabaseClient
         .from(table)
         .select("*")
         .order(orderBy, { ascending: false });
@@ -31,7 +31,7 @@ DB.getAll = async function (table, orderBy = "created_at") {
 
 DB.getById = async function (table, id) {
 
-    const { data, error } = await supabase
+    const { data, error } = await window.supabaseClient
         .from(table)
         .select("*")
         .eq("id", id)
@@ -46,7 +46,7 @@ DB.getById = async function (table, id) {
 
 DB.insert = async function (table, values) {
 
-    const { data, error } = await supabase
+    const { data, error } = await window.supabaseClient
         .from(table)
         .insert(values)
         .select();
@@ -60,7 +60,7 @@ DB.insert = async function (table, values) {
 
 DB.update = async function (table, id, values) {
 
-    const { data, error } = await supabase
+    const { data, error } = await window.supabaseClient
         .from(table)
         .update(values)
         .eq("id", id)
@@ -75,7 +75,7 @@ DB.update = async function (table, id, values) {
 
 DB.remove = async function (table, id) {
 
-    const { error } = await supabase
+    const { error } = await window.supabaseClient
         .from(table)
         .delete()
         .eq("id", id);
