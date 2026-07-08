@@ -2,49 +2,7 @@
 =========================================================
 JJN HUB ERP
 Storage Manager
-Version 1.0 - Step 1
-=========================================================
-Requires:
-- supabase.js
-=========================================================
-*/
-
-const StorageManager = {
-
-    /*
-    =========================================================
-    INITIALIZE
-    =========================================================
-    */
-
-    init() {
-
-        console.log("Storage Manager Ready");
-
-    }
-
-};
-
-/*
-=========================================================
-EXPORT
-=========================================================
-*/
-
-window.StorageManager = StorageManager;
-
-/*
-=========================================================
-START
-=========================================================
-*/
-
-StorageManager.init();
-/*
-=========================================================
-JJN HUB ERP
-Storage Manager
-Version 1.1
+Version 1.2
 =========================================================
 Requires:
 - supabase.js
@@ -61,7 +19,7 @@ const StorageManager = {
 
     bucket: STORAGE.DOCUMENTS,
 
-    maxFileSize: 50 * 1024 * 1024, // 50 MB
+    maxFileSize: 50 * 1024 * 1024,
 
     allowedTypes: [
 
@@ -85,6 +43,60 @@ const StorageManager = {
 
     /*
     =========================================================
+    VALIDATE FILE
+    =========================================================
+    */
+
+    validate(file) {
+
+        if (!file) {
+
+            return {
+
+                valid: false,
+
+                message: "No file selected."
+
+            };
+
+        }
+
+        if (!this.allowedTypes.includes(file.type)) {
+
+            return {
+
+                valid: false,
+
+                message: "Unsupported file type."
+
+            };
+
+        }
+
+        if (file.size > this.maxFileSize) {
+
+            return {
+
+                valid: false,
+
+                message: "Maximum upload size is 50 MB."
+
+            };
+
+        }
+
+        return {
+
+            valid: true,
+
+            message: "File validation successful."
+
+        };
+
+    },
+
+    /*
+    =========================================================
     INITIALIZE
     =========================================================
     */
@@ -92,8 +104,6 @@ const StorageManager = {
     init() {
 
         console.log("Storage Manager Ready");
-
-        console.log("Bucket:", this.bucket);
 
     }
 
