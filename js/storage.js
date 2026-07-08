@@ -141,7 +141,81 @@ const StorageManager = {
         return "📁";
 
     },
+    /*
+    =========================================================
+    GET FILE EXTENSION
+    =========================================================
+    */
 
+    getExtension(filename) {
+
+        return filename.split(".").pop().toLowerCase();
+
+    },
+
+
+
+    /*
+    =========================================================
+    GENERATE UNIQUE FILE NAME
+    =========================================================
+    */
+
+    generateFileName(file, prefix = "DOC") {
+
+        const ext = this.getExtension(file.name);
+
+        const timestamp = Date.now();
+
+        const random = Math.floor(Math.random() * 9000) + 1000;
+
+        return `${prefix}_${timestamp}_${random}.${ext}`;
+
+    },
+
+
+
+    /*
+    =========================================================
+    BUILD STORAGE FOLDER
+    =========================================================
+    */
+
+    buildFolder(department = "General") {
+
+        const year = new Date().getFullYear();
+
+        const month = String(
+
+            new Date().getMonth() + 1
+
+        ).padStart(2, "0");
+
+        return `${department.toLowerCase()}/${year}/${month}`;
+
+    },
+
+
+
+    /*
+    =========================================================
+    BUILD STORAGE PATH
+    =========================================================
+    */
+
+    buildStoragePath(file, department = "General", prefix = "DOC") {
+
+        return `${
+
+            this.buildFolder(department)
+
+        }/${
+
+            this.generateFileName(file, prefix)
+
+        }`;
+
+    },
     /*
     =========================================================
     INITIALIZE
