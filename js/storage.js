@@ -927,3 +927,6 @@ window.StorageManager = StorageManager;
         );
 
     }
+StorageManager.init();
+
+window.StorageManager = StorageManager;
